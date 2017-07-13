@@ -1,0 +1,56 @@
+# misc
+.modgit/
+/_notes
+/_server
+/_backup
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE settings - netbeans
+/.project
+/.metadata
+/.settings
+/.buildpath
+/.classpath
+/.idea
+*.iml
+/nbproject
+
+# Magento
+/app/etc/local.xml
+/dev
+/errors/local.xml
+/errors/design.xml
+/media
+/test
+/var/*
+/google*.html
+/BingSiteAuth.xml
+/downloader/.htaccess
+/downloader/.cache/*
+/downloader/cache.cfg
+/downloader/connect.cfg
+/includes/src/*
+/emailnewsletter
+/sitemap.xml
+/maintenance.flag
+
+# checkout tester
+app/code/community/Yireo/CheckoutTester/*
+app/design/frontend/base/default/layout/checkouttester.xml
+app/etc/modules/Yireo_CheckoutTester.xml
+
+# sass cache
+.sass-cache/
+
+# codekit
+config.codekit
+config.rb
+.codekit-cache/
