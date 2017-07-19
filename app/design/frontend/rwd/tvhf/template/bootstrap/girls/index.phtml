@@ -1,0 +1,72 @@
+<?php
+/*
+
+carousel is invoked in app.js
+- css can be found styles.css - look for owl-theme
+
+*/
+
+
+/*
+<?php if($this->getItems()->getSize() > 0){ ?>
+	<div class="slideshow">
+		<?php foreach($this->getItems() as $data): 
+
+			$_link = $data->getData('link');
+			$_image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image');
+			$_title 	= $data->getData('title');
+			$_desc 		= $data->getData('description');
+
+		?>
+		<div class="slide">
+	        <h3 class="heading-sans"><?php echo $_title;?></h3>
+	        <p><?php echo $_desc;?></p>
+	        <a href="<?php echo $_link;?>">shop now</a>
+			<img src="<?php echo $_image;?>" alt="<?php echo $_title;?>"></a>
+		</div>
+	<?php endforeach;?>
+    </div>
+</div>
+<?php } ?>
+*/
+?>
+
+<?php if($this->getItems()->getSize() > 0): ?>
+<div class="slideshow-fullscreen">
+	<?php foreach($this->getItems() as $data): 
+		$_link 		= $data->getData('link');
+		$_image 	= Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image');
+		$_title 	= $data->getData('title');
+		$_desc 		= $data->getData('description');
+	?>
+	<div class="fullscreen-item" style="background-image:url('<?php echo $_image;?>');">              
+			<div class="hero-text-wrap">
+			    <div class="hero-text">
+			        <div class="container">
+			            <div class="caption-wrap">
+			                <div class="caption">
+				                <h3><?php echo $_title;?></h3>
+				                <p><?php echo $_desc;?></p>
+				                <a class="right-arrowed view-now" href="<?php echo $_link;?>">view now</a>           
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+	</div>
+	<?php endforeach;?>
+</div>
+<?php endif; ?>
+<script>
+$j(".slideshow-fullscreen").owlCarousel({
+    pagination: false,
+    navigation: true,
+    singleItem: true,
+    slideSpeed:600,
+    autoPlay: 5000,
+    rewindNav: true,
+    stopOnHover: true,
+    addClassActive: true,
+    //transitionStyle: "fade"
+});
+</script>

@@ -1,0 +1,14 @@
+        	<?php
+            $_menuActive = Mage::getModel('cms/block')->load('vh_main_menu')->getIsActive();
+            ?>
+            <?php if($_menuActive): ?>
+                <nav>
+                    <?php 
+						$count = Mage::helper('checkout/cart')->getSummaryCount();
+      					$total = Mage::helper('checkout/cart')->getQuote()->getGrandTotal();
+						echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_main_menu')->toHtml();
+					?>
+                    <input type="hidden" value="<?php echo number_format($total,2,'.',',');?>" class="gross_total">
+                </nav>
+            <?php endif ?>          
+

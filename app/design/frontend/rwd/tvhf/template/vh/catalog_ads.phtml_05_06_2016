@@ -1,0 +1,52 @@
+<?php
+if(Mage::registry('current_category')){
+	$cat_name = Mage::registry('current_category')->getName();
+}else{
+	$cat_name = '';
+}
+//$block_id = $cat_name == 'Young Virgin' ? 'vh_young_virgin_ads':'vh_catalog_ads';
+
+switch(strtolower($cat_name)){
+	case 'young virgin':
+		$block_id = $cat_name = 'vh_young_virgin_ads';
+		$show = TRUE;
+		break;
+	case 'weaves':
+		$block_id = $cat_name = 'vh_weaves_ads';
+		$show = TRUE;
+		break;
+	case 'virgin hair':
+		$block_id = $cat_name = 'vh_weaves_ads';
+		$show = TRUE;
+		break;
+	case 'lace products':
+		$block_id = $cat_name = 'vh_lace_products_ads';
+		$show = TRUE;
+		break;
+	case 'extensions':
+		$block_id = $cat_name = 'vh_extensions_ads';
+		$show = TRUE;
+		break;
+	case 'virgin brazilian hair':
+		$block_id = $cat_name = 'vh_virgin_brazilian_hair_ads';
+		$show = TRUE;
+		break;
+	default:
+		$block_id = $cat_name = '';
+		$show = FALSE;
+}
+$block = Mage::getModel('cms/block')->load($block_id);
+$block2 = Mage::getModel('cms/block')->load('vh_catalog_ads');
+
+?>
+<?php if($block->getIsActive() && $show === TRUE):?>
+<div class="vh-catalog-ads">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($block_id)->toHtml(); ?>
+</div>
+<?php else:?>
+<?php if($block2->getIsActive() && $show === TRUE):?>
+<div class="vh-catalog-ads">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_catalog_ads')->toHtml(); ?>
+</div>
+	<?php endif; ?>
+<?php endif; ?>

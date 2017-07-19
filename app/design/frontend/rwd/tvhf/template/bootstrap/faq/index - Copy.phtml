@@ -1,0 +1,66 @@
+<?php if($this->getItems()->getSize() > 0){ ?>
+<div class="std">
+	<?php foreach($this->getItems() as $data):?> 
+	<div class="toggle-content tabs">
+	<?php
+		$_q 	= $data->getData('question');
+		$_a 	= $data->getData('answer');
+	?>
+        <h3><?php echo $_q;?></h3>
+        <div class="faq-answer"><?php echo $_a;?></div>
+    </div>
+	<?php endforeach;?>
+    <div class="left-group"></div>
+    <div class="right-group"></div>
+</div>
+<script>
+// <![CDATA[
+	var ctr=0;
+	$j(".toggle-content.tabs").each(function(){
+		if(ctr%2==0){
+			$j(this).appendTo($j(".left-group"));
+		}else{
+			$j(this).appendTo($j(".right-group"));
+		}
+		ctr++;
+	})
+	$j('.toggle-content').on('click', function(){
+		//var ans = $j(this).find(".faq-answer");
+		$j('.toggle-content').not(this).removeClass('expanded');
+		$j(this).toggleClass('expanded');
+		/*
+		ans.slideToggle('fast',function(){
+			$j('expanded').removeClass('expanded').slideToggle();
+		})
+
+		if(ans.hasClass("expanded")){
+			return;
+		}
+		$j(".expanded").parent().removeClass("expanded");
+		$j(".expanded").slideUp().removeClass("expanded");
+		ans.slideDown().addClass("expanded");
+		ans.parent().addClass("expanded");
+		*/
+	})
+
+
+	/*
+	//reserve for possible use
+	function windowResize(){
+		return;///disable this when ready
+		var tallest = 0;
+		$j(".faq .toggle-content.tabs").each(function(index, element) {
+           if($j(this).outerHeight() > 0){
+			   tallest = $j(this).outerHeight();
+			   $j(".faq .toggle-content.tabs").height(tallest);
+		   }
+        });	
+	}
+	$j(window).resize(function(){
+		windowResize();
+	});
+	windowResize();
+	*/
+// ]]>
+</script>
+<?php } ?>

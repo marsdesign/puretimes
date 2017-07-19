@@ -1,0 +1,144 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+?>
+<div class="modal fade" id="modal-subscribe">
+	<div class="modal-dialog">
+		<div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <div class="modal-body">
+
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('modal_subscribe_header')->toHtml();?> 
+        <div class="block-subscribe">
+          <form  method="post" id="newsletter-pop" name="newsletter-pop">
+<input type="hidden" name="signup_location" value="popup">
+            <div class="block-content">
+                <div class="input-box">
+                   <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="newsletter" title="<?php echo $this->__('Sign up for our newsletter') ?>" class="input-text required-entry validate-email" />
+                </div>
+                <div class="actions">
+                    <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button" onclick="subscribePop();" ><span><span><?php echo $this->__('Subscribe') ?></span></span></button>
+                </div>
+            </div>
+
+            <div id="subscribe-pop-loader" class="subscribe-msg" style="display:none">Sending...</div>
+            <div id="subscribe-pop-success" class="subscribe-msg" style="display:none">Thank you!</div>
+          </form>
+        </div>
+        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('modal_subscribe_footer')->toHtml();?> 
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+//<![CDATA[
+	var newsletterPopFormDetail = new VarienForm('newsletter-pop');
+    function subscribePop(){ 
+            if (newsletterPopFormDetail.validator.validate()) {
+             	new Ajax.Updater(
+             			{success:'newsletterPopFormDetail'},'/newsletter/subscriber/new', 
+             			{
+             				method:'post', 
+             				action:"/newsletter/subscriber/new", 
+             				asynchronous:true, 
+             				evalScripts:false, 
+             				onComplete:function(request, json){
+             					Element.hide('subscribe-pop-loader');
+             					Element.show('subscribe-pop-success');
+             					setTimeout("fadeoutPop()",1000)
+             					document.getElementById('newsletter-pop').reset();
+             				}, 
+             				onLoading:function(request, json){
+             					Element.show('subscribe-pop-loader')
+             				}, 
+             				parameters:Form.serialize($('newsletter-pop'))
+             			});
+             }else{
+             	var elem = document.getElementById("newsletterPop");
+				elem.value = "Valid email please";
+             }
+       }
+       
+       function fadeoutPop(){
+       		new Effect.Fade('subscribe-pop-success');
+       		setTimeout(function(){
+       			jQuery("#modal-subscribe").modal('hide');
+       			},2000);
+       }
+
+     // var sub = readCookie('subscribePop');
+  	//if(!sub){
+  	//	jQuery(document).ready(function() {
+         		//setTimeout(function() {jQuery("#modal-subscribe").modal('show');}, 3000);
+  			//createCookie('subscribePop',1,3);
+  	//	});
+  	//}
+
+    function createCookie(name,value,days) {
+      if (days) {
+            var date = new Date();
+            date.setTime(date.getTime()+(days*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+      }
+      else var expires = "";
+      document.cookie = name+"="+value+expires+"; path=/";
+    }
+
+    function readCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+    
+    if (window.location.protocol != "https:"){
+      if (Modernizr.localstorage) {
+      	// use local storage to show pop up only once
+    		if (localStorage.getItem("subpop") === null) {
+    			setTimeout(function() {jQuery("#modal-subscribe").modal('show');}, 3000);
+    			localStorage.setItem('subpop', 1);
+    		}
+	   } else {
+    		// javascript fallback - not in use.
+       		//var sub = readCookie('subscribePop');
+    		//if(!sub){
+    		//	jQuery(document).ready(function() {
+           	//		setTimeout(function() {jQuery("#modal-subscribe").modal('show');}, 3000);
+    		//		createCookie('subscribePop',1,3);
+    		//	});
+    		//}
+	   }
+	}
+  // show modal no matter
+  // setTimeout(function() {jQuery("#modal-subscribe").modal('show');}, 3000);
+       
+//]]>
+</script>

@@ -1,0 +1,211 @@
+<style>
+.the-slideshow{
+	width:100%;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	overflow:hidden;
+}
+.the-slideshow img.slide-img{
+	height:100%;
+	width:auto;
+	margin:0 auto;
+}
+.the-slideshow > div{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	text-align:center;
+	position:relative;
+}
+.the-slideshow img.first{
+	float:right;
+}
+.cms-home .page .main{
+	padding-top:0;
+}
+.centered.vh-intro > *{
+	width:100%;
+	max-width:600px;
+	text-align:center;
+	display:inline-block;
+	margin-left:auto;
+	margin-right:auto;
+}
+.centered.vh-intro{
+	opacity:0;
+}
+img.the-logo{
+	width:257px !important;
+	height:auto !important;
+	margin:0px auto 40px auto;
+	display:block;
+}
+.welcome-text h1{
+	font-family: 'din_condensedbold';
+	margin:25px auto;
+	text-align:center;
+}
+.welcome-text img{
+	display:inline-block;
+}
+.welcome-text{
+	width:100%;
+	max-width:600px;
+	padding:0 30px;
+	margin:30px auto;
+	text-align:center;
+}
+.home-featured img{
+	margin:0 25px;
+}
+.centrist2{
+}
+.footer .container{
+	padding:0 30px;
+}
+@media (max-width:1250px){
+	.centrist2 .vh-intro{
+		max-width:500px;
+	}
+}
+@media (max-width:767px){
+
+	img.the-logo{
+		margin:0 auto !important;
+	}
+}
+</style>
+<div class="the-slideshow">
+<?php if($this->getItems()->getSize()): ?>
+  <?php 
+  		$cyr = 0;
+  		foreach($this->getItems() as $_item):
+			$ctr++;
+			$img = $_item->getImage();
+			$img_src = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img;
+			
+			$img_mobile        = $_item->getMobileImage();
+			if(empty($img_mobile)){
+				$img_mobile_src = $img_src;
+			}else{
+				$img_mobile_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile;
+			}
+			
+  ?>
+    <div style="height:100%;background:#fff" class="the-slide">
+        <img data-mobile-src="<?php echo str_replace("\\","/",$img_mobile_src);?>" data-src="<?php echo str_replace("\\","/",$img_src);?>"<?php echo $ctr==1?' class="slide-img first"':' class="slide-img"' ?>>
+		   		<?php if($ctr==1):?>
+					<?php
+                    $block = Mage::getModel('cms/block')->load('vh_intro');
+                    ?>
+                    <?php if($block->getIsActive()):?>
+                    <div class="centrist centrist2"  style="height:100%;width:100%;z-index:100">
+                        <div class="centered vh-intro" style="width:100%;text-align:center">
+                            <img class="the-logo" src="/skin/frontend/rwd/tvhf/images/intro-logo.png">
+                            <h1><?php echo $title = $block->getTitle();?></h1>
+                            <p><?php echo $content = $block->getContent();?></p>
+                        </div>
+                    </div>
+                <?php endif; ?>
+       <?php endif; ?>         
+
+    </div>
+  <?php endforeach;?>
+<?php endif; ?>
+</div>
+
+<?php if(isset($title) && isset($content)):?>
+<div class="welcome-text">
+    <img class="the-logo" src="/skin/frontend/rwd/tvhf/images/intro-logo.png">
+    <h1><?php echo $title;?></h1>
+    <p><?php echo $content;?></p>
+</div>
+<?php endif;?>
+
+<script type="text/javascript">
+<?php if($this->getItems()->getSize() > 1){ ?>
+
+	function resizeHome(){
+		$j(".the-slide > img").each(function(){
+			//if($j(window).width() > 767){
+			if($j(window).width() > $j(window).height()){
+				console.log('landscape');
+				$j(this).attr("src",$j(this).data("src"));	
+				//$j(this).css({"height":"100%","width":"auto"});
+				//$j(this).css({"height":$j(window).height()-$j(".page-header-container").height(),"width":"auto"});
+				//$j(this).css({"height":$j(window).height()-$j(".page-header-container").height(),"width":"auto"});
+				if($j(window).width() > 1024){
+					$j(this).css({"height":"100%","width":"auto"});
+				}else{
+					$j(this).css({"width":"100%","height":"auto"});
+				}
+			}else{
+				console.log('portrait');
+				$j(this).attr("src",$j(this).data("mobile-src"));	
+				$j(this).css({"width":"100%","height":"auto"});
+			}
+		});
+	}
+
+	function init(){
+		
+		$j(".the-slideshow,.the-slideshow img.slide-img,.centrist2").height($j(window).height()+50); 
+		$j(".centered.vh-intro").css({"margin-left":$j("a.logo").offset().left+"px"}).animate({"opacity":"1"});   
+		resizeHome();
+		$j(".the-slideshow").owlCarousel({
+			pagination: false,
+			navigation: false,
+			singleItem: true,
+			slideSpeed:1000,
+			autoPlay: 5000,
+			rewindNav: true,
+			stopOnHover: false,
+			addClassActive: true,
+			transitionStyle: "fade",
+		});
+
+		if($j(window).width() > $j(window).height() && $j(window).width() > 975){
+			$j(".centrist2").fadeIn();
+			$j(".welcome-text").css({"display":"none"});
+		}
+		else{
+			//reserve the following just it case
+			/*
+			if($j(window).width() > $j(window).height()){
+			}else{
+			}
+			$j(".the-slideshow img.slide-img").each(function(index, element) {
+
+            });
+			*/
+			$j(".centrist2").css({"display":"none"});
+			$j(".welcome-text").fadeIn();
+		}
+		if( $j(window).width() < 771){
+			//$j(".the-slideshow").css({"margin-top":"104px"});
+		}else{
+			//$j(".the-slideshow").css({"margin-top":"60px"});
+		}
+		
+		//$j(".the-slideshow").css({"margin-top":$j("#header").outerHeight(true)+"px"});
+		//$j(".the-slideshow").css({"margin-top":$j("#header").offset().top+$j("#header").outerHeight(true)+"px"});
+		var ctr = 0;
+		var tt = setInterval(function(){
+			$j(".the-slideshow").css({"margin-top":$j("#header").outerHeight(true)+"px"});
+			ctr++;
+			if(ctr > 4){
+				clearInterval(tt);
+			}
+		},1000);
+		
+	}
+	$j(document).ready(function(e) {
+		init();
+    });
+	$j(window).resize(function() {
+		init();
+    });
+<?php } ?>
+</script>

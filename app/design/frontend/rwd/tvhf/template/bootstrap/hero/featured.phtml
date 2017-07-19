@@ -1,0 +1,426 @@
+<style>
+
+html,body{
+	-webkit-backface-visibility: hidden;
+	-webkit-font-smoothing: antialiased;
+}
+.the-slide{
+	position:absolute;
+	display:none;
+	-webkit-backface-visibility: hidden;
+}
+.welcome-text,
+.the-vh-intro{
+	display:none;
+}
+
+.welcome-text h1{
+	font-family: 'din_condensedbold';
+	margin:40px auto;
+	text-align:center;
+	font-size:46px;
+	line-height:46px;
+	font-weight:normal;
+}
+.welcome-text img{
+	display:inline-block;
+}
+.welcome-text{
+	width:100%;
+	max-width:600px;
+	padding:0 30px;
+	margin:30px auto;
+	text-align:center;
+}
+
+.welcome-text a {
+	color: #c6c5c3;
+	font-size: 14px;
+	letter-spacing: 2px;
+	display: inline-block;
+	font-weight: 700;
+	margin-top:30px;
+}
+
+@media screen and (max-width:770px) {
+	.portrait,
+	.landscape{
+		margin-top:104px;
+	}
+	html,body,div.the-slide,
+	body.cms-index-index.cms-home,
+	div.portrait.the-carousel,
+	div.landscape.the-carousel, #header{
+		width:100% !important;
+	}
+}
+@media screen and (min-width:771px) {
+	.portrait,
+	.landscape{
+		margin-top:58px;
+	}
+}
+
+@media screen and (orientation:portrait) {
+	.welcome-text,
+	.portrait{
+		display:block;
+	}
+	.landscape{
+		display:none;
+	}
+	.the-vh-intro{
+		display:none;
+	}
+}
+@media screen and (orientation:landscape){
+	.portrait{
+		display:none;
+	}
+	.landscape{
+		display:block;
+	}
+
+	.landscape .the-slide:first-child{
+	}
+	
+	.the-vh-intro{
+		width:100%;
+		height:100%;
+		position:absolute;
+		top:0;
+		left:0;
+	}
+	.the-vh-intro > div{
+		max-width:50%;
+		text-align:center;
+	}
+
+	img.the-logo{
+		width:257px;
+		height:auto;
+		margin:0px auto 40px auto;
+		display:block;
+	}
+
+	.the-vh-intro h1{
+		font-family: 'din_condensedbold';
+		margin:25px auto;
+		font-weight:normal;
+		font-size:46px;
+	}
+
+	.the-vh-intro p{
+		width:100%;
+		max-width:600px;
+		padding:0 30px;
+		margin:30px auto;
+	}
+	
+	.the-vh-intro a {
+		color: #c6c5c3;
+		font-size: 14px;
+		letter-spacing: 2px;
+		display: inline-block;
+		font-weight: 700;
+	}
+	
+	.the-vh-intro > div{
+	  position: relative;
+	  top: 50%;
+	  -webkit-transform: translateY(-50%);
+	  -ms-transform: translateY(-50%);
+	  transform: translateY(-50%);
+	}
+	.landscape .the-slide:first-child > img{
+		position:absolute;
+		right:0px;
+	}
+	
+}
+/*
+@media screen and (min-height:768px) and (orientation:landscape) {
+	.the-vh-intro{
+		display:block;
+	}
+}
+@media screen and (max-height:767px) and (orientation:landscape) {
+	.welcome-text{
+		display:block;
+	}
+}
+*/
+@media screen and (min-width:768px) and (orientation:landscape) {
+	.the-vh-intro{
+		display:block;
+	}
+}
+/*
+@media screen and (device-min-width:768px) and (orientation:landscape) {
+	.the-vh-intro{
+		display:block;
+	}
+}
+*/
+@media screen and (max-width:767px) and (orientation:landscape) {
+	.welcome-text{
+		display:block;
+	}
+}
+/*
+@media screen and (device-max-width:767px) and (orientation:landscape) {
+	.welcome-text{
+		display:block;
+	}
+}
+*/
+
+
+.cms-home .page .main {
+    padding-top: 0px;
+}
+.portrait,
+.landscape{
+	position:relative;
+}
+.portrait,
+.portrait .the-slide,
+.landscape,
+.landscape .the-slide{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	background:#fff;
+	box-sizing:border-box;
+}
+.landscape,
+.landscape .the-slide{
+	width:100% !important;
+}
+
+.portrait .the-slide:first-child,
+.landscape .the-slide:first-child{
+	text-align:right;
+}
+.portrait .the-slide:first-child img,
+.landscape .the-slide:first-child img{
+	display:inline-block;
+}
+.portrait .the-slide img{
+	width:100%;
+	height:auto;
+}
+.landscape .the-slide img{
+	height:102%;
+	width:auto;
+}
+.the-slide{
+	background-size:contain !important;
+	/*background-position:left top !important;*/
+	
+}
+.landscape .the-slide:first-child{
+	background-position:right top !important;
+	
+}
+@media screen and (orientation:landscape) and (max-width:770px){
+/*
+	.portrait{
+		display:block;
+	}
+	.landscape{
+		display:none;
+	}
+	
+	.landscape{
+	}
+	.landscape .the-slide:first-child{
+	}
+
+	.portrait img{
+	}
+
+	.the-slide{
+		background-size: auto 100%;
+		background-position:center top !important;
+		
+	}
+*/
+}
+
+@media screen and (max-width:1024px) and (min-width:1024px) and (orientation:landscape) {
+	html,body,#header,.landscape,.the-slide{
+		width:1024px;
+	}
+}
+
+
+</style>
+<?php 
+
+$block = Mage::getModel('cms/block')->load('vh_intro');
+
+if($block->getIsActive()){
+	$title = $block->getTitle();
+	$content = $block->getContent();
+}else{
+	$title = "";
+	$content = "";
+}
+
+$images = array();
+
+if($this->getItems()->getSize()): 
+
+	foreach($this->getItems() as $_item):
+
+		$desktop_width = 0;
+		$desktop_height = 0;
+		$mobile_width = 0;
+		$mobile_height = 0;
+
+		$img = $_item->getImage();
+
+		$img_src = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img;
+
+		if( !empty($img)){
+			$im = getimagesize($img_src);
+			if($im){
+				$desktop_width = $im[0];
+				$desktop_height = $im[1];
+			}
+		}
+		
+		
+		$img_mobile        = $_item->getMobileImage();
+
+		if(empty($img_mobile)){
+
+			$img_mobile_src = $img_src;
+
+			$mobile_width = $desktop_width;
+			$mobile_height = $desktop_height;
+
+		}else{
+
+			$img_mobile_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile;
+			$im = getimagesize($img_mobile_src);
+			if($im){
+				$mobile_width = $im[0];
+				$mobile_height = $im[1];
+			}
+		}
+		
+		//echo '<pre>'.print_r($im,true).'</pre>';
+		
+		$desktop_ratio = $desktop_height/$desktop_width;
+		$mobile_ratio = $mobile_height/$mobile_width;
+		
+		$images[] = array(
+			"desktop-src" => $img_src,
+			"desktop_width"	=> $desktop_width,
+			"desktop_height"	=> $desktop_height,
+			"desktop_ratio"	=> $desktop_ratio,
+			"mobile-src" => $img_mobile_src,
+			"mobile_width"	=> $mobile_width,
+			"mobile_height"	=> $mobile_height,
+			"mobile_ratio"	=> $mobile_ratio
+		);
+	endforeach;
+endif;
+
+?>
+
+
+	<div class="landscape the-carousel">
+<?php 
+	  $ctr = 0;
+	  foreach($images as $image):
+	  	$ctr++;
+?>
+		<div class="the-slide" style="background:url(<?php echo $image['desktop-src']; ?>) no-repeat" data-ratio="<?php echo $image['desktop_ratio']; ?>">
+        	<!--<img src = "<?php //echo $image['desktop-src']; ?>">-->
+<?php
+			if($ctr == 1 && $title != '' && $content != ''):
+?>
+                    <div class="the-vh-intro">
+                        <div>
+                            <img class="the-logo" src="<?php echo Mage::getBaseUrl();?>/skin/frontend/rwd/tvhf/images/intro-logo.png">
+                            <h1><?php echo $title; ?></h1>
+                            <p><?php echo $content; ?></p>
+                        </div>
+                    </div>
+<?php			
+			endif;
+?>            
+        </div>
+<?php endforeach; ?>
+	</div>
+	<div class="portrait the-carousel">
+<?php foreach($images as $image):?>
+		<div class="the-slide">
+        	<img src = "<?php echo $image['mobile-src']; ?>">
+        </div>
+<?php endforeach; ?>
+	</div>
+<?php if($title != '' && $content != ''):?>
+<div class="welcome-text">
+    <img class="the-logo" src="/skin/frontend/rwd/tvhf/images/intro-logo.png">
+    <h1><?php echo $title;?></h1>
+    <p><?php echo $content;?></p>
+</div>
+<?php endif;?>
+
+<script>
+/*
+$j(document).ready(function(){
+//moved to bottom of app.js	
+	if($j("body").hasClass("cms-home")){
+
+
+		var ctr1 = 0;
+		var total1 = $j(".landscape .the-slide").length;
+		var ctr2 = 0;
+		var total2 = $j(".portrait .the-slide").length;
+		$j(".landscape .the-slide").eq(ctr1).fadeIn(1000).addClass("active-the-slide");
+		ctr1++;
+		var t1 = setInterval(function(){
+			$j(".landscape .the-slide.active-the-slide").fadeOut(500).removeClass("active-the-slide");
+			$j(".landscape .the-slide").eq(ctr1).fadeIn(1000).addClass("active-the-slide");
+			ctr1++;
+			if(ctr1 == total1){
+				ctr1 = 0;
+			}
+		},6000);
+		$j(".portrait .the-slide").eq(ctr2).fadeIn(1000).addClass("active-the-slide");
+		ctr2++;
+		var t2 = setInterval(function(){
+			$j(".portrait .the-slide.active-the-slide").fadeOut(500).removeClass("active-the-slide");
+			$j(".portrait .the-slide").eq(ctr2).fadeIn(1000).addClass("active-the-slide");
+			ctr2++;
+			if(ctr2 == total2){
+				ctr2 = 0;
+			}
+		},6000);
+	}
+	
+	function resize_slides(){
+		var highest = 0;
+		$j(".landscape .the-slide").each(function(){
+			var ratio = $j(this).data("ratio");
+			var h = $j(window).width()*ratio;
+			if(h > highest){
+				highest = h;
+			}
+			$j(this).height(h);	
+		});
+		$j(".landscape").height(highest);
+	}
+	$j(window).resize(function(){
+		resize_slides();	
+	});
+	resize_slides();
+
+});
+*/
+</script>

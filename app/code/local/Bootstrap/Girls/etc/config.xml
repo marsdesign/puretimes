@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+    	<Bootstrap_Girls>
+    		<version>0.1.0</version>
+    	</Bootstrap_Girls>
+  	</modules>
+	<frontend>
+    	<routers>
+      		<girls>
+        		<use>standard</use>
+          		<args>
+            		<module>Bootstrap_Girls</module>
+            		<frontName>tvhf-dolls</frontName>
+          		</args>
+      		</girls>
+    	</routers>
+		<layout>
+		  	<updates>
+				<girls>
+			  		<file>bootstrap/girls.xml</file>
+				</girls>
+		  	</updates>
+		</layout>
+	</frontend>
+  	<global>
+        <rewrite>
+            <bootstrap_girls_index_index>
+                <from><![CDATA[#^/girls/#]]></from>
+                <to>/girls/index/index/</to>
+                <complete>1</complete>
+            </bootstrap_girls_index_index>
+        </rewrite>
+    	<helpers>
+      		<girls>
+        		<class>Bootstrap_Girls_Helper</class>
+      		</girls>
+    	</helpers>
+		<blocks>
+	  		<girls>
+				<class>Bootstrap_Girls_Block</class>
+	  		</girls>
+		</blocks>
+		<models>
+	  		<girls>
+				<class>Bootstrap_Girls_Model</class>
+				<resourceModel>girls_mysql4</resourceModel>
+	  		</girls>
+	  		<girls_mysql4>
+				<class>Bootstrap_Girls_Model_Mysql4</class>
+					<entities>		  
+			  			<girls>
+							<table>bootstrap_girls</table>
+			  			</girls>
+        			</entities>
+	  		</girls_mysql4>
+		</models>
+		<resources>
+	  		<girls_setup>
+	  			
+				<setup>
+		  			<module>Bootstrap_Girls</module>
+		  			<!--this invokes custom function - without uses magento default setup
+		  			<class>Bootstrap_Girls_Model_Mysql4_Setup</class>-->
+				</setup>
+				<!-- default setup -->
+				<connection>
+		  			<use>core_setup</use>
+				</connection>
+	  		</girls_setup>
+	  		<girls_write>
+				<connection>
+		  			<use>core_write</use>
+				</connection>
+	  		</girls_write>
+	  		<girls_read>
+				<connection>
+		  			<use>core_read</use>
+				</connection>
+	  		</girls_read>
+		</resources>
+	</global>
+  	<admin>
+  	<!--
+        <routers>
+            <girls>
+                <use>admin</use>
+                <args>
+                    <module>Bootstrap_Girls</module>
+                    <frontName>girls</frontName>
+                </args>
+            </girls>
+        </routers>
+        -->
+        <!-- 
+        	
+        module is same as in controller with _Adminhtml 
+        	
+        -->
+  		<routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bootstrap_Girls after="Mage_Adminhtml">Bootstrap_Girls_Adminhtml</Bootstrap_Girls>
+                    </modules>
+                </args>
+            </adminhtml>
+		</routers>
+  	</admin>
+  	<adminhtml>
+		<layout>
+	  		<updates>
+				<girls module="Bootstrap_Girls">
+		  			<file>bootstrap/girls.xml</file>
+				</girls>
+	  		</updates>
+		</layout>
+		<menu>
+        	<!-- 
+        	
+        	note the path does not contain adminhtml_girls just girls
+        	the controller definition in config.xml contains _Adminhtml
+        	see line 90 
+        	
+        	-->
+           <cms>
+                <children>
+                    <girls module="girls">
+                        <title>Lookbook Girls</title>
+                        <sort_order>1200</sort_order>
+                        <action>adminhtml/girls/index</action>
+                    </girls>
+            	</children>
+        	</cms>
+		</menu>
+		<acl>
+	  		<resources>
+				<all>
+		  			<title>Allow Everything</title>
+				</all>
+				<admin>
+		  			<children>
+           				<cms>
+                			<children>
+                    			<girls translate="title" module="girls">
+                        			<title>Girls</title>
+                        			<sort_order>1000</sort_order>
+                    			</girls>
+            				</children>
+            			</cms>
+		  			</children>
+				</admin>
+	  		</resources>
+		</acl>
+	</adminhtml>
+</config> 

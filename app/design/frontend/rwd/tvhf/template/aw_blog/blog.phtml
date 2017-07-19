@@ -1,0 +1,118 @@
+<?php
+/**
+ * aheadWorks Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This software is designed to work with Magento community edition and
+ * its use on an edition other than specified is prohibited. aheadWorks does not
+ * provide extension support in case of incorrect edition use.
+ * =================================================================
+ *
+ * @category   AW
+ * @package    AW_Blog
+ * @version    1.3.11
+ * @copyright  Copyright (c) 2010-2012 aheadWorks Co. (http://www.aheadworks.com)
+ * @license    http://ecommerce.aheadworks.com/AW-LICENSE.txt
+ */
+?><?php $posts = $this->getPosts(); ?>
+<style>
+.postWrapper .postTitle a{
+	text-transform:capitalize;
+}
+.postWrapper .postContent p,
+.postWrapper .postContent{
+	line-height:16px;
+}
+.postWrapper .postTitle {
+    border-bottom: none;
+    margin-bottom: 5px;
+}
+.postWrapper .blog-image,
+.postWrapper .blog-image img{
+	width:100%;
+	height:auto;
+}
+.shader:before{
+	content:"";
+	position:absolute;
+	top:0;
+	left:0;
+	right:auto;
+	bottom:0;
+	width:60%;
+	background:#c5c5c5;
+	z-index:-1;
+}
+.postWrapper {
+    margin-bottom: 80px;
+	padding-bottom:0;
+}
+.blog-image img{
+	border:none;
+}
+.blog-left{
+	width:60%;box-sizing:border-box;float:left;
+}
+.blog-right{
+	width:40%;box-sizing:border-box;float:left;padding-left:25px;
+}
+@media (max-width:767px){
+	.shader:before{
+		display:none;
+	}
+	.blog-right,
+	.blog-left{
+		width:100%;
+		float:none;
+	}
+}
+</style>
+<div id="messages_product_view">
+    <?php Mage::app()->getLayout()->getMessagesBlock()->setMessages(Mage::getSingleton('customer/session')->getMessages(true)); ?>
+    <?php echo Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml(); ?>
+</div>
+<div class="page-title">
+    <h1><?php echo $this->__('Blog');?></h1>
+</div>
+<?php echo $this->getChildHtml('aw_blog_comments_toolbar'); ?>
+<?php foreach ($posts as $post):?>
+<?php
+// get first image from shortcontent 
+preg_match_all('/<img[^>]+>/i',$post->getShortContent(), $_blogImages); 
+if(is_array($_blogImages)){
+    $_blogImage = $_blogImages[0][0];
+}
+?>
+    <div class="postWrapper clearer<?php echo empty($_blogImage)?' shader':'';?>" style="position:relative;">
+    	<div class="blog-left">
+			<?php if(!empty($_blogImage)){ ?>
+            <div class="blog-image"><a href="<?php echo $post->getAddress(); ?>" ><?php echo $_blogImage;?></a></div>
+            <?php } 
+			else{
+			?>
+            <div class="blog-image"><a href="<?php echo $post->getAddress(); ?>" ></a></div>
+            <?php	
+			}
+			?>
+        </div>
+    	<div class="blog-right">
+            <div class="postTitle">
+                <h2><a href="<?php echo $post->getAddress(); ?>" ><?php echo $post->getTitle(); ?></a></h2>
+                <h3><?php echo date('l, F j, Y',strtotime($post->getCreatedTime())); ?></h3>
+            </div>
+            <div class="postContent std"><?php echo $post->getPostContent(); ?></div>
+        </div>
+
+        <?php // echo $this->getBookmarkHtml($post) ?>
+
+    </div>
+<?php endforeach; ?>

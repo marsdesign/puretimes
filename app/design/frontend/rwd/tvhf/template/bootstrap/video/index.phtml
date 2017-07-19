@@ -1,0 +1,80 @@
+<div class="container">
+	<div class="page-title">
+		<h1>TVHF Tube</h1>
+	</div>
+</div>
+<?php if($this->getItems()->getSize() > 0){ ?>
+<div class="std">
+	<div class="content video-list">
+	<?php 
+	$i = 0;
+	foreach($this->getItems() as $data): 
+		$i++;
+
+		$_video 	= $data->getData('video');
+		$parts 		= parse_url($_video);
+		$path 		= explode("/",$parts["path"]);
+		$_videoId 	= array_pop($path);
+		$_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
+		$_title 	= $data->getData('title');
+		$_desc 		= $data->getData('description');
+		// optional can use to resize video thumbnail
+		$_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'),300,360);
+	?>
+		<div class="section-video">
+			<div class="video-wrap">
+		        <div class="video">
+	            	<a class="video-link" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>">
+						<div class="video-play">
+							<div class="video-play-triangle"></div>
+						</div>
+	            	</a>
+	            	<img src="<?php echo $_image;?>" alt="<?php echo $_title;?>">
+		        </div>
+		        <div class="text-wrap">
+					<div class="video-caption">
+			        	<div class="video-center">
+	                    <h3><?php echo $_title;?></h3>
+	                    <?php echo $_desc;?>
+	                    <a class="button-hollow video-link" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>">watch now <i class="fa fa-angle-right"></i></a>
+	                	</div>
+                	</div>
+                </div>
+	    	</div>
+		</div>
+	<?php endforeach;?>
+    </div>
+</div>
+
+<div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video">        
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="video-player">
+                <div class="embed-container"><iframe src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>
+            </div>
+        </div>
+        <a href="#" class="close button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">close</span></a>
+    </div>
+</div>
+
+<script>
+// <![CDATA[
+
+	// set iframe url on click
+	$j('.video-link').on('click', function(){
+	    var url 	= 'https://player.vimeo.com/video/',
+	    modal 		= $j(this).data("target"),
+	    videoId 	= $j(this).data("video"),
+	    videoSrc 	= url+videoId, 
+	    videoUrl 	= videoSrc+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
+	    $j(modal+' iframe').attr('src', videoUrl); 
+	})
+	// unset url on close
+	$j('#video-modal').on('hide.bs.modal', function (e) {
+	    $j('#video-modal').find('iframe').attr('src', '');
+	})
+
+// ]]>
+</script>
+
+<?php } ?>

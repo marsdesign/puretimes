@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="head">
+			<action method="setCanLoadExtJs"><flag>1</flag></action>
+			<action method="setCanLoadTinyMce"><flag>1</flag></action>
+    		<action method="addJs"><script>mage/adminhtml/variables.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+    		<action method="addJs"><script>lib/flex.js</script></action>
+    		<action method="addJs"><script>lib/FABridge.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/browser.js</script></action>
+    		<action method="addJs"><script>prototype/window.js</script></action>
+    		<action method="addJs"><script>prototype/prototype.js</script></action>
+    		<action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+    		<action method="addItem"><type>js_css</type><name>prototype/windows/themes/magento.css</name></action>
+    		<action method="addCss"><name>lib/prototype/windows/themes/magento.css</name></action>
+		</reference>
+	</default>
+	<adminhtml_video_index>
+		<reference name="content">
+	  	<!--<block type="video/adminhtml_video" name="video" template="bootstrap/video/form.phtml" />-->
+		<!--<block type="bootstrap_video/adminhtml_grid" name="bootstrap_video_grid" />-->
+		<!-- We also reference our block by namespacename_modulename/adminhtml_controllername, and name it uniquely -->
+    	<!--<block type="bootstrap_video/adminhtml_video" name="bootstrap_video_video" />-->
+    	<!--<block type="adminhtml/template" name="video_form" template="bootstrap/video/form.phtml"/>-->
+		<block type="video/adminhtml_video" name="video" />
+		</reference>
+	</adminhtml_video_index>
+</layout>

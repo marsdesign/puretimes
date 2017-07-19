@@ -1,0 +1,45 @@
+
+<?php if($this->getItems()->getSize()){ ?>
+
+    <?php 
+    $i=0;
+    foreach($this->getItems() as $_item): 
+        $i++;
+        $img        = $_item->getImage();
+        $img_src    = str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img);
+
+        $img_mobile        = $_item->getMobileImage();
+        $img_mobile_src    = str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile);
+        
+        $link       = $_item->getLink();
+		$odd_even = $i%2?'odd':'even';
+    ?>
+
+    <div class="section-home <?php echo $odd_even;?>" id="section<?php echo $i;?>">
+        <div class="container">
+            <div class="callout-overlay"></div>
+            <div class="sw"><img class="section-background" src="<?php echo $img_src;?>"></div>
+            <div class="text-wrap">
+                <div class="inner-text">
+                    <h3 class="shop-kicker">SHOP</h3>
+                    <h3 class="the-title"><?php echo $_item->getTitle();?></h3>
+                    <?php echo $_item->getDescription();?>
+                    <?php if(!empty($link)){ ?><a  class="plain-link" href="<?php echo $link;?>"><?php }?>shop now ><?php if(!empty($link)){ ?></a><?php }?>
+                </div>
+            </div>
+            <div class="callout-overlay-bottom"></div>
+        </div>
+        <div class="text-wrap-mobile">
+                <h3 class="shop-kicker">SHOP</h3>
+                <h3 class="the-title"><?php echo $_item->getTitle();?></h3>
+                <?php echo $_item->getDescription();?>
+                <?php if(!empty($link)){ ?><a class="plain-link" href="<?php echo $link;?>"><?php }?>shop now <i class="fa fa-angle-right"></i><?php if(!empty($link)){ ?></a><?php }?>
+        </div>
+    </div>
+
+    <?php endforeach;?>
+
+<?php } ?>
+
+
+

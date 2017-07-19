@@ -1,0 +1,16 @@
+<?php
+$will_subscribe = Mage::getSingleton('core/session')->getWillSubscribe();
+?>
+<div style="padding-left:25px;padding-top:30px;position:relative">
+<input style="position:absolute;left:0px" type="checkbox" name="will_subscribe" id="will_subscribe"<?php echo $will_subscribe=='on'?' checked="checked"':''; ?>><label for="will_subscribe">Subscribe to our Newsletter list and receive great deals and information about new products.</label>
+</div>
+<script>
+	$j(document).ready(function(){
+		///checkout/cart/updatePost/
+		$j("#will_subscribe").click(function(){
+			$j("#the-cart-form").attr("action","/checkout/cart/");
+			$j(this).parents("form").submit();	
+			$j("body").css({"opacity":"0.3"});
+		});
+	});
+</script>

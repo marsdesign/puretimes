@@ -1,0 +1,44 @@
+<?php
+$poll_answers = Mage::getModel('poll/poll_answer')
+	->getResourceCollection()
+	->addPollFilter(4)
+	->load()
+?>
+<div class="sw" style="padding:100px 0 0 0">
+    <h1 style="margin-right:10px"><?php echo $this->escapeHtml($poll->getPollTitle()); ?></h1>
+    <div style="margin-left:-10px">
+        <?php 
+		foreach( $poll_answers as $answer ):
+			if($answer->getAnswerStatus() > 0): 
+		?>
+                <div style="width:25%;float:left;box-sizing:border-box;overflow:hidden;padding-left:10px;margin-bottom:10px;">
+                    <div style="box-sizing:border-box;overflow:hidden;padding:10px 0px 10px;background:#efefef;">
+                        <div style="margin:0 10px;overflow:hidden;text-align:center"><img style="height:250px;width:auto;display:inline-block;" src="/media/vote-assistant/<?php echo $answer->getPollId(); ?>/<?php echo $answer->getAnswerTitle(); ?>"></div>
+                    </div>
+                    <div style="text-align:center">
+                    	<span><?php echo $answer->getVotesCount(); ?> vote<?php echo $answer->getVotesCount() > 1?'s':''; ?></span>
+                    	<a class="voter" href="#" data-id="<?php echo $answer->getAnswerId() ?>">VOTE</a>
+                    </div>
+                </div>
+        <?php 
+			endif;
+		endforeach; ?>
+        <div style="clear:both"></div>        
+    </div>
+</div>
+<input type="hidden" name="poll_id" value="4">
+<form id="pollForm" action="<?php echo $action ?>" method="post">
+      <input type="hidden" name="vote" value="" id="the_vote">
+</form>
+<script>
+	$j(document).ready(function(){
+		$j(".voter").click(function(e){
+			e.preventDefault();
+			$j("#the_vote").val($j(this).data("id"));
+			if(confirm('Submit vote?')){
+				$j("#pollForm").submit();
+			}
+			return false;
+		});
+	});
+</script>

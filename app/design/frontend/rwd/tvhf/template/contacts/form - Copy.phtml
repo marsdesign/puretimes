@@ -1,0 +1,76 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<!--<div id="messages_product_view"><?php //echo $this->getMessagesBlock()->toHtml() ?></div>-->
+<form action="<?php //echo $this->getFormAction(); ?>/contacts/index/post" id="contactForm" method="post" class="scaffold-form">
+	<input type="hidden" name="redirect_url" value ="<?php echo Mage::app()->getStore()->getCurrentUrl(false); ?>" />
+	<input type="hidden" name="form_type" value="contact_form" />
+    <div class="fieldset">
+        <ul class="form-list">
+            <li>
+                <div class="input-box">
+                    <input name="name" id="name" title="<?php echo Mage::helper('contacts')->__('First Name') ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" placeholder="<?php echo Mage::helper('contacts')->__('First Name') ?>" />
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <input name="last_name" id="last_name" title="<?php echo Mage::helper('contacts')->__('Last Name') ?>" value="" class="input-text" type="text" placeholder="<?php echo Mage::helper('contacts')->__('Last Name') ?>" />
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="<?php echo Mage::helper('contacts')->__('Email') ?>" />
+                </div>
+            </li>
+            <li>
+                <div class="input-box">
+                    <textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Message') ?>" placeholder="<?php echo Mage::helper('contacts')->__('Message') ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <button id="contact-submit-button" type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?> <i class="fa fa-angle-right"></i></span></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+    var contactForm = new VarienForm('contactForm', true);
+	$j(document).ready(function(){
+		if($j("body").hasClass("cms-contact")){
+			$j("#contactForm .input-box textarea").parent().css({"position":"relative"});
+			var s = $j(document.createElement("a")).attr("href","#").css({"position":"absolute","bottom":"5px","right":"10px","display":"inline-block","width":"auto","color":"#3f3f41","font-size":"12px"}).addClass("submit-trigger").html("SUBMIT >");
+			s.appendTo($j("#contactForm .input-box textarea").parent());
+			s.click(function(e){
+				e.preventDefault();
+				$j("#contact-submit-button").trigger("click");
+			});
+			
+		}
+	})
+//]]>
+</script>

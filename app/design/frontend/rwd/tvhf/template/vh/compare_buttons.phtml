@@ -1,0 +1,48 @@
+<?php
+Mage::getSingleton('core/session', array('name' => 'frontend'));
+$_compare_helper = Mage::helper('catalog/product_compare');
+$_compare_items = $_compare_helper->getItemCollection();
+$total_items = count($_compare_items);
+?>
+<?php if($total_items > 0):?>
+	<li class="bordered compare-class"><a data-src="<?php echo $_compare_helper->getListUrl();?>" class="compare-class" data-toggle="modal" data-target="#compare-modal" data-backdrop="static">COMPARE</a></li>
+    <li class="bordered compare-count"><a class="lightbox" href="#compare-items-container">COMPARE <?php echo $total_items; ?> ITEM<?php echo $total_items > 1?'S':'';?></a></li>
+    <div class="modal fade" id="compare-modal" tabindex="-1" role="dialog" aria-labelledby="compare" style="width:100%;height:auto">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body" id="compare-container">
+            <div class="embed-container">
+              <iframe src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="closer compare-button" data-dismiss="modal" aria-label="Close"></a>
+       </div>
+    </div>
+<script>
+	$j(document).ready(function(){
+		$j("a.link-compare").each(function(){
+			var id1 = $j(this).data("id");
+			var dis = $j(this);
+			console.log('id1='+id1);
+			$j("#compare-items .compare-item-id").each(function(){
+				var id2 = $j(this).val();
+				var h = $j(this).parent().find('a.btn-remove').attr("href");
+				var o = $j(this).parent().find('a.btn-remove').attr("onclick");
+				if(id1 == id2){
+					console.log('id1 is equal to id2');
+					dis.addClass("compare-this").attr("href",h).attr("onclick",o);
+				}
+			})
+		});
+
+		$j('a.compare-class').click(function(e){
+			e.preventDefault();
+			$j('#compare-modal iframe').attr('src', $j(this).data('src')); 
+		})
+		$j('#compare-modal').on('hide.bs.modal', function (e) {
+			$j('#compare-modal').find('iframe').attr('src', '');
+		})
+	})
+</script>
+<?php endif; ?>

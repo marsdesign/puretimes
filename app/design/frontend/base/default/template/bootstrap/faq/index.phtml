@@ -1,0 +1,15 @@
+<?php if($this->getItems()->getSize() > 0){ ?>
+<div class="std">
+	<div class="toggle-content tabs">
+	<?php foreach($this->getItems() as $data): 
+
+		$_q 	= $data->getData('question');
+		$_a 	= $data->getData('answer');
+	?>
+        <h3><?php echo $_q;?></h3>
+        <p><?php echo $_a;?></p>
+
+	<?php endforeach;?>
+    </div>
+</div>
+<?php } ?>

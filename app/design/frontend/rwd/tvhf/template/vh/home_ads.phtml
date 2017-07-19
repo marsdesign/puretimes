@@ -1,0 +1,8 @@
+<?php
+$block = Mage::getModel('cms/block')->load('vh_home_ads');
+?>
+<?php if($block->getIsActive()):?>
+<div class="vh-home-ads">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_home_ads')->toHtml(); ?>
+</div>
+<?php endif; ?>

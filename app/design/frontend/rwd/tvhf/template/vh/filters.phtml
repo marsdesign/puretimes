@@ -1,0 +1,58 @@
+<?php
+function getCountByCategoryIdAndHairType($cat_id,$hair_type){
+	$products = Mage::getModel('catalog/category')->load($cat_id)
+	->getProductCollection()
+	->addAttributeToSelect('entity_id')
+	->addAttributeToFilter('status', 1)
+	->addAttributeToFilter('hair_type', $hair_type)
+	->addAttributeToFilter('visibility', 4);
+	return $products->count();
+}
+if(Mage::registry('current_category')){
+	$url = Mage::registry('current_category')->getUrl();
+	$cat_id = Mage::registry('current_category')->getId();
+}else{
+	$cat_id = 4; //cat id of weaves/virgin hair
+	$url = Mage::getModel('catalog/category')->load($cat_id)->getUrl();
+}
+
+$appliedFilters = Mage::getSingleton('catalog/layer')->getState()->getFilters();
+$active_filters=array();
+foreach ($appliedFilters as $item) {
+    $active_filters[] = $item->getValue();
+}
+?>
+<ol id="narrow-by-list" class="clearer">
+            <li>FILTER BY</li>
+	<?php
+    if(count($active_filters) > 0):
+    ?>	
+            <li><a href="<?php echo $url; ?>">ALL</a></li>
+    <?php    
+    else:
+    ?>
+            <li class="active">ALL</li>
+    <?php
+    endif;
+    
+    $filter = Mage::getModel('eav/config')->getAttribute('catalog_product', 'hair_type');
+    $filter_items = $filter->getSource()->getAllOptions(true, true);
+    foreach ($filter_items as $_filter):
+	
+		$filter_count = getCountByCategoryIdAndHairType($cat_id,$_filter['value']);
+		
+        if(empty($_filter['value']) || strtolower($_filter['label'])=='all' || $filter_count < 1){
+            continue;
+        }
+        if(in_array($_filter['value'],$active_filters)):
+    ?>	
+            <li class="active"><?php echo $_filter['label']; ?></li>
+    <?php	
+        else:?>
+            <li><a href="<?php echo $url;?>?hair_type=<?php echo $_filter['value']; ?>"><?php echo $_filter['label']; ?></a></li>
+    <?php
+        endif;
+    endforeach;
+    ?>
+</ol>
+<div class="clearer"></div>

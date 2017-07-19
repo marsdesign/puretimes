@@ -1,0 +1,54 @@
+<?php if($this->getItems()->getSize() > 0): ?>
+
+<div class="lookbook-slides">
+	<?php foreach($this->getItems() as $data): 
+		$_link 		= $data->getData('link');
+		$_image 	= Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image');
+		$_title 	= $data->getData('title');
+		$_desc 		= $data->getData('description');
+	?>
+    	<!--<div class="slide-item" style="background:url(<?php echo str_replace('\\','/',$_image);?>);background-size:cover;"></div>-->
+        <?php if( $data->getData('image')):?>
+        <div class="slide-item">
+        	<div class="stretched">
+            	<div style="width:100%;height:100%;text-align:center;position:relative;z-index:1">
+                    <img class="lookbook-image" src="<?php echo str_replace('\\','/',$_image);?>" alt="<?php echo $_title;?>">
+                </div>
+            </div>
+			<div class="transparent-strip"><span><?php echo $_title?></span><a href="<?php echo $_link;?>">Get This Look</a></div>            
+        </div>
+        <?php endif; ?>
+	<?php endforeach;?>
+</div>
+<?php endif; ?>
+<script>
+$j(".lookbook-slides").owlCarousel({
+    pagination: true,
+    navigation: true,
+    singleItem: true,
+    slideSpeed:600,
+    autoPlay: 5000,
+    rewindNav: true,
+    stopOnHover: true,
+    addClassActive: true,
+    //transitionStyle: "fade"
+});
+$j(document).ready(function(){
+	function resize(){
+		$j(".slide-item").width($j(window).width());	
+		$j(".slide-item").height($j(window).height());
+		$j(".slide-item img").css({"margin-top":$j("#header").height()+"px"});
+	}
+	$j(window).resize(function(){
+		resize();		
+	});	
+	resize();	
+	$j("#the-owl-pagination").append($j(".owl-pagination"));	
+})
+</script>
+<style>
+/*  Lookbook ============================================ */
+.footer{
+	display:none;
+}
+</style>

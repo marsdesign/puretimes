@@ -1,0 +1,10 @@
+<?php
+$block = Mage::getModel('cms/block')->load('vh_intro');
+?>
+<?php if($block->getIsActive()):?>
+<div class="vh-intro">
+	<div><span class="logo-intro"></span></div>
+	<h1><?php echo $block->getTitle();?></h1>
+	<p><?php echo $block->getContent();?></p>
+</div>
+<?php endif; ?>

@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+    	<Bootstrap_Faq>
+    		<version>0.1.0</version>
+    	</Bootstrap_Faq>
+  	</modules>
+	<frontend>
+    	<routers>
+      		<faq>
+        		<use>standard</use>
+          		<args>
+            		<module>Bootstrap_Faq</module>
+            		<frontName>faq</frontName>
+          		</args>
+      		</faq>
+    	</routers>
+		<layout>
+		  	<updates>
+				<faq>
+			  		<file>bootstrap/faq.xml</file>
+				</faq>
+		  	</updates>
+		</layout>
+	</frontend>
+  	<global>
+        <rewrite>
+            <bootstrap_faq_index_index>
+                <from><![CDATA[#^/faq/#]]></from>
+                <to>/faq/index/index/</to>
+                <complete>1</complete>
+            </bootstrap_faq_index_index>
+        </rewrite>
+    	<helpers>
+      		<faq>
+        		<class>Bootstrap_Faq_Helper</class>
+      		</faq>
+    	</helpers>
+		<blocks>
+	  		<faq>
+				<class>Bootstrap_Faq_Block</class>
+	  		</faq>
+		</blocks>
+		<models>
+	  		<faq>
+				<class>Bootstrap_Faq_Model</class>
+				<resourceModel>faq_mysql4</resourceModel>
+	  		</faq>
+	  		<faq_mysql4>
+				<class>Bootstrap_Faq_Model_Mysql4</class>
+					<entities>		  
+			  			<faq>
+							<table>bootstrap_faq</table>
+			  			</faq>
+        			</entities>
+	  		</faq_mysql4>
+		</models>
+		<resources>
+	  		<faq_setup>
+	  			
+				<setup>
+		  			<module>Bootstrap_Faq</module>
+		  			<!--this invokes custom function - without uses magento default setup
+		  			<class>Bootstrap_Faq_Model_Mysql4_Setup</class>-->
+				</setup>
+				<!-- default setup -->
+				<connection>
+		  			<use>core_setup</use>
+				</connection>
+	  		</faq_setup>
+	  		<faq_write>
+				<connection>
+		  			<use>core_write</use>
+				</connection>
+	  		</faq_write>
+	  		<faq_read>
+				<connection>
+		  			<use>core_read</use>
+				</connection>
+	  		</faq_read>
+		</resources>
+	</global>
+  	<admin>
+  	<!--
+        <routers>
+            <faq>
+                <use>admin</use>
+                <args>
+                    <module>Bootstrap_Faq</module>
+                    <frontName>faq</frontName>
+                </args>
+            </faq>
+        </routers>
+        -->
+        <!-- 
+        	
+        module is same as in controller with _Adminhtml 
+        	
+        -->
+  		<routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bootstrap_Faq after="Mage_Adminhtml">Bootstrap_Faq_Adminhtml</Bootstrap_Faq>
+                    </modules>
+                </args>
+            </adminhtml>
+		</routers>
+  	</admin>
+  	<adminhtml>
+		<layout>
+	  		<updates>
+				<faq module="Bootstrap_Faq">
+		  			<file>bootstrap/faq.xml</file>
+				</faq>
+	  		</updates>
+		</layout>
+		<menu>
+        	<!-- 
+        	
+        	note the path does not contain adminhtml_faq just faq
+        	the controller definition in config.xml contains _Adminhtml
+        	see line 90 
+        	
+        	-->
+           <cms>
+                <children>
+                    <faq module="faq">
+                        <title>Faq</title>
+                        <sort_order>1000</sort_order>
+                        <action>adminhtml/faq/index</action>
+                    </faq>
+            	</children>
+        	</cms>
+		</menu>
+		<acl>
+	  		<resources>
+				<all>
+		  			<title>Allow Everything</title>
+				</all>
+				<admin>
+		  			<children>
+           				<cms>
+                			<children>
+                    			<faq translate="title" module="faq">
+                        			<title>Faq</title>
+                        			<sort_order>1000</sort_order>
+                    			</faq>
+            				</children>
+            			</cms>
+		  			</children>
+				</admin>
+	  		</resources>
+		</acl>
+	</adminhtml>
+</config> 

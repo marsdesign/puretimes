@@ -1,0 +1,90 @@
+<?php if($this->getItems()->getSize() > 1){ ?>
+<div class="fullscreen-wrap">
+    <ul class="bxslider hero">
+	<?php foreach($this->getItems() as $_item): 
+
+		$img 		= $_item->getImage();
+		$img_src 	= Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img;
+		$link 		= $_item->getLink();
+
+
+        $img_title        = $_item->getBgImage();
+        $img_title_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_title;
+
+        $img_mobile        = $_item->getMobileImage();
+        $img_mobile_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile;
+	?>
+
+
+            <li style="background-image: url('<?php echo $img_src;?>');">
+                <?php if(!empty($link)){ ?><a href="<?php echo $link;?>"><?php }?>
+                <div class="hero-text-wrap">
+                    <div class="hero-text">
+                        <div class="container">
+                            <div class="caption-wrap">
+                                <img src="<?php echo $img_title_src;?>">
+                                <div class="caption">
+                                    <?php echo $_item->getDescription();?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php if(!empty($link)){ ?></a><?php }?>
+            </li>
+
+	<?php endforeach;?>
+    </ul>
+</div>
+
+<?php }elseif($this->getItems()->getSize() == 1){ ?>
+
+<?php foreach($this->getItems() as $_item): 
+
+    $img        = $_item->getImage();
+    $img_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img;
+    $link       = $_item->getLink();
+
+
+    $img_title        = $_item->getBgImage();
+    $img_title_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_title;
+
+    $img_mobile        = $_item->getMobileImage();
+    $img_mobile_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile;
+?>
+<div class="fullscreen-wrap-single" style="background-image: url('<?php echo $img_src;?>');">
+    <div class="fullscreen-loader"><img src="<?php echo $this->getSkinUrl('images/ring.svg'); ?>"></div>
+    <div class="hero-text-wrap">
+        <div class="hero-text">
+            <div class="container">
+                <div class="caption-wrap">
+                    <img src="<?php echo $img_title_src;?>">
+                    <div class="caption">
+                        <?php echo $_item->getDescription();?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php /*
+<div class="hero-mobile">
+    <img src="<?php echo $img_mobile_src;?>">
+    <div class="hero-text-wrap">
+        <div class="hero-text">
+            <div class="container">
+                <div class="caption-wrap">
+                    <img src="<?php echo $img_title_src;?>">
+                    <div class="caption">
+                        <?php echo $_item->getDescription();?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+*/?>
+<?php endforeach;?>
+<?php } ?>
+
+

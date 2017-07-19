@@ -1,0 +1,342 @@
+<style>
+.cms-home .page{
+	overflow:hidden;
+}
+p, h1, html, body {
+	margin:0;
+	padding:0;
+	-webkit-backface-visibility: hidden;
+	position:relative;
+}
+div.the-callout {
+	-webkit-backface-visibility: hidden;
+	display:block;
+	padding-top:39%;
+	position:relative;
+	overflow:hidden;
+	background:#fff;
+	width:110%;
+}
+div.the-callout > div {
+	display:block;
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	-webkit-backface-visibility: hidden;
+}
+div.the-callout > div > img {
+	height:130%;
+	width:auto;
+	margin-top:-5%;
+}
+.even img{
+	margin-left:40%;
+}
+.odd img{
+	margin-left:12%;
+}
+.bottom-shadowed {
+	box-shadow: 0 4px 2px -2px #eee;
+}
+.centrist {
+	white-space: nowrap;
+	text-align:center;
+	z-index:100;
+}
+.centrist::before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;
+}
+.centered {
+	display: inline-block;
+	vertical-align: middle;
+	white-space: normal;
+}
+.the-callout h1{
+	font-family: 'din_condensedbold';
+    font-size: 20px;
+    font-size: 10vw;
+	line-height:normal;
+}
+.the-callout a{
+	display:inline-block;
+	text-transform:uppercase;
+	text-decoration:none;
+	color:#222;
+	padding:10px 40px;
+	line-height:normal;
+	text-align:center;
+	border:3px solid #222;
+	letter-spacing:1px;
+	font-family:"PT Sans", sans-serif;
+	font-weight:700px;
+	font-size:14px;
+	font-size:1.5vw;	
+	font-weight:700;
+}
+.whatsnew{
+	position:relative;
+	background:#fff;
+	-webkit-backface-visibility: hidden;
+	opacity:0;
+}
+.whatsnew >div{
+	position:absolute;
+	background:#222;
+	bottom:0;
+	left:0;
+	width:60%;
+	-webkit-backface-visibility: hidden;
+}
+.whatsnew >div>div{
+	position:absolute;
+	bottom:0;
+	left:0;
+	height:55%;
+	right:0;
+	left:0;
+	width:100%;
+	-webkit-backface-visibility: hidden;
+	-moz-transform:rotate(6.5deg);
+	-webkit-transform:rotate(6.5deg);
+	-ms-transform:rotate(6.5deg);
+	transform:rotate(6.5deg);
+}
+.whatsnew h1{
+	font-family: 'din_condensedbold';
+	color:#fff;
+	font-size:3.5vw;
+	margin:0;
+	line-height:normal;
+}
+.whatsnew a{
+	font-family: 'PT Sans',sans-serif;
+	color:#eee;
+	font-size:1.5vw;
+	line-height:normal;
+}
+.whatsnew .centered{
+	padding-top:40px;
+	padding-left:75px;
+}
+.whatsnew-text{
+	position:absolute;
+	left:0;
+	bottom:-10px;
+	margin-left:16%
+}
+.home-featured-header{
+	opacity:0;
+	max-height:10px;
+}
+.home-featured-header h2{
+	font-family: 'din_condensedbold';
+}
+.the-callouts{
+	overflow:hidden;
+	padding-bottom:150px;
+}
+/*
+.the-callout:after{
+	content:"";
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:2px;
+	left:0;
+	box-shadow: 0 4px 2px -2px #eee;
+	background:none;
+}
+*/
+
+@media (max-width:1024px){
+	.centrist2 .vh-intro{
+		max-width:400px;
+	}
+	.the-callouts{
+		overflow:hidden;
+		padding-bottom:75px;
+	}
+}
+@media (max-width:991px){
+	.whatsnew-text{
+	}
+	.whatsnew h1{
+	}
+	.the-callout h1{
+	}
+}
+@media (max-width:767px){
+	.home-featured-header{
+		opacity:1;
+		max-height:none;
+		padding-bottom:0 !important;
+	}
+	.the-callout h1{
+		font-size:12px !important;
+	}
+
+	.whatsnew{
+		display:none;
+	}
+
+	.the-callouts{
+		padding-bottom:30px;
+	}
+	.home-featured{
+		padding-top:0;
+	}
+	.the-callout h1{
+		font-size: 40px !important;
+	}
+	.the-callout a{
+		font-size:14px !important;
+	}
+	
+}
+@media (max-width:767px){
+	.home-featured-header{
+		opacity:1;
+		max-height:none;
+		padding-bottom:0 !important;
+	}
+	.the-callout h1{
+		font-size:12px !important;
+	}
+
+	.whatsnew{
+		display:none;
+	}
+
+	.the-callouts{
+		padding-bottom:30px;
+	}
+	.home-featured{
+		padding-top:0;
+	}
+	.the-callout h1{
+		font-size: 40px !important;
+	}
+	.the-callout a{
+		font-size:14px !important;
+	}
+	
+}
+@media (max-width:479px){
+	.the-callout a{
+		font-size:12px !important;
+		padding:3px;
+	}
+}
+
+</style>
+	<div class="the-callouts">
+
+<?php if($this->getItems()->getSize()){ ?>
+
+    <?php 
+    $i=0;
+    foreach($this->getItems() as $_item): 
+        $i++;
+        $img        = $_item->getImage();
+        $img_src    = str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img);
+
+        $img_mobile        = $_item->getMobileImage();
+        $img_mobile_src    = str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile);
+        
+        $link       = $_item->getLink();
+		$odd_even = $i%2?'even':'odd';
+		$float = $i%2?'left':'right';
+    ?>
+
+        <div class="the-callout bottom-shadowed <?php echo $i%2?'even':'odd';?><?php echo $i==1?' first':''?><?php echo $i==$this->getItems()->getSize()?' last':''?>" style="z-index:<?php echo $this->getItems()->getSize()+1-$i;?>">
+        <?php if($odd_even=='even'):?>
+            <div class="centrist" style="width:55%">
+                <div class="centered">
+                    <h1><?php echo $_item->getTitle();?></h1> 
+                    <a href="<?php echo $link; ?>">SHOP NOW</a>
+                </div>
+            </div>
+            <div> 
+                <img src="<?php echo $img_src; ?>">
+            </div>
+         <?php else: ?>
+            <div class="centrist" style="width:100%">
+                <div class="centered" style="margin-left:20%">
+                    <h1><?php echo $_item->getTitle();?></h1> 
+                    <a href="<?php echo $link; ?>">SHOP NOW</a>
+                </div>
+            </div>
+            <div> 
+                <img src="<?php echo $img_src; ?>">
+            </div>
+         <?php endif; ?>   
+        </div>
+	
+    <?php endforeach;?>
+
+<?php } ?>
+        <div class="whatsnew">
+            <div>
+            	<div>
+                    <div class="whatsnew-text">
+                        <h1>WHAT'S NEW</h1>
+                        <a href="/shop">VIEW ALL ></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+	$j.fn.rotate = function(degrees) {
+		$j(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
+					 '-moz-transform' : 'rotate('+ degrees +'deg)',
+					 '-ms-transform' : 'rotate('+ degrees +'deg)',
+					 'transform' : 'rotate('+ degrees +'deg)'});
+		return $j(this);
+	};
+	
+	$j(document).ready(function(e) {
+		$j(".the-callout").each(function(index, element) {
+			if($j(this).hasClass("last")){
+				$j(".whatsnew").width($j(this).width()).height($j(this).outerHeight(true)).css({"margin-top":-$j(this).outerHeight(true)+"px","z-index":"0","margin-left":-($j(this).width()-$j(window).width())+"px"}).rotate(-6.5);
+				$j(".whatsnew").width($j(this).width()-100);
+				$j(".whatsnew").find(">div").height($j(".whatsnew").height()/2);
+				$j(".whatsnew").animate({"opacity":"1"});
+				$j(this).rotate(6.5);
+				$j(this).find("> div").rotate(-6.5);
+			}else{
+				$j(this).rotate(6.5);
+				$j(this).find("> div").rotate(-6.5);
+			}
+			if($j(this).hasClass("first")){
+				$j(this).find("img").css({"height":$j(this).find("img").height()+"px","margin-top":"5%"});
+				$j(this).css({"padding-top":"50%"});
+			}
+        });
+   });
+
+	$j(window).resize(function(){
+		$j(".the-callout").each(function(index, element) {
+			if($j(this).hasClass("last")){
+				$j(".whatsnew").width($j(this).width()).height($j(this).outerHeight(true)).css({"margin-top":-$j(this).outerHeight(true)+"px","z-index":"0","margin-left":-($j(this).width()-$j(window).width())+"px"});
+				$j(".whatsnew").width($j(this).width()-100);
+				$j(".whatsnew").find(">div").height($j(".whatsnew").height()/2);
+				$j(".whatsnew").animate({"opacity":"1"});
+			}else{
+			}
+			if($j(this).hasClass("first")){
+				$j(this).find("img").css({"height":"100%"});
+				$j(this).find("img").css({"height":$j(this).find("img").height()+"px","margin-top":"5%"});
+				$j(this).css({"padding-top":"50%"});
+			}
+        });
+	});
+</script>

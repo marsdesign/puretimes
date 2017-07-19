@@ -1,0 +1,74 @@
+<?php if($this->getItems()->getSize() > 0){ ?>
+<div class="std">
+	<div class="content video-list">
+	<?php foreach($this->getItems() as $data): 
+
+		$_video = $data->getData('video');
+		$_videoId = $this->getYouTubeIdFromURL($_video);
+		$_image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image');
+		$_title 	= $data->getData('title');
+		$_desc 		= $data->getData('description');
+		// optional can use to resize video thumbnail
+		$_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'),300,360);
+	?>
+	<div class="section">
+	    <div class="gridrow">
+	        <div class="cols2">
+	            <div class="text-wrap">
+	                <div class="inner-text">
+	                    <h3><?php echo $_title;?></h3>
+	                    <p><?php echo $_desc;?></p>
+	                    <button class="shop-now">watch now</button>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="cols2">
+	            <div class="image-wrap">
+	            	<a href=""><img src="<?php echo $_image;?>" alt="<?php echo $_title;?>"></a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<?php endforeach;?>
+    </div>
+</div>
+
+<?php
+// need modal here
+/*
+?>
+<div class="video-container">
+    <iframe frameborder="0" height="315" src="https://www.youtube.com/embed/<?php echo $_videoId;?>" width="560"></iframe>
+</div>
+<?php
+*/
+?>
+
+
+<?php 
+// need similar function for Vimeo
+function getYouTubeIdFromURL($url) 
+{
+  $pattern = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
+  preg_match($pattern, $url, $matches);
+  return isset($matches[1]) ? $matches[1] : false;
+}
+?>
+
+<script>
+// this is prob not needed
+// place bootstrap modal code here
+$j(document).ready(function(){
+
+	var max=0;
+	$j('.cols2').children().each(function(){
+	    if($j(this).height()>max) max = $(this).height();
+	});
+	$j('.cols2').children().each(function(){
+	    $j(this).height(max);
+	});
+
+});
+</script>
+
+<?php } ?>

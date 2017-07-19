@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+    	<Bootstrap_Video>
+    		<version>0.1.0</version>
+    	</Bootstrap_Video>
+  	</modules>
+	<frontend>
+    	<routers>
+      		<video>
+        		<use>standard</use>
+          		<args>
+            		<module>Bootstrap_Video</module>
+            		<frontName>tvhf-tube</frontName>
+          		</args>
+      		</video>
+    	</routers>
+		<layout>
+		  	<updates>
+				<video>
+			  		<file>bootstrap/video.xml</file>
+				</video>
+		  	</updates>
+		</layout>
+	</frontend>
+  	<global>
+        <rewrite>
+            <bootstrap_video_index_index>
+                <from><![CDATA[#^/video/#]]></from>
+                <to>/video/index/index/</to>
+                <complete>1</complete>
+            </bootstrap_video_index_index>
+        </rewrite>
+    	<helpers>
+      		<video>
+        		<class>Bootstrap_Video_Helper</class>
+      		</video>
+    	</helpers>
+		<blocks>
+	  		<video>
+				<class>Bootstrap_Video_Block</class>
+	  		</video>
+		</blocks>
+		<models>
+	  		<video>
+				<class>Bootstrap_Video_Model</class>
+				<resourceModel>video_mysql4</resourceModel>
+	  		</video>
+	  		<video_mysql4>
+				<class>Bootstrap_Video_Model_Mysql4</class>
+					<entities>		  
+			  			<video>
+							<table>bootstrap_video</table>
+			  			</video>
+        			</entities>
+	  		</video_mysql4>
+		</models>
+		<resources>
+	  		<video_setup>
+	  			
+				<setup>
+		  			<module>Bootstrap_Video</module>
+		  			<!--this invokes custom function - without uses magento default setup
+		  			<class>Bootstrap_Video_Model_Mysql4_Setup</class>-->
+				</setup>
+				<!-- default setup -->
+				<connection>
+		  			<use>core_setup</use>
+				</connection>
+	  		</video_setup>
+	  		<video_write>
+				<connection>
+		  			<use>core_write</use>
+				</connection>
+	  		</video_write>
+	  		<video_read>
+				<connection>
+		  			<use>core_read</use>
+				</connection>
+	  		</video_read>
+		</resources>
+	</global>
+  	<admin>
+  	<!--
+        <routers>
+            <video>
+                <use>admin</use>
+                <args>
+                    <module>Bootstrap_Video</module>
+                    <frontName>video</frontName>
+                </args>
+            </video>
+        </routers>
+        -->
+        <!-- 
+        	
+        module is same as in controller with _Adminhtml 
+        	
+        -->
+  		<routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bootstrap_Video after="Mage_Adminhtml">Bootstrap_Video_Adminhtml</Bootstrap_Video>
+                    </modules>
+                </args>
+            </adminhtml>
+		</routers>
+  	</admin>
+  	<adminhtml>
+		<layout>
+	  		<updates>
+				<video module="Bootstrap_Video">
+		  			<file>bootstrap/video.xml</file>
+				</video>
+	  		</updates>
+		</layout>
+		<menu>
+        	<!-- 
+        	
+        	note the path does not contain adminhtml_video just video
+        	the controller definition in config.xml contains _Adminhtml
+        	see line 90 
+        	
+        	-->
+           <cms>
+                <children>
+                    <video module="video">
+                        <title>Video</title>
+                        <sort_order>1000</sort_order>
+                        <action>adminhtml/video/index</action>
+                    </video>
+            	</children>
+        	</cms>
+		</menu>
+		<acl>
+	  		<resources>
+				<all>
+		  			<title>Allow Everything</title>
+				</all>
+				<admin>
+		  			<children>
+           				<cms>
+                			<children>
+                    			<video translate="title" module="video">
+                        			<title>Video</title>
+                        			<sort_order>1000</sort_order>
+                    			</video>
+            				</children>
+            			</cms>
+		  			</children>
+				</admin>
+	  		</resources>
+		</acl>
+	</adminhtml>
+</config> 

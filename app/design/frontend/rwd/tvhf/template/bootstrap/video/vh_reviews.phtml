@@ -1,0 +1,200 @@
+<style>
+	.page-title{
+		margin-bottom:0px;
+	}
+	.page-title h1{
+		color:#2D2B28;
+		font-size:34px;
+		text-align:center;
+		max-width:700px;
+		margin:0 auto;
+	}
+	.video-intro p,
+	.video-intro{
+		color:#a7a7a7;
+		font-size:16px;
+		text-align:center;
+		max-width:700px;
+		line-height:26px;
+		margin:0 auto;
+	}
+	.the-videos > div{
+		margin-left:-20px;
+	}
+	.the-videos > div > div.video{
+		margin-top:60px;
+		padding-left:20px;
+		width:50%;
+		box-sizing:border-box;
+		text-align:center;
+		float:left;
+	}
+	h3.video-title{
+		margin:0;
+	}
+	h3.video-title a.video-link2{
+		color:#404040;
+		letter-spacing:1px;
+		margin:20px auto 0px auto;
+		font-size:16px;
+		display:inline-block;
+		max-width:400px;
+	}
+	div.video-description{
+		color:#808285;
+		font-size:14px;
+		margin:0 auto;
+		max-width:400px;
+	}
+	.the-videos{
+		margin-bottom:70px;
+	}
+	.video .video-link, .product-video .video-link{
+		background:none;
+	}
+	.review-links{
+		text-align:center;
+		margin-bottom:15px;
+	}
+	.review-links .review-link{
+		display:inline-block;
+		width:200px;
+		height:35px;
+		text-align:center;
+		line-height:35px;
+		border:1px solid #dbdbdb;
+		font-size:16px;
+	}
+	.review-links a.review-link{
+		background:#fff;
+		color:#59595b;
+	}
+	.review-links span.review-link{
+		background:#6d6e70;
+		color:#fff;
+	}
+	.video-review .video-description{
+		margin-top:60px;
+	}
+</style>
+<div class="container" style="text-align:center;margin-top:80px">
+	<div class="review-links">
+    	<div>
+        	<span class="review-link">VIDEO REVIEWS</span><a style="margin-left:5px" class="review-link" href="testimonials">TESTIMONIALS</A>
+        </div>
+    </div>
+    <div class="video-intro">
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_reviews_intro')->toHtml();?>
+    </div>
+</div>
+<?php
+	$vhs_videos = Mage::getModel('video/video')->getCollection();
+    $vhs_videos->addFieldToFilter('type_id','2');
+    $vhs_videos->addFieldToFilter('active','1');
+?>
+<?php if(count($vhs_videos->getItems()) > 0){ ?>
+<div class="container the-videos">
+	<div>
+	<?php 
+	$i = 0;
+	foreach($vhs_videos->getItems() as $data): 
+		$i++;
+
+		$_video 	= $data->getData('video');
+		$parts 		= parse_url($_video);
+		$path 		= explode("/",$parts["path"]);
+		$_videoId 	= array_pop($path);
+		
+		$_videoId = $_video;
+
+		if($data->getData('image')){
+			$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
+		}else{
+			$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'video/video-placeholder.jpg');
+		}
+		
+		//$_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
+		$_title 	= $data->getData('title');
+		$_desc 		= $data->getData('description');
+		// optional can use to resize video thumbnail
+		$_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'),300,360);
+	?>
+    	<div class="video video-review">
+        	<div>
+                <div class="video-image" style="padding-top:57%;position:relative;background:#ccc">
+                    <a class="video-link stretched" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>" style="background:url(<?php echo $_image; ?>) no-repeat center top;
+                    background-size:cover">
+                    </a>
+                </div>
+                <div class="text">
+                    <h3 class="video-title" style="display:none">
+                        <a class="video-link2" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>">
+                            <?php echo $_title;?>
+                        </a>
+                    </h3>
+                    <div class="video-description"><?php echo $_desc;?></div>
+                </div>
+            </div>
+        </div>
+	<?php 
+		if($i==2):
+			$i=0;
+?>
+		<div class="clearer"></div>
+<?php
+		endif;
+		endforeach;?>
+    </div>
+</div>
+
+<div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video">        
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="video-player">
+                <div class="embed-container"><iframe src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>
+            </div>
+        </div>
+        <a href="#" class="close button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">close</span></a>
+    </div>
+</div>
+
+<script>
+// <![CDATA[
+
+	function getVideoUrl(video_url){
+		var d = video_url.match(/(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/i);
+		if(d != null){
+			return "http://www.youtube.com/embed/"+d[d.length-1]+"?rel=0&amp;autoplay=1&amp;color=white"
+		}
+		d = video_url.match(/vimeo.*(?:\/|clip_id=)([0-9a-z]*)/i);
+		if(d != null){
+			return "http://player.vimeo.com/video/"+d[d.length-1]+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
+		}
+		return false;
+	}
+	
+	// set iframe url on click
+	$j('.video-link,.video-link2').on('click', function(){
+		/*
+	    var url 	= 'https://player.vimeo.com/video/',
+	    modal 		= $j(this).data("target"),
+	    videoId 	= $j(this).data("video"),
+	    videoSrc 	= url+videoId, 
+	    videoUrl 	= videoSrc+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
+	    $j(modal+' iframe').attr('src', videoUrl); 
+		*/
+        var modal = $j(this).data("target");
+		var video_url = $j(this).data("video");
+		
+		if(getVideoUrl(video_url) !== false){
+			$j(modal+' iframe').attr('src', getVideoUrl(video_url)); 
+		}
+	})
+	// unset url on close
+	$j('#video-modal').on('hide.bs.modal', function (e) {
+	    $j('#video-modal').find('iframe').attr('src', '');
+	})
+// ]]>
+</script>
+
+<?php } ?>

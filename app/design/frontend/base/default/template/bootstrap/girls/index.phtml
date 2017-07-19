@@ -1,0 +1,30 @@
+<?php if($this->getItems()->getSize() > 0){ ?>
+	<div class="slideshow">
+		<?php foreach($this->getItems() as $data): 
+
+			$_link = $data->getData('link');
+			$_image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image');
+			$_title 	= $data->getData('title');
+			$_desc 		= $data->getData('description');
+
+		?>
+		<div class="slide">
+	        <h3><?php echo $_title;?></h3>
+	        <p><?php echo $_desc;?></p>
+	        <a href="<?php echo $_link;?>">shop now</a>
+			<img src="<?php echo $_image;?>" alt="<?php echo $_title;?>"></a>
+		</div>
+
+	<?php endforeach;?>
+    </div>
+</div>
+
+<script>
+// use owl carousel here
+$j(document).ready(function(){
+
+
+
+});
+</script>
+<?php } ?>

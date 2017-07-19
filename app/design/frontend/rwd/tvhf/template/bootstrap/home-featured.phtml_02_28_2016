@@ -1,0 +1,59 @@
+<?php
+/*
+STATUS_ENABLED 
+STATUS_DISABLED
+
+VISIBILITY_NOT_VISIBLE 
+VISIBILITY_IN_CATALOG 
+VISIBILITY_IN_SEARCH 
+VISIBILITY_BOTH
+*/
+$categoryid = 9;
+$category = new Mage_Catalog_Model_Category();
+$category->load($categoryid);
+$collection = $category->getProductCollection()
+	->addAttributeToSelect('*')
+	->setOrder('position', 'ASC')
+	->addFieldToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+	->addFieldToFilter('visibility', Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH);
+?>
+<?php if(count($collection)){ ?>
+<div class="home-featured sw">
+	<div class="container">
+		<div class="products-grid carousel-home">
+			<?php
+			$i=0;
+			foreach ($collection as $_product) { 
+			$i++;
+			?>
+		        <div class="carousel-item">
+		            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img class="lazyOwl" data-src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(280); ?>"
+		            	alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+		            <h3 class="product-name"><?php echo $this->stripTags($_product->getName(), null, true) ?></h3>
+		            </a>
+		            <?php echo $this->getPriceHtml($_product, true);?>
+		        </div>
+			<?php
+			}
+			?>
+		</div>
+	</div>
+</div>
+<?php } ?>
+<script type="text/javascript">   
+	$j(".carousel-home").owlCarousel({
+        pagination: true,
+        navigation: true,
+        items : 3,
+        itemsDesktop : [1199,4],
+        itemsDesktopSmall : [980,3],
+        itemsTablet: [768,2],
+        itemsTabletSmall: [600,2],
+        itemsMobile : [479,1],
+        navigationText : ["",""],
+        scrollPerPage: true,
+        slideSpeed: 1000,
+        lazyLoad: true
+    });
+
+</script>

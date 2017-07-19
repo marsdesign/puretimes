@@ -1,0 +1,55 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Store switcher template
+ *
+ * @see Mage_Core_Block_Store_Switcher
+ */
+?>
+<?php if(count($this->getGroups())>1): ?>
+<div class="store-switcher">
+    <ul>
+    <?php foreach ($this->getGroups() as $_group): ?>
+        <?php $_selected = ($_group->getId()==$this->getCurrentGroupId()) ? ' class="selected"' : '' ?>
+        <li<?php echo $_selected ?>><a href="<?php echo $_group->getHomeUrl() ?>"><?php echo $this->escapeHtml($_group->getName()) ?></a></li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+
+<?php
+/*
+    $this_session_id = Mage::getSingleton('core/session', array('name' => 'frontend'))->getSessionId();
+    $this_store_url = explode('?', $_group->getHomeUrl());
+    $this_store_url = $this_store_url[0] . '?SID=' . $this_session_id . '&___store=' . $_group->getDefaultStore()->getCode();
+?>
+<li><a href="<?php echo $this_store_url ?>"><?php echo $this->htmlEscape($_group->getName()) ?> x</a></li>
+*/?>
+
+

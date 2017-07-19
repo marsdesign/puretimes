@@ -1,0 +1,135 @@
+<div class="sw vote-page-header">
+	<h1>VOTE</h1>
+    <div>
+        For your favorite<br>
+        style of the week
+        <span>1 vote per person</span>
+    </div>
+</div>
+<?php
+
+//$voting_description_block = Mage::getModel('cms/block')->load('vh_voting_description');
+
+if($the_poll_id):
+$poll = Mage::getModel('poll/poll')
+	->getResourceCollection()
+	->addFilter($the_poll_id)
+	->load();
+$poll_answers = Mage::getModel('poll/poll_answer')
+	->getResourceCollection()
+	->addPollFilter($the_poll_id)
+	->setOrder('votes_count','desc')
+	->load();
+	
+?>
+<div class="votees">
+    <div>
+        <?php 
+		foreach( $poll_answers as $answer ):
+			if($answer->getAnswerStatus() > 0):
+				$poll_vote = Mage::getModel('poll/poll_vote')->load($answer->getAnswerId(), 'poll_answer_id');
+		?>
+                <div class="votee">
+                    <img src="/media/vote-assistant/<?php echo $answer->getPollId(); ?>/<?php echo $answer->getAnswerTitle(); ?>">
+                    <div class="votee-caption">
+                    	<span><span class="vote-count"><?php echo $answer->getVotesCount(); ?></span> vote<?php echo $answer->getVotesCount() > 1?'s':''; ?></span>
+                    	<a class="voter" href="#" data-id="<?php echo $answer->getAnswerId() ?>">VOTE</a>
+						<div>
+                        <?php
+						if($poll_vote){
+							if($answer->getAnswerId() == $poll_vote->getPollAnswerId() &&  Mage::helper('core/http')->getRemoteAddr(true)==$poll_vote->getIpAddress()){
+								//echo '<p>You voted for this!</p>';								
+							}
+						}
+						?>
+                        </div>
+                    </div>
+                </div>
+        <?php 
+			endif;
+		endforeach; ?>
+        <div style="clear:both"></div>        
+    </div>
+</div>
+<!--<form id="pollForm" action="<?php //echo Mage::getUrl('vote/index/vote', array('poll_id' => $pollId, '_secure' => true)); ?>" method="post">-->
+<form id="pollForm" action="<?php echo Mage::getUrl('vote/index/vote'); ?>" method="post">
+	<input type="hidden" name="poll_id" value="<?php echo $the_poll_id; ?>">
+    <input type="hidden" name="vote" value="" id="the_vote">
+</form>
+<script>
+	$j(document).ready(function(){
+		$j(".voter").click(function(e){
+			e.preventDefault();
+			console.log($j("#pollForm").attr("action"));
+			$j("#the_vote").val($j(this).data("id"));
+			if(confirm('Submit vote?')){
+				$j("#pollForm").submit();
+			}
+			return false;
+		});
+	});
+</script>
+<?php
+if (Mage::getSingleton('customer/session')->isLoggedIn()): 
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+?>
+<div id="image-uploader-container" class="sw">
+	<h1>HAVE IMAGES YOU WANT TO UPLOAD?</h1>
+    <a style="display:none" id="uploader-toggler" href="#">CLICK HERE TO LEARN MORE</a>
+    <div class="sw" style="display:block;text-align:center">
+    	<div class="vote-description"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_voting_description')->toHtml(); ?></div>
+        <form action="<?php echo Mage::getUrl('vote/index/save') ?>" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="scrolltop" id="scrolltop" value="<?php echo Mage::getSingleton('core/session')->getScrollTop();?>">
+            <input type="hidden" name="poll_id" value="<?php echo $the_poll_id;?>">
+            <input type="hidden" name="cid" value="<?php echo $customer->getID();?>">
+            <input type="file" id="bs_image" name="bs_image" required="true"/>
+            <div id="btn-upload" class="button-container"><input class="button" type="submit" value="Upload" /></div>
+        </form>
+            <?php 
+				if(Mage::getSingleton('core/session')->getVoteReferrer()==1){
+					Mage::getSingleton('core/session')->setVoteReferrer(0);
+			?>
+            	<input type="hidden" id="from-login" value="1">
+            <?php		
+				}
+			
+			?>
+    </div>
+</div>
+<?php 
+else: 
+?>
+<div id="image-uploader-container" class="sw" style="text-align:center;margin-top:50px">
+    <h1>HAVE IMAGES YOU WANT TO UPLOAD?</h1>
+    <a class="login-vote" href="/howtovote">LEARN MORE</a>
+</div>
+<?php
+endif;
+?>
+<script>
+$j(document).ready(function() {
+	$j("#uploader-toggler").click(function(e){
+		e.preventDefault();
+		$j("#image-uploader").slideToggle();
+		if($j(this).html()=="CLICK HERE TO LEARN MORE"){
+			$j(this).html("CLOSE IMAGE UPLOADER");
+		}else{
+			$j(this).html("CLICK HERE TO LEARN MORE");
+		}
+	});
+	$j(window).scroll(function(){
+		$j("#scrolltop").val($j(window).scrollTop());	
+	});
+	if($j("#from-login").length > 0){
+		$j("#uploader-toggler").trigger("click");
+		$j("html,body").scrollTop($j("#uploader-toggler").offset().top);
+	}else{
+		$j("html,body").scrollTop($j("#scrolltop").val());
+	}
+});
+</script>
+<?php else: ?>
+<div style="height:100%;min-height:600px;padding-top:150px">
+	<h1 class="sw" style="text-align:center">Coming soon. Please check back later.</h1>
+</div>
+<?php endif; ?>

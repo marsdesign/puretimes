@@ -1,0 +1,27 @@
+<div style="padding:10px 0">
+<?php
+$vote_id = Mage::getSingleton('core/session')->getTheVoteId();
+?>
+<span style="margin-right:10px"><?php echo $this->escapeHtml($poll->getPollTitle()); ?></span>
+<select id="vote-trigger" name="vote" style="background:none;width:auto;min-width:auto">
+    <option value="0"<?php echo 0 == $vote_id?' selected==selected':'';?>>Choose</option>
+    <?php foreach( $poll_answers as $answer ): ?>
+    <option value="<?php echo $answer->getId(); ?>"<?php echo $answer->getId() == $vote_id?' selected==selected':'';?>>
+        <?php echo $this->escapeHtml($answer->getAnswerTitle()) ?>
+    </option>
+    <?php endforeach; ?>
+</select>
+</div>
+<input type="hidden" name="poll_id" value="2">
+
+<script>
+	$j(document).ready(function(){
+		$j("#vote-trigger").change(function(){
+			if($j("#vote-trigger").val() > 0){
+				$j("#the-cart-form").attr("action","/checkout/cart/");
+				$j(this).parents("form").submit();	
+				$j("body").css({"opacity":"0.3"});
+			}
+		});
+	});
+</script>

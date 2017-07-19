@@ -1,0 +1,15 @@
+<?php if($this->getItems()->getSize() > 0){ ?>
+<h1 class="section-title">FAQ<span style="text-transform:none">s</span></h1>
+<div class="faq-items">
+	<?php foreach($this->getItems() as $data):?> 
+	<div class="the-faq-item">
+	<?php
+		$_q 	= $data->getData('question');
+		$_a 	= $data->getData('answer');
+	?>
+        <h3><?php echo $_q;?></h3>
+        <div class="the-faq-answer"><?php echo $_a;?></div>
+    </div>
+	<?php endforeach;?>
+</div>
+<?php }

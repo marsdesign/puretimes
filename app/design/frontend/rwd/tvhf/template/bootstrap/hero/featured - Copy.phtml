@@ -1,0 +1,56 @@
+
+<?php if($this->getItems()->getSize()){ ?>
+
+    <?php foreach($this->getItems() as $_item): 
+
+        $img        = $_item->getImage();
+        $img_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img;
+
+        $img_mobile        = $_item->getMobileImage();
+        $img_mobile_src    = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $img_mobile;
+        
+        $link       = $_item->getLink();
+    ?>
+    <div class="hero-background">
+        <img src="<?php echo str_replace("\\","/",$img_src);?>">
+    </div>
+    <?php endforeach;?>
+<?php } ?>
+<div class="hero-logo" id="hero-logo"></div>     
+<!--<div class="hero-background" style="background-image:url('<?php echo str_replace("\\","/",$img_src);?>');"></div> -->
+
+<div class="hero-space"></div>
+<div id="logo-trigger"></div>
+<script type="text/javascript">
+  // init controller
+  var controller = new ScrollMagic.Controller();
+
+  var logoDuration = 0.3  * ($j(window).height() - 260);
+
+  //console.log(logoDuration);
+
+  // build scene
+  var logoScene = new ScrollMagic.Scene({triggerElement: "#logo-trigger", duration: 150})
+          .addTo(controller)
+          //.addIndicators() // add indicators (requires plugin)
+          .on("progress", function (e) {
+           // $j("#progress").text(e.progress.toFixed(3));
+            $j("#hero-logo").css("opacity",1-e.progress);
+        });
+  var headerScene = new ScrollMagic.Scene({triggerElement: ".home-header", duration: "100%"})
+          .addTo(controller)
+          //.addIndicators() // add indicators (requires plugin)
+          .on("progress", function (e) {
+            var newH = (1-e.progress) * 46; //46 = nav height
+            $j(".home-header").height(newH);
+            $j(".home-header nav li").css("opacity",1-e.progress);
+            $j(".scroll-down-arrow").css("opacity",1-e.progress);
+
+            if(e.progress >= 0.9){
+                $j(".page-header").addClass("fade-in");
+            }else{
+                $j(".page-header").removeClass("fade-in");
+            }
+
+        });     
+</script>

@@ -1,0 +1,62 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="footer">
+	<div class="footer-top sw">
+		<div class="container">
+			<div class="footer-logo">
+				<div class="footer-newsletter">
+					<?php echo $this->getChildHtml() ?>
+				</div>
+				<div class="footer-social">
+					<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_social')->toHtml(); ?>
+				</div>
+				<div class="footer-chat">
+					<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_chat')->toHtml(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-bottom sw">
+		<div class="container">
+		    <div class="footer-copyright hidden-small">
+		        &copy; <?php echo $this->getCopyright() ?> <?php echo date('Y');?> 
+		    </div>
+		    <div class="footer-links">
+		        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_footer_links')->toHtml(); ?>
+		    </div>
+		    <div class="footer-phone" style="display:none">
+		    	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('footer_phone')->toHtml(); ?>
+		   	</div>
+		    <div class="footer-copyright hidden-large">
+		        &copy; <?php echo $this->getCopyright() ?> <?php echo date('Y');?> 
+		    </div>
+		    <div class="footer-credits" style="margin-right:10px">
+		    	site by: <a href="http://marsdesign.com" target="_blank">marsdesign</a>
+		    </div>
+		</div>
+	</div>
+<div>

@@ -1,0 +1,18 @@
+<?php
+$block = Mage::getModel('cms/block')->load('vh_coupon_callout');
+?>
+<?php if($block->getIsActive()):?>
+<div class="vh-coupon-callout">
+	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_coupon_callout')->toHtml(); ?>
+</div>
+<?php endif; ?>
+<script>
+	$j(document).ready(function(){
+		if($j(".vh-newsletter").length > 0){
+			$j(".vh-coupon-callout").show();
+			$j(".vh-coupon-callout").click(function(){
+				$j(".vh-newsletter").slideToggle();	
+			});	
+		}
+	});
+</script>
