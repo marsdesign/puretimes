@@ -196,8 +196,7 @@ div.product-info{
     float: none;
     text-align: left;
 }
-.products-list .product-shop .action,
-.add-to-links{
+.products-list .product-shop .action{
 	display:none;
 }
 a.link-learn{
@@ -1241,3 +1240,14 @@ h3.ssi-title{
 
 }
 
+.cart-table .product-cart-actions .button{
+	display:block;
+    padding: 2px 7px;
+    margin: 0 auto;
+}
+.form-list .control input.checkbox{
+	margin-right:0;
+}
+.form-list .control label{
+	padding-left:15px;
+}
