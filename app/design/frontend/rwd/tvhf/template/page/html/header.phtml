@@ -64,8 +64,8 @@
             </div>
         </div>
 
-        <!-- Navigation -->
-        <div id="header-nav" class="skip-content">
+        <div class="desktop-nav">
+
         <?php
             // mmc drop custom block here
             //$_menuActive = Mage::getModel('cms/block')->load('main_menu')->getIsActive();
@@ -74,14 +74,20 @@
             <?php if($_menuActive): ?>
                 <nav id="nav">
                     <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('main_menu')->toHtml();?>
-					<?php
-						$count = Mage::helper('checkout/cart')->getSummaryCount();
-      					$total = Mage::helper('checkout/cart')->getQuote()->getGrandTotal();
-					?>	
+                    <?php
+                        $count = Mage::helper('checkout/cart')->getSummaryCount();
+                        $total = Mage::helper('checkout/cart')->getQuote()->getGrandTotal();
+                    ?>  
                     <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('vh_main_menu')->toHtml();?>
                 </nav>
             <?php endif ?>            
-                    <input type="hidden" value="<?php echo number_format($total,2,'.',',');?>" class="gross_total">
+            <input type="hidden" value="<?php echo number_format($total,2,'.',',');?>" class="gross_total">
+
+        </div>
+
+        <!-- Navigation -->
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
         </div>
 
         <!-- Search -->
@@ -97,7 +103,8 @@
         <?php echo $this->getChildHtml('store_switcher'); ?>
     </div>
    </div>
-    <?php echo $this->getChildHtml('topMenu') ?>
+    <?php //echo $this->getChildHtml('topMenu') ?>
+    <?php echo $this->getChildHtml('topMenuContainer'); ?>
 </header>
 <div class="fixed-header-spacer"></div>
 <?php echo $this->getChildHtml('topContainer'); ?>

@@ -35,7 +35,6 @@
         <reference name="cart_sidebar.extra_actions">
             <remove name="paypal.partner.cart_sidebar.shortcut"/>
         </reference>
-
     </default>
 
     <customer_logged_out>
@@ -153,9 +152,7 @@
             <reference name="head">
                 <action method="addItem"><type>skin_js</type><name>js/lib/ScrollMagic.min.js</name></action>
             </reference>
-          </reference>
-        <reference name="content">
-        </reference>        
+          </reference> 
     </cms_index_index>
 
 
@@ -163,6 +160,14 @@
         <reference name="root">
             <action method="setTemplate"><template>page/1column-fullwidth.phtml</template></action>
         </reference>
+
+
+        <reference name="top.menucontainer">
+            <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+            </block>
+        </reference>  
+
     </catalog_category_default>
     
     <catalog_category_layered>
@@ -185,6 +190,11 @@
 			<block type="core/template" name="vh_compare_buttons" template="vh/compare_buttons.phtml"/>
 			<block type="core/template" name="vh_catalog_ads" template="vh/catalog_ads.phtml"/>
         </reference>
+        <reference name="top.menucontainer">
+            <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml">
+                <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+            </block>
+        </reference>  
     </catalog_category_layered>
 
     <!-- product -->
