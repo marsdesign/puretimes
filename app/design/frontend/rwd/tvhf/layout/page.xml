@@ -115,6 +115,10 @@
                     <label>Page Header</label>
                     <action method="setElementClass"><value>top-container</value></action>
                 </block>
+                <block type="page/html_wrapper" name="top.menucontainer" as="topMenuContainer" translate="label">
+                    <label>Top Menu Container</label>
+                    <action method="setElementClass"><value>topmenu-container</value></action>
+                </block>
             </block>
 <!-- mmc remove
             <block type="page/html_breadcrumbs" name="breadcrumbs" as="breadcrumbs"/>

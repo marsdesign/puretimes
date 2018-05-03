@@ -196,8 +196,7 @@ div.product-info{
     float: none;
     text-align: left;
 }
-.products-list .product-shop .action,
-.add-to-links{
+.products-list .product-shop .action{
 	display:none;
 }
 a.link-learn{
@@ -1238,6 +1237,64 @@ h3.ssi-title{
 	.checkout-review-table tfoot tr td:first-child {
 		padding-left: 0;
 	}
-
 }
+
+/* mmc 2ten fixes */
+
+.cart-table .product-cart-actions .button{
+	display:block;
+    padding: 2px 7px;
+    margin: 0 auto;
+}
+.form-list .control input.checkbox{
+	margin-right:0;
+}
+.form-list .control label{
+	padding-left:15px;
+}
+.topmenu-container{
+	display:none;
+}
+.desktop-nav{
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    margin-top: -15px;
+    display:none;
+}
+@media(min-width:771px){
+	.topmenu-container,.desktop-nav{
+		display:block;
+	}
+	#header-nav{
+		display: none;
+	}
+}
+
+
+
+
+	@media (max-width:770px){
+		.shop-menu{
+			display:block;
+		}
+/*		.shop-menu a{
+			font-size:10px;
+			word-wrap:break-word;
+			line-height:12px;
+			height:auto;
+			display:inline-block;
+			vertical-align:middle;
+		}
+		.shop-menu li{
+			height:40px;
+			line-height:40px;
+			display:inline-block;
+			vertical-align:middle;
+		}
+		.category-menu-inner > ul > li.level0.active, .category-menu a:hover, .category-menu a.active, .category-nav a:hover, .category-nav a.active,
+		li.level0.active{
+			background:#999 !important;
+		}*/
+	}
 
