@@ -2731,6 +2731,9 @@ div.share-button{
 		text-align:center;
 		text-transform:uppercase;
 	}
+	#header-nav li:last-child a{
+		border-bottom:none;
+	}
 }
 
 @media (max-width:767px){
