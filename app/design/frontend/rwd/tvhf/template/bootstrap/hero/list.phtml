@@ -1,241 +1,223 @@
 <style>
-.cms-home .page{
-	overflow:hidden;
+.section{
+  position: relative;
+  z-index:1;
 }
-p, h1, html, body {
+.section:after{
+  content:'';
+  clear:both;
+/*    background-image: url(img/shadow.png);*/
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4vw;
+    background-repeat: repeat-x;
+    transform: skewY(4.6deg);
+    background-position: top left;
+    /* height: 40px; */
+    /* border: solid 1px red; */
+    z-index: 10000000000;
+    box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.1);
+}
+.section:not(:first-child){
+  margin-top:-8vw;
+}
+.section .section__wrapper{
+  clip-path: polygon(
+    0 0, 
+    100% 0, 
+    100% 100%, 
+    0 calc(100% - 8vw)
+    );
+}
+/*.section:not(:first-child) .section__wrapper{
+  clip-path: polygon(
+    0 0, 
+    100% 8vw, 
+    100% 100%, 
+    0 calc(100% - 8vw)
+    );
+}*/
+.section__wrapper{
+  position: relative;
+  background: white;
+
+}
+.section__wrapper:after{
+
+/*  background-image:url('img/shadow.jpg');
+  content: '';
+  position: absolute;
+  top:4px;
+  left:0;
+  right:0;
+  bottom:0;
+  /*
+  background-color: #000;
+  background-color: rgba(0,0,0,0.15);
+  -webkit-filter: blur(3px);*/*/
+}
+.section:first-child{
+  z-index:2;
+}
+.section:last-child{
+  z-index: 0
+}
+/*.section:not(:first-child){
+  margin-top:-10%;
+}*/
+
+.whats-new:after{
+  content:'';
+  position: absolute;
+  top:5.9vw;
+  left:-10px;
+  right:-10px;
+  height:1vw;
+  background:white;
+  z-index: 1000;
+  transform: rotate(3.5deg);
+  box-shadow: 0 4px 2px -2px #000;
+}
+.section__contents{
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width:900px;
+  margin:0 auto;
+}
+.section__caption{
+  flex:0 0 auto;
+  text-align:center;
+}
+.section__image{
+  width:50%;
+  flex:0 0 auto;
+}
+.section__image img{
+  width:100%;
+  height:auto;
+}
+.section:nth-of-type(odd) .section__caption{
+   order:1;
+}
+.section:nth-of-type(odd) .section__image{
+   order:2;
+}
+.content{
+  background: red;
+}
+.whats-new{
+	display:none;
+}
+.whats-new{
+  background: black;
+  color:white;
+  clip-path: polygon(
+    0 0, 
+    100% 5vw, 
+    100% 5vw, 
+    0 100%
+    );
+  margin-top:-9vw;
+  height:10vw;
+  width:50%;
+}
+.whats-new h3{
+  font-family: 'din_condensedbold';
+  color: #fff;
+  font-size: 3.5vw;
+  margin: 0;
+  line-height: normal;	
+}
+.whats-new a{
+	font-family: 'PT Sans',sans-serif;
+	color: #eee;
+	font-size: 1.5vw;
+	line-height: normal;
+}
+.whats-new__wrapper{
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.whats-new__caption{
+	padding-left:30px;
+}
+.section__caption h2{
+	font-family: 'din_condensedbold';
+	font-size: 40px;
+	line-height: normal;
+}
+.section__caption  a {
+    display: inline-block;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #222;
+    padding: 5px 10px;
+    line-height: normal;
+    text-align: center;
+    border: 3px solid #222;
+    letter-spacing: 1px;
+    font-family: "PT Sans", sans-serif;
+    font-weight: 700;
+    font-size:12px;
+}
+.section__caption p{
 	margin:0;
 	padding:0;
-	-webkit-backface-visibility: hidden;
-	position:relative;
-}
-div.the-callout {
-	-webkit-backface-visibility: hidden;
-	display:block;
-	padding-top:39%;
-	position:relative;
-	overflow:hidden;
-	background:#fff;
-	width:110%;
-}
-div.the-callout > div {
-	display:block;
-	position:absolute;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
-	-webkit-backface-visibility: hidden;
-}
-div.the-callout > div > img {
-	height:130%;
-	width:auto;
-	margin-top:-5%;
-}
-.even img{
-	margin-left:40%;
-}
-.odd img{
-	margin-left:12%;
-}
-.bottom-shadowed {
-	box-shadow: 0 4px 2px -2px #eee;
-}
-.centrist {
-	white-space: nowrap;
 	text-align:center;
-	z-index:100;
 }
-.centrist::before {
-	content: '';
-	display: inline-block;
-	height: 100%;
-	vertical-align: middle;
-	margin-right: -0.25em;
+.sw.home-featured-header{
+	margin-bottom:0;
+	padding:0;
+	padding-top:30px!important;
 }
-.centered {
-	display: inline-block;
-	vertical-align: middle;
-	white-space: normal;
-}
-.the-callout h1{
+.home-featured-header h2 {
 	font-family: 'din_condensedbold';
-    font-size: 20px;
-    font-size: 10vw;
-	line-height:normal;
+  font-size: 34px;
+  color: #2d2b28;
+  letter-spacing: 1px;
 }
-.the-callout a{
-	display:inline-block;
-	text-transform:uppercase;
-	text-decoration:none;
-	color:#222;
-	padding:10px 40px;
-	line-height:normal;
-	text-align:center;
-	border:3px solid #222;
-	letter-spacing:1px;
-	font-family:"PT Sans", sans-serif;
-	font-weight:700px;
-	font-size:14px;
-	font-size:1.5vw;	
-	font-weight:700;
+.sw.home-featured{
+	margin-top:0;
+	padding-top:0;
 }
-.whatsnew{
-	position:relative;
-	background:#fff;
-	-webkit-backface-visibility: hidden;
-	opacity:0;
-}
-.whatsnew >div{
-	position:absolute;
-	background:#222;
-	bottom:0;
-	left:0;
-	width:60%;
-	-webkit-backface-visibility: hidden;
-}
-.whatsnew >div>div{
-	position:absolute;
-	bottom:0;
-	left:0;
-	height:55%;
-	right:0;
-	left:0;
-	width:100%;
-	-webkit-backface-visibility: hidden;
-	-moz-transform:rotate(6.5deg);
-	-webkit-transform:rotate(6.5deg);
-	-ms-transform:rotate(6.5deg);
-	transform:rotate(6.5deg);
-}
-.whatsnew h1{
-	font-family: 'din_condensedbold';
-	color:#fff;
-	font-size:3.5vw;
-	margin:0;
-	line-height:normal;
-}
-.whatsnew a{
-	font-family: 'PT Sans',sans-serif;
-	color:#eee;
-	font-size:1.5vw;
-	line-height:normal;
-}
-.whatsnew .centered{
-	padding-top:40px;
-	padding-left:75px;
-}
-.whatsnew-text{
-	position:absolute;
-	left:0;
-	bottom:-10px;
-	margin-left:16%
-}
-.home-featured-header{
-	opacity:0;
-	max-height:10px;
-}
-.home-featured-header h2{
-	font-family: 'din_condensedbold';
-}
-.the-callouts{
-	overflow:hidden;
-	padding-bottom:150px;
-}
-/*
-.the-callout:after{
-	content:"";
-	position:absolute;
-	top:0;
-	right:0;
-	bottom:2px;
-	left:0;
-	box-shadow: 0 4px 2px -2px #eee;
-	background:none;
-}
-*/
-
-@media (max-width:1024px){
-	.centrist2 .vh-intro{
-		max-width:400px;
+@media(min-width:600px){
+	.section__caption h2{
+		font-size: 30px;
+		font-size: 10vw;
 	}
-	.the-callouts{
-		overflow:hidden;
-		padding-bottom:75px;
+	.section__caption  a {
+    font-size: 14px;
+    font-size: 1.5vw;
+    padding: 10px 40px;
 	}
 }
-@media (max-width:991px){
-	.whatsnew-text{
+@media(min-width:771px){
+	.whats-new{
+		display:block;
 	}
-	.whatsnew h1{
-	}
-	.the-callout h1{
-	}
-}
-@media (max-width:767px){
-	.home-featured-header{
-		opacity:1;
-		max-height:none;
-		padding-bottom:0 !important;
-	}
-	.the-callout h1{
-		font-size:12px !important;
-	}
-
-	.whatsnew{
+	.sw.home-featured-header{
 		display:none;
 	}
-
-	.the-callouts{
-		padding-bottom:30px;
+	.sw.home-featured{
+		padding-top:36px;
 	}
-	.home-featured{
-		padding-top:0;
-	}
-	.the-callout h1{
-		font-size: 40px !important;
-	}
-	.the-callout a{
-		font-size:14px !important;
-	}
-	
 }
-@media (max-width:767px){
-	.home-featured-header{
-		opacity:1;
-		max-height:none;
-		padding-bottom:0 !important;
-	}
-	.the-callout h1{
-		font-size:12px !important;
-	}
-
-	.whatsnew{
-		display:none;
-	}
-
-	.the-callouts{
-		padding-bottom:30px;
-	}
-	.home-featured{
-		padding-top:0;
-	}
-	.the-callout h1{
-		font-size: 40px !important;
-	}
-	.the-callout a{
-		font-size:14px !important;
-	}
-	
-}
-@media (max-width:479px){
-	.the-callout a{
-		font-size:12px !important;
-		padding:3px;
+@media(min-width:1200px){
+	.section__caption h2{
+		font-size:130px;
+	}	
+	.section__caption  a {
+    font-size: 24px;
 	}
 }
 
 </style>
-	<div class="the-callouts">
+
+<div class="sections">
 
 <?php if($this->getItems()->getSize()){ ?>
 
@@ -254,89 +236,35 @@ div.the-callout > div > img {
 		$float = $i%2?'left':'right';
     ?>
 
-        <div class="the-callout bottom-shadowed <?php echo $i%2?'even':'odd';?><?php echo $i==1?' first':''?><?php echo $i==$this->getItems()->getSize()?' last':''?>" style="z-index:<?php echo $this->getItems()->getSize()+1-$i;?>">
-        <?php if($odd_even=='even'):?>
-            <div class="centrist" style="width:55%">
-                <div class="centered">
-                    <h1><?php echo $_item->getTitle();?></h1> 
-                    <a href="<?php echo $link; ?>">SHOP NOW</a>
-                </div>
-            </div>
-            <div> 
-                <img src="<?php echo $img_src; ?>">
-            </div>
-         <?php else: ?>
-            <div class="centrist" style="width:100%">
-                <div class="centered" style="margin-left:20%">
-                    <h1><?php echo $_item->getTitle();?></h1> 
-                    <a href="<?php echo $link; ?>">SHOP NOW</a>
-                </div>
-            </div>
-            <div> 
-                <img src="<?php echo $img_src; ?>">
-            </div>
-         <?php endif; ?>   
+   <div class="section">
+    <div class="section__wrapper">
+      <div class="section__contents">
+        <div class="section__image">
+          <img src="<?php echo $img_src; ?>">
         </div>
+        <div class="section__caption">
+          <h2><?php echo $_item->getTitle();?></h2>
+          <p><a href="<?php echo $link; ?>">SHOP NOW</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
 	
     <?php endforeach;?>
 
 <?php } ?>
-        <div class="whatsnew">
-            <div>
-            	<div>
-                    <div class="whatsnew-text">
-                        <h1>WHAT'S NEW</h1>
-                        <a href="/shop">VIEW ALL ></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+</div>
+<div class="whats-new">
+  <div class="whats-new__wrapper">
+  	<div class="whats-new__caption">
+    	<h3>Whats new</h3>
+    	<a href="/shop">VIEW ALL ></a>
+  	</div>
+  </div>
+</div>
 
 <script>
 
-	$j.fn.rotate = function(degrees) {
-		$j(this).css({'-webkit-transform' : 'rotate('+ degrees +'deg)',
-					 '-moz-transform' : 'rotate('+ degrees +'deg)',
-					 '-ms-transform' : 'rotate('+ degrees +'deg)',
-					 'transform' : 'rotate('+ degrees +'deg)'});
-		return $j(this);
-	};
-	
-	$j(document).ready(function(e) {
-		$j(".the-callout").each(function(index, element) {
-			if($j(this).hasClass("last")){
-				$j(".whatsnew").width($j(this).width()).height($j(this).outerHeight(true)).css({"margin-top":-$j(this).outerHeight(true)+"px","z-index":"0","margin-left":-($j(this).width()-$j(window).width())+"px"}).rotate(-6.5);
-				$j(".whatsnew").width($j(this).width()-100);
-				$j(".whatsnew").find(">div").height($j(".whatsnew").height()/2);
-				$j(".whatsnew").animate({"opacity":"1"});
-				$j(this).rotate(6.5);
-				$j(this).find("> div").rotate(-6.5);
-			}else{
-				$j(this).rotate(6.5);
-				$j(this).find("> div").rotate(-6.5);
-			}
-			if($j(this).hasClass("first")){
-				$j(this).find("img").css({"height":$j(this).find("img").height()+"px","margin-top":"5%"});
-				$j(this).css({"padding-top":"50%"});
-			}
-        });
-   });
 
-	$j(window).resize(function(){
-		$j(".the-callout").each(function(index, element) {
-			if($j(this).hasClass("last")){
-				$j(".whatsnew").width($j(this).width()).height($j(this).outerHeight(true)).css({"margin-top":-$j(this).outerHeight(true)+"px","z-index":"0","margin-left":-($j(this).width()-$j(window).width())+"px"});
-				$j(".whatsnew").width($j(this).width()-100);
-				$j(".whatsnew").find(">div").height($j(".whatsnew").height()/2);
-				$j(".whatsnew").animate({"opacity":"1"});
-			}else{
-			}
-			if($j(this).hasClass("first")){
-				$j(this).find("img").css({"height":"100%"});
-				$j(this).find("img").css({"height":$j(this).find("img").height()+"px","margin-top":"5%"});
-				$j(this).css({"padding-top":"50%"});
-			}
-        });
-	});
 </script>
