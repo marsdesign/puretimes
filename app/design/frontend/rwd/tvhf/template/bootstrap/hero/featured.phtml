@@ -9,10 +9,10 @@ html,body{
 	display:none;
 	-webkit-backface-visibility: hidden;
 }
-.welcome-text,
+/*.welcome-text,
 .the-vh-intro{
 	display:none;
-}
+}*/
 
 .welcome-text h1{
 	font-family: 'din_condensedbold';
@@ -339,20 +339,7 @@ endif;
 	  	$ctr++;
 ?>
 		<div class="the-slide" style="background:url(<?php echo $image['desktop-src']; ?>) no-repeat" data-ratio="<?php echo $image['desktop_ratio']; ?>">
-        	<!--<img src = "<?php //echo $image['desktop-src']; ?>">-->
-<?php
-			if($ctr == 1 && $title != '' && $content != ''):
-?>
-                    <div class="the-vh-intro">
-                        <div>
-                            <img class="the-logo" src="<?php echo Mage::getBaseUrl();?>/skin/frontend/rwd/tvhf/images/intro-logo.png">
-                            <h1><?php echo $title; ?></h1>
-                            <p><?php echo $content; ?></p>
-                        </div>
-                    </div>
-<?php			
-			endif;
-?>            
+        	<!--<img src = "<?php //echo $image['desktop-src']; ?>">-->           
         </div>
 <?php endforeach; ?>
 	</div>
