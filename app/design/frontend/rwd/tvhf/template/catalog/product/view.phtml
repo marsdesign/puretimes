@@ -334,6 +334,9 @@ function getQuantitySold($sku){
     	font-size: 28px !important;
 	}
 }
+.add-to-cart + ul.add-to-links {
+    display: none;
+}
 </style>
 <div id="qty-sold" class="product-detail-section clearer divider" style="position:relative;z-index:5"> <span class="qty-sold fixed-it"><?php echo number_format(getQuantitySold(nl2br($_product->getSku())),'0','.',',');?> SOLD</span> 
 <?php
@@ -706,7 +709,7 @@ if (in_array($ext, $supported_image)) {
 <script>
 // <![CDATA[
 	$j(document).ready(function(){
-
+/*
 		var t1 = setInterval(function(){
 			if($j("#behavior-twitter iframe").length > 0 || $j("#twitter-widget-0").length > 0)
 			{
@@ -761,28 +764,23 @@ if (in_array($ext, $supported_image)) {
 		});
 		
 		init_sharing();
+		*/
 		
 		if($j(window).width() > 991){
 		
 			var position = $j(".add-to-shopping-bag-container").css("position");
-			console.log("position: "+position);
 			
 			var nice_bar_top = $j("#nice-bar").offset().top;
-			console.log("nice_bar_top: "+nice_bar_top);
 			
 			var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-			console.log("add_button_top: "+add_button_top);
 			
 			var tt = setInterval(function(){
 
 				var position = $j(".add-to-shopping-bag-container").css("position");
-				console.log("position: "+position);
 
 				var nice_bar_top = $j("#nice-bar").offset().top;
-				console.log("nice_bar_top: "+nice_bar_top);
 
 				var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-				console.log("add_button_top: "+add_button_top);
 
 				if(position=="fixed"){
 					clearInterval(tt);

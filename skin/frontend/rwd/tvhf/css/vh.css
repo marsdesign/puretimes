@@ -540,8 +540,8 @@ a.link-compare:before{
 	width:20px;
 	height:20px;
 	background:url(../images/unchecked.png) no-repeat center center;
-	margin-right:5px;
-	vertical-align:top;
+	margin-right:10px;
+	vertical-align:middle;
 }
 /*a.link-compare:hover:before,*/
 a.link-compare.compare-this:before{
@@ -665,7 +665,7 @@ div.social-share > div > div#googleplus:before{
 	height:60px;
 	line-height:60px;
 }
-.add-to-shopping-bag-container a:before{
+.add-to-shopping-bag-container > a:before{
 	content:"";
 	display:inline-block;
 	width:20px;
@@ -675,6 +675,38 @@ div.social-share > div > div#googleplus:before{
 	margin-right:10px;
 	vertical-align:top;
 	margin-top:15px;
+}
+.catalog-product-view .add-to-links{
+	display:flex;
+	margin-top:1px;
+}
+.catalog-product-view .add-to-links li{
+	flex: 1 1 auto;
+}
+.catalog-product-view .add-to-links li:last-child{
+	margin-left:1px;
+}
+.catalog-product-view .add-to-links a{
+	display:block;
+	background: #cbcac8;
+	color:white;
+	text-transform:uppercase;
+	height:60px;
+	line-height: 60px;
+	font-size:14px;
+}
+.catalog-product-view .add-to-links a.link-wishlist:before{
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url(../images/VH-heart-400.png) no-repeat center center;
+  background-size: 100% 100%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.catalog-product-view a.link-compare:before{
+	margin-top:0;
 }
 .product-view .product-essential{
 	background:none !important;
@@ -1610,9 +1642,7 @@ a.closer.compare-button::before {
 	margin-top:10px;
 	line-height:22px;
 }
-a.link-compare{
-	display:none;
-}
+
 .products-grid .product-name {
     width: 130px;
 	min-height:34px;
@@ -2143,7 +2173,7 @@ div.share-button{
 #googleplus,
 #pinterest,
 #twitter{
-	pointer-events:none;
+	/*pointer-events:none;*/
 }
 
 @media (min-width:480px){
