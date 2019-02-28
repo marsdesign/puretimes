@@ -80,14 +80,8 @@
                 <action method="addItem"><type>skin_css</type><name>js/lib/bootstrap/bootstrap.min.css</name><params/></action>
                 <action method="addItem"><type>skin_css</type><name>js/lib/fancybox/jquery.fancybox.css</name><params/></action>
 
-                <!-- Add stylesheets with no media queries for use in IE 8 and below -->
-                <action method="addItem"><type>skin_css</type><name>css/styles-ie8.css</name><params/><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
-
                 <!-- Add stylesheets with media queries for use by modern browsers -->
-                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
-
-                <action method="addItem"><type>skin_css</type><name>css/styles-nap.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
-                <action method="addItem"><type>skin_css</type><name>css/vh.css</name><params/><if><![CDATA[<!--[if (gte IE 9) | (IEMobile)]><!-->]]></if></action>
+                <action method="addItem"><type>skin_css</type><name>css/styles.css</name><params/></action>
 
                 <!-- Sets viewport meta tag using text block -->
                 <block type="core/text" name="head.viewport">

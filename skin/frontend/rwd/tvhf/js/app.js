@@ -1415,25 +1415,7 @@ $j(document).ready(function() {
     ProductMediaManager.init();
 	$j("a.check-out-cart").after('<span style="font-size:10px;margin-left:5px">($'+$j(".gross_total").val()+')</span>');
 
-	function initFooterNav(){
-		if($j(window).width() > 990){
-			$j(".footer-newsletter,.footer-social,.footer-chat").css({"margin-left":"0","width":"auto","text-align":"left","display":"inline-block"});
-			var first = $j(".footer-newsletter");
-			var second = $j(".footer-social");
-			var last = $j(".footer-chat");
-		
-			var remainingWidth = $j(".footer-logo").width() - first.width() - second.width() - last.width()-10;
-			var gap = Math.floor(remainingWidth/2)-1;
-			first.width(first.width()+gap);
-			second.width(second.width()+gap).css("text-align","left");
-		}else{
-			$j(".footer-newsletter,.footer-social,.footer-chat").css({"margin-left":"0","width":"100%","display":"block","text-align":"center"});
-		}
-	}	
-	initFooterNav();
-	$j(window).resize(function(){
-		initFooterNav();
-	});
+
 	$j(".write-a-review").fancybox();
 	$j(".lightbox").fancybox();
 	$j(".btn-trigger").click(function(e){
@@ -1627,6 +1609,8 @@ $j(document).ready(function() {
 		}
 		console.log(width);
 	}
+
+    // 2ten todo - is this needed
 	$j(window).on('resize', function(e)
 	{
 		setFixHeaderSpacer();
@@ -1650,6 +1634,9 @@ $j(document).ready(function() {
 $j(document).ready(function(){
 //moved from featured.phtml
 	
+
+    // 2ten todo why not use slick slider?
+    // 2ten todo and use html/css to change aspect ratio
 	if($j("body").hasClass("cms-home")){
 
 		var ctr1 = 0;
@@ -1699,8 +1686,11 @@ $j(document).ready(function(){
 			},1000)
 		}
 */
+
+        // 2ten todo what does this do
 		$j("#header,#header > div").css({"z-index":"10000","width":"100%"});
 
+        // 2ten todo what does this do
 		$j( window ).on( "orientationchange", function( event ) {
 			$j("html,body,#header,.landscape,.the-slide").width($j(window).width());
 			$j("html,body").animate({"scrollTop":"100px"},100,function(){

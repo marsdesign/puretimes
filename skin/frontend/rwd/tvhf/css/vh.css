@@ -164,22 +164,14 @@ a.check-out-cart{
 .home-featured-header {
     text-align: left;
 }
-.cms-home .container{
+.cms-home .full-width .container{
 	max-width:none;
 	padding:0;
 }
 .footer {
-    clear: both;
-    width: 100%;
-    background: #262626;
+  background: #262626;
 	color:#fff;
-	height:auto;
-	padding:50px 0;
-}
-.footer-top {
-    border-top: none;
-    background: none;
-	padding-top:30px;
+	padding:25px 0;
 }
 .footer-bottom {
     background: none;
@@ -189,17 +181,6 @@ a.check-out-cart{
     font-family: "nimbus-sans-extended",sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-.footer-logo .footer-newsletter {
-    width: 500px;
-    position: relative;
-    top: auto;
-    left: 10px;
-
-    margin-left: auto;
-    margin-top: -15px;
-    padding: 0px;
-	float:none;
 }
 .footer .form-subscribe-header {
     display: inline-block;
@@ -225,14 +206,7 @@ a.check-out-cart{
 	color:#fff;
 	font-size:13px;
 }
-div.footer-social {
-    width: auto;
-    text-align: right !important;
-    padding: 38px 0px;
-    float: none;
-    display: inline-block;
-	margin-left:25px;
-}
+
 .footer-social a{
 	display:inline-block;
 	height:28px;
@@ -285,16 +259,7 @@ div.footer-chat{
 .footer .block-subscribe{
 	background:none;
 }
-.footer-newsletter {
-	display:inline-block;
-    width: auto;
-    position: relative;
-    top: 50%;
-    left: auto;
-    margin-left: auto;
-    margin-top: -15px;
-    padding: 0px;
-}
+
 .footer-credits,
 .footer-credits a,
 .footer-links a{
@@ -2065,9 +2030,6 @@ div.play-overlay > div.right-overlay{
 	background-position:right top;
 	pointer-events: none;
 }
-.footer-credits{
-	margin-top: -40px;
-}
 #checkout-agreements{
 	margin:0 20px;
 }
@@ -2656,13 +2618,6 @@ div.share-button{
 	.cms-virgin-hair-secrets div.container{
 		margin-top:30px !important;
 	}
-	
-	.footer-credits{
-		margin-top: auto;
-	}
-	div.footer-social{
-		text-align:center !important;
-	}
 }
 @media (max-width:768px){
 	a.back-to-gallery{
@@ -2718,15 +2673,6 @@ div.share-button{
 	.cms-page-view .category-menu, .category-nav {
 		display:none;
 	}
-	
-	.footer-credits{
-		margin-top: auto;
-	}
-	/*
-	#the-image img{
-		display:none;
-	}
-	*/
 	#header .account-cart-wrapper{
 		display:block !important;
 	}
@@ -2797,11 +2743,6 @@ div.share-button{
 		float:none;
 		padding-left:0px;
 	}
-	
-	.footer-credits{
-		margin-top: auto;
-	}
-
 	.vote-page-header > div > span {
 		position: relative;
 		right: auto;
@@ -2907,11 +2848,6 @@ div.share-button{
 	.vh-catalog-ads{
 		display:none;
 	}
-	
-	.footer-credits{
-		margin-top: auto;
-	}
-
 	.votees {
 		max-width:320px !important
 	}
@@ -2940,9 +2876,6 @@ div.share-button{
 }
 
 @media (max-width:499px){
-	.footer-credits{
-		margin-top: auto;
-	}
 	.fa-user::before {
 		/*content: "\f007";*/
 		content: "";
@@ -2959,9 +2892,6 @@ div.share-button{
 
 }
 @media (max-width:320px){
-	.footer-credits{
-		margin-top: auto;
-	}
 	#the-image #page-text{
 		min-width:290px !important;
 	}
