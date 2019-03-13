@@ -1484,38 +1484,7 @@ $j(document).ready(function() {
 		$j("a.modaller").click();
 	}	
 */
-	if($j("ul.messages").length > 0){
-		var msg = $j("ul.messages");
-		var modal = $j(document.createElement("div")).attr("id","modaller").append(msg);
-		msg.css({"display":"inline-block"});
-		
-		var the_message = msg.html();
-		var m = the_message.match(/has\sbeen\sadded\sto\scomparison\slist/g);
-		if(m && m.length > 0){
-			msg.find("span").each(function(){
-				var html = $j(this).html();
-				var m1 = html.match(/has\sbeen\sadded\sto\scomparison\slist/g);
-				if(m1.length > 0){
-					$j(this).html("This product has been added to comparison list.");
-				}
-			});
-		}
-		var p = the_message.match(/Your\spassword\swas\ssend\sto\sthe\semail/g);
-		if(p && p.length > 0){
-			msg.find("span").each(function(){
-				var html = $j(this).html();
-				var p1 = html.match(/Your\spassword\swas\ssend\sto\sthe\semail/g);
-				if(p1.length > 0){
-					$j(this).html(html.replace(/Your\spassword\swas\ssend\sto\sthe\semail/g,"Your password was sent to the email"));
-				}
-			});
-		}
 
-		$j("body").append(modal);
-		$j("body").append('<a class="modaller lightbox" href="#modaller"></a>');
-		$j("a.modaller").click();
-	}	
-	
 	$j(".account-create .pslogin-button-link").append('<span>REGISTER WITH FACEBOOK</span>');
 	$j(".pslogin-login .pslogin-button-link").append('<span>LOGIN WITH FACEBOOK</span>');
 
