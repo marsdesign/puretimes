@@ -33,1163 +33,1306 @@
 ?>
 <?php $_helper = $this->helper('catalog/output'); ?>
 <?php $_product = $this->getProduct(); ?>
-<?php 
+<?php
 // get custom attributes
-$_video     = $_product->getVideo(); // vimeo video url
-$parts      = parse_url($_video);
-$path       = explode("/",$parts["path"]);
-$_videoId   = array_pop($path);
+$_video = $_product->getVideo(); // vimeo video url
+$parts = parse_url($_video);
+$path = explode("/", $parts["path"]);
+$_videoId = array_pop($path);
 // user can set sizing pop to yes/no
-$_showSizing    = $_product->getShowSizing();
-$_videoId   = getVideoId($_video);
+$_showSizing = $_product->getShowSizing();
+$_videoId = getVideoId($_video);
 
 // function is also used by code in addtocart.phtml
-function getVideoId($v){
-    $v          = strip_tags($v);
-    $parts      = parse_url($v);
-    $path       = explode("/",$parts["path"]);
-    $videoId   = array_pop($path); 
-    return $videoId;  
+function getVideoId($v)
+{
+    $v = strip_tags($v);
+    $parts = parse_url($v);
+    $path = explode("/", $parts["path"]);
+    $videoId = array_pop($path);
+    return $videoId;
 }
+
 // use this to output the sizing chart into a modal
 // the link to the modal should be placed next to quantity box
 // use the custom attribute to show only if checked
-function getQuantitySold($sku){
-	$product = Mage::getResourceModel('reports/product_collection')
-	->addOrderedQty()
-	->addAttributeToFilter('sku', $sku)
-	->setOrder('ordered_qty', 'desc')
-	->getFirstItem();
-	return ((int)$product->ordered_qty);
+function getQuantitySold($sku)
+{
+    $product = Mage::getResourceModel('reports/product_collection')
+        ->addOrderedQty()
+        ->addAttributeToFilter('sku', $sku)
+        ->setOrder('ordered_qty', 'desc')
+        ->getFirstItem();
+    return ((int)$product->ordered_qty);
 }
+
 ?>
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
 <style>
-.page-width{
-	width:100%;
-	max-width:1200px;
-	padding:0 30px;
-	margin:0 auto;
-}
-.clearer:after{
-	content:"";
-	display:table;
-	clear:both;
-}
-#nice-bar{
-	height:60px;
-	opacity:0;
-}
-.vh-coupon-callout{
-	background:#fff;
-}
-.coupon-text{
-	font-family: 'nimbus-sans-extended', sans-serif;
-	letter-spacing:1px;
-	display:inline-block;
-	vertical-align:middle;
-	height:50px;
-	line-height:50px;
-}
-.coupon-text span{
-	text-transform:uppercase;
-	display:inline-block;
-}
-.dollar-symbol,
-.coupon-text span.coupon-amount{
-	font-family: Georgia, "Times New Roman", Times;/*'Playfair Display', serif;*/
-	font-size:45px;
-	font-weight:bold;
-	font-style:italic;
-}
-.dollar-symbol{
-	font-family: Georgia, "Times New Roman", Times, serif; /*'Radley', serif;*/
-}
-#mc_embed_signup{
-	background:#fff;
-}
-.input-box.negate-after:after{
-	display:none !important;
-}
-.product-options-bottom{
-	margin-bottom:0;
-}
-@media (min-width:1024px){
+    .page-width {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 30px;
+        margin: 0 auto;
+    }
 
-	.product-detail-section{
-		position:relative;
-	}
-	.product-img-box{
-		width:100%;
-		float:none;
-		margin:50px auto;
-		max-width:800px;
-	}
-	.divider:before{
-		content:"";
-		display:block;
-		position:absolute;
-		top:0;
-		bottom:0;
-		left:0;
-		right:35%;
-		box-sizing:border-box;
-		border-right:1px solid #f3f3f3;
-		z-index:-1;
-	}
-	.left-column{
-		width:65% !important;
-		float:left;
-		box-sizing:border-box;
-	}
-	.right-column{
-		width:35% !important;
-		float:left;
-		box-sizing:border-box;
-	}	
-}
-@media (max-width:1199px){
-	div.social-share {
-		padding-left: 0px !important;
-	}
-}
+    .clearer:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 
-@media (min-width:992px) and (max-width:1023px){
-	.product-detail-section{
-		position:relative;
-	}
-	.product-img-box{
-		width:100%;
-		float:none;
-		margin:50px auto;
-		max-width:none;
-	}
-	.divider:before{
-		content:"";
-		display:block;
-		position:absolute;
-		top:0;
-		bottom:0;
-		left:0;
-		right:50%;
-		box-sizing:border-box;
-		border-right:1px solid #f3f3f3;
-		z-index:-1;
-	}
-	.left-column{
-		width:50% !important;
-		float:left;
-		box-sizing:border-box;
-	}
-	.right-column{
-		width:50% !important;
-		float:left;
-		box-sizing:border-box;
-	}	
-	.underneath .left-column{
-		width:100%;
-		float:none;
-	}
-	.underneath .right-column{
-		width:100%;
-		float:none;
-	}	
-}
+    #nice-bar {
+        height: 60px;
+        opacity: 0;
+    }
 
-@media (max-width:770px){
-	.qty-sold{
-		top: 26px;
-	}
-	.wrapper{
-		width:100%;
-		box-sizing:border-box;
-		overflow-x:hidden;
-	}
-	.fixed-header-spacer{
-		padding-top:125px;
-	}
-}
+    .vh-coupon-callout {
+        background: #fff;
+    }
 
-@media (min-width:768px) and (max-width:991px){
-	.product-view .product-shop{
-		max-width:650px;
-	}
-	.product-detail-section{
-		position:relative;
-	}
-	.product-img-box{
-		width:100%;
-		float:none;
-		margin:50px auto;
-		max-width:none;
-	}
-	.divider:before{
-		content:"";
-		display:block;
-		position:absolute;
-		top:0;
-		bottom:0;
-		left:0;
-		right:50%;
-		box-sizing:border-box;
-		border-right:1px solid #f3f3f3;
-		z-index:-1;
-		display:none;
-	}
-	.left-column{
-		width:100% !important;
-		float:none;
-		box-sizing:border-box;
-	}
-	.right-column{
-		width:100% !important;
-		float:none;
-		box-sizing:border-box;
-	}	
-	#nice-bar{
-		height:auto;
-	}
-}
-@media (max-width:767px){
-	#contactForm li.last {
-		position: relative;
-		top: 0px;
-		right: 0px;
-		width: 100%;
-	}
+    .coupon-text {
+        font-family: 'nimbus-sans-extended', sans-serif;
+        letter-spacing: 1px;
+        display: inline-block;
+        vertical-align: middle;
+        height: 50px;
+        line-height: 50px;
+    }
 
-	#contactForm li{
-		width:100%;
-	}
-	.the-contact-form{
-		margin:30px;
-	}
-	#nice-bar{
-		height:auto;
-	}
-	.qty-sold {
-    	top: -7px;
-		right:-56px;
-	}
-	.catalog-product-view .main{
-		/*margin-top:130px;*/
-	}
-	.product-view .product-shop {
-		width: 100%;
-		float: none;
-		max-width: none;
-		padding:30px;
-	}
-	.product-detail-section{
-		position:relative;
-	}
-	.product-img-box{
-		width:100%;
-		float:none;
-		margin:50px auto;
-		max-width:none;
-	}
-	.divider:before{
-		content:"";
-		display:block;
-		position:absolute;
-		top:0;
-		bottom:0;
-		left:0;
-		right:50%;
-		box-sizing:border-box;
-		border-right:1px solid #f3f3f3;
-		z-index:-1;
-		display:none;
-	}
-	.left-column{
-		width:100% !important;
-		float:none;
-		box-sizing:border-box;
-	}
-	.right-column{
-		width:100% !important;
-		float:none;
-		box-sizing:border-box;
-	}	
+    .coupon-text span {
+        text-transform: uppercase;
+        display: inline-block;
+    }
 
-	.coupon-text span{
-		font-size: 16px;
-	}
-	.dollar-symbol,
-	.coupon-text span.coupon-amount {
-		font-size: 40px;
-	}
-	
-}
-@media (max-width:479px){
-	.dollar-symbol,
-	span.coupon-amount {
-    	font-size: 28px !important;
-	}
-}
-.add-to-cart + ul.add-to-links {
-    display: none;
-}
+    .dollar-symbol,
+    .coupon-text span.coupon-amount {
+        font-family: Georgia, "Times New Roman", Times; /*'Playfair Display', serif;*/
+        font-size: 45px;
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    .dollar-symbol {
+        font-family: Georgia, "Times New Roman", Times, serif; /*'Radley', serif;*/
+    }
+
+    #mc_embed_signup {
+        background: #fff;
+    }
+
+    .input-box.negate-after:after {
+        display: none !important;
+    }
+
+    .product-options-bottom {
+        margin-bottom: 0;
+    }
+
+    @media (min-width: 1024px) {
+
+        .product-detail-section {
+            position: relative;
+        }
+
+        .product-img-box {
+            width: 100%;
+            float: none;
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        .divider:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 35%;
+            box-sizing: border-box;
+            border-right: 1px solid #f3f3f3;
+            z-index: -1;
+        }
+
+        .left-column {
+            width: 65% !important;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .right-column {
+            width: 35% !important;
+            float: left;
+            box-sizing: border-box;
+        }
+    }
+
+    @media (max-width: 1199px) {
+        div.social-share {
+            padding-left: 0px !important;
+        }
+    }
+
+    @media (min-width: 992px) and (max-width: 1023px) {
+        .product-detail-section {
+            position: relative;
+        }
+
+        .product-img-box {
+            width: 100%;
+            float: none;
+            margin: 50px auto;
+            max-width: none;
+        }
+
+        .divider:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+            box-sizing: border-box;
+            border-right: 1px solid #f3f3f3;
+            z-index: -1;
+        }
+
+        .left-column {
+            width: 50% !important;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .right-column {
+            width: 50% !important;
+            float: left;
+            box-sizing: border-box;
+        }
+
+        .underneath .left-column {
+            width: 100%;
+            float: none;
+        }
+
+        .underneath .right-column {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    @media (max-width: 770px) {
+        .qty-sold {
+            top: 26px;
+        }
+
+        .wrapper {
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .fixed-header-spacer {
+            padding-top: 125px;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+        .product-view .product-shop {
+            max-width: 650px;
+        }
+
+        .product-detail-section {
+            position: relative;
+        }
+
+        .product-img-box {
+            width: 100%;
+            float: none;
+            margin: 50px auto;
+            max-width: none;
+        }
+
+        .divider:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+            box-sizing: border-box;
+            border-right: 1px solid #f3f3f3;
+            z-index: -1;
+            display: none;
+        }
+
+        .left-column {
+            width: 100% !important;
+            float: none;
+            box-sizing: border-box;
+        }
+
+        .right-column {
+            width: 100% !important;
+            float: none;
+            box-sizing: border-box;
+        }
+
+        #nice-bar {
+            height: auto;
+        }
+    }
+
+    @media (max-width: 767px) {
+        #contactForm li.last {
+            position: relative;
+            top: 0px;
+            right: 0px;
+            width: 100%;
+        }
+
+        #contactForm li {
+            width: 100%;
+        }
+
+        .the-contact-form {
+            margin: 30px;
+        }
+
+        #nice-bar {
+            height: auto;
+        }
+
+        .qty-sold {
+            top: -7px;
+            right: -56px;
+        }
+
+        .catalog-product-view .main {
+            /*margin-top:130px;*/
+        }
+
+        .product-view .product-shop {
+            width: 100%;
+            float: none;
+            max-width: none;
+            padding: 30px;
+        }
+
+        .product-detail-section {
+            position: relative;
+        }
+
+        .product-img-box {
+            width: 100%;
+            float: none;
+            margin: 50px auto;
+            max-width: none;
+        }
+
+        .divider:before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+            box-sizing: border-box;
+            border-right: 1px solid #f3f3f3;
+            z-index: -1;
+            display: none;
+        }
+
+        .left-column {
+            width: 100% !important;
+            float: none;
+            box-sizing: border-box;
+        }
+
+        .right-column {
+            width: 100% !important;
+            float: none;
+            box-sizing: border-box;
+        }
+
+        .coupon-text span {
+            font-size: 16px;
+        }
+
+        .dollar-symbol,
+        .coupon-text span.coupon-amount {
+            font-size: 40px;
+        }
+
+    }
+
+    @media (max-width: 479px) {
+        .dollar-symbol,
+        span.coupon-amount {
+            font-size: 28px !important;
+        }
+    }
+
+    .add-to-cart + ul.add-to-links {
+        display: none;
+    }
 </style>
-<div id="qty-sold" class="product-detail-section clearer divider" style="position:relative;z-index:5"> <span class="qty-sold fixed-it"><?php echo number_format(getQuantitySold(nl2br($_product->getSku())),'0','.',',');?> SOLD</span> 
-<?php
-if(Mage::registry('current_category')):
-?>
-	<a  style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery" href="<?php echo Mage::registry('current_category')->getUrl(); ?>">< BACK TO CATEGORY</a>
-<?php 
-else: 
+<div id="qty-sold" class="product-detail-section clearer divider" style="position:relative;z-index:5"><span
+        class="qty-sold fixed-it"><?php echo number_format(getQuantitySold(nl2br($_product->getSku())), '0', '.',
+            ','); ?> SOLD</span>
+    <?php
+    if (Mage::registry('current_category')):
+        ?>
+        <a style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery"
+           href="<?php echo Mage::registry('current_category')->getUrl(); ?>">< BACK TO CATEGORY</a>
+        <?php
+    else:
 
-	$the_cats = $_product->getCategoryIds();
-	$sw = false;
-	foreach ($the_cats as $the_category_id) {
-		$_the_cat = Mage::getModel('catalog/category')->load($the_category_id);
-		if('featured' == strtolower($_the_cat->getName())){
-			//force 'Back to Category' link to go to the product's next category if it has one, or to the main shop page, if it doesn't have one
-			//Otherwise, comment this out, if it's okay for the 'Back to Category' link to go to Featuted category
-			$sw = true; 
-			continue;
-		}else{
-			$sw = false;
-			break;
-		}
-	} 
-	if($the_cats && $sw === false):
-?>
-        <a  style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery" href="<?php echo $_the_cat->getUrl(); ?>" data-cat-id-name="<?php echo $the_category_id . $_the_cat->getName(); ?>">< BACK TO CATEGORY</a>
-<?php	
-	else:
-?>
-        <a  style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery" href="<?php echo Mage::getBaseUrl(); ?>shop">< BACK TO CATEGORY</a>
-<?php
-	endif; 
-endif; ?> 
+        $the_cats = $_product->getCategoryIds();
+        $sw = false;
+        foreach ($the_cats as $the_category_id) {
+            $_the_cat = Mage::getModel('catalog/category')->load($the_category_id);
+            if ('featured' == strtolower($_the_cat->getName())) {
+                //force 'Back to Category' link to go to the product's next category if it has one, or to the main shop page, if it doesn't have one
+                //Otherwise, comment this out, if it's okay for the 'Back to Category' link to go to Featuted category
+                $sw = true;
+                continue;
+            } else {
+                $sw = false;
+                break;
+            }
+        }
+        if ($the_cats && $sw === false):
+            ?>
+            <a style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery"
+               href="<?php echo $_the_cat->getUrl(); ?>"
+               data-cat-id-name="<?php echo $the_category_id . $_the_cat->getName(); ?>">< BACK TO CATEGORY</a>
+            <?php
+        else:
+            ?>
+            <a style="padding:30px 0 0 30px;display:inline-block" class="back-to-gallery"
+               href="<?php echo Mage::getBaseUrl(); ?>shop">< BACK TO CATEGORY</a>
+            <?php
+        endif;
+    endif; ?>
 </div>
 <div class="product-detail-section clearer divider first-box">
-  <div class="left-column">
-    <div class="product-img-box"> <?php echo $this->getChildHtml('media') ?> </div>
-  </div>
-  <div class="right-column product-view">
-    <form class="fixed-it" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-      <?php echo $this->getBlockHtml('formkey') ?>
-      <div class="no-display">
-        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-        <input type="hidden" name="related_product" id="related-products-field" value="" />
-      </div>
-      <div class="product-shop">
-        <div class="product-name"> <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span> </div>
-        <div class="price-info"> <?php echo $this->getPriceHtml($_product); ?> <?php echo $this->getChildHtml('bundle_prices') ?> <?php echo $this->getTierPriceHtml() ?>
-          <p><?php echo $_product->getShortDescription(); ?></p>
-        </div>
-        <div class="extra-info"> <?php echo $this->getReviewsSummaryHtml($_product, 'default', false)?> <?php echo $this->getChildHtml('product_type_availability'); ?> </div>
-        <?php echo $this->getChildHtml('alert_urls') ?> <?php echo $this->getChildHtml('other');?>
-        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-        <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-        <?php endif;?>
-        <?php /* if ($_product->getShortDescription()):?>
+    <div class="left-column">
+        <div class="product-img-box"> <?php echo $this->getChildHtml('media') ?> </div>
+    </div>
+    <div class="right-column product-view">
+        <form class="fixed-it" action="<?php echo $this->getSubmitUrl($_product) ?>" method="post"
+              id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>"/>
+                <input type="hidden" name="related_product" id="related-products-field" value=""/>
+            </div>
+            <div class="product-shop">
+                <div class="product-name"><span class="h1"><?php echo $_helper->productAttribute($_product,
+                            $_product->getName(), 'name') ?></span></div>
+                <div
+                    class="price-info"> <?php echo $this->getPriceHtml($_product); ?> <?php echo $this->getChildHtml('bundle_prices') ?> <?php echo $this->getTierPriceHtml() ?>
+                    <p><?php echo $_product->getShortDescription(); ?></p>
+                </div>
+                <div class="extra-info"> <?php echo $this->getReviewsSummaryHtml($_product, 'default',
+                        false) ?><?php echo $this->getChildHtml('product_type_availability'); ?> </div>
+                <?php echo $this->getChildHtml('alert_urls') ?> <?php echo $this->getChildHtml('other'); ?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif; ?>
+                <?php /* if ($_product->getShortDescription()):?>
                         <div class="short-description">
                             <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
                         </div>
                     <?php endif;
-                    */?>
-      </div>
-      <div class="add-to-cart-wrapper"> <?php echo $this->getChildHtml('product_type_data') ?> <?php echo $this->getChildHtml('extrahint') ?>
-        <?php if (!$this->hasOptions()):?>
-        <div class="add-to-box">
-          <?php if($_product->isSaleable()): ?>
-          <?php echo $this->getChildHtml('addtocart') ?>
-          <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
-          <span class="or"><?php echo $this->__('OR') ?></span>
-          <?php endif; ?>
-          <?php endif; ?>
-          <?php echo $this->getChildHtml('addto') ?> </div>
-        <?php echo $this->getChildHtml('extra_buttons') ?>
-        <?php elseif (!$_product->isSaleable()): ?>
-        <div class="add-to-box"> <?php echo $this->getChildHtml('addto') ?> </div>
-        <?php endif; ?>
-      </div>
-      <?php //echo $this->getChildHtml('related_products') ?>
-      <div class="clearer"></div>
-      <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-      <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-      <?php endif;?>
-    </form>
-  </div>
+                    */ ?>
+            </div>
+            <div
+                class="add-to-cart-wrapper"> <?php echo $this->getChildHtml('product_type_data') ?> <?php echo $this->getChildHtml('extrahint') ?>
+                <?php if (!$this->hasOptions()): ?>
+                    <div class="add-to-box">
+                        <?php if ($_product->isSaleable()): ?>
+                            <?php echo $this->getChildHtml('addtocart') ?>
+                            <?php if ($this->helper('wishlist')->isAllow() || $_compareUrl = $this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                                <span class="or"><?php echo $this->__('OR') ?></span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php echo $this->getChildHtml('addto') ?> </div>
+                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                <?php elseif (!$_product->isSaleable()): ?>
+                    <div class="add-to-box"> <?php echo $this->getChildHtml('addto') ?> </div>
+                <?php endif; ?>
+            </div>
+            <?php //echo $this->getChildHtml('related_products') ?>
+            <div class="clearer"></div>
+            <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif; ?>
+        </form>
+    </div>
 </div>
 <div id="nice-bar" class="product-detail-section clearer divider">
-  <div class="left-column" style="background:#cbcac8;position:relative">
-    <div class="full-screen-toggle"></div>
-    <div class="social-share">
-      <div>
-        <div>SHARE</div>
-        <div class="share-bar" id="facebook" data-url="<?php echo $_product->getProductUrl(); ?>" data-text="Share on Facebook" data-title="Like"></div>
-        <div class="share-bar" id="twitter" data-url="<?php echo $_product->getProductUrl(); ?>" data-text="Share on Twitter" data-title="Tweet"></div>
-        <div class="share-bar" id="googleplus" data-url="<?php echo $_product->getProductUrl(); ?>" data-text="Share on Google+" data-title="+1"></div>
-        <div class="share-bar" id="pinterest" data-url="<?php echo $_product->getProductUrl(); ?>" data-text="Pin it on Pinterest" data-title="Pin" data-media="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"></div>
-      </div>
-    </div>
-  </div>
-  <div class="right-column add-to-shopping-bag-container fixed-it scroll-to-form gap-base"> 
-  	<a class="btn-trigger" data-trigger-what=".add-to-cart-buttons button.button.btn-cart" href="#">ADD TO SHOPPING BAG</a> 
-  	 <?php echo $this->getChildHtml('addto') ?>
-  </div>
-</div>
-<div class="underneath product-detail-section clearer">
-  <div class="left-column">
-    <div class="product-description">
-      <div class="container" style="background:#fafafa">
-        <div class="description">
-          <div class="std">
-            <h3>Product Description</h3>
-            <div class="description-text"><?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description') ?></div>
-          </div>
-        </div>
-      </div>
-      <div class="clearer"></div>
-<?php
-	$product_videos = Mage::getModel('video/video')->getCollection();
-	$product_videos->addFieldToFilter('product_id',$_product->getId());
-	$product_videos->addFieldToFilter('active','1');
-	$product_videos->addFieldToFilter('type_id','1');
-	
-if(count($product_videos)):
-?>      
-      <h3 class="section-title" style="text-align:center;margin-top:60px">Product Secrets</h3>
-      <div class="clearer"></div>
-      <div class="the-videos clearer">
-        <div>
-          <?php
-                        foreach($product_videos as $data):
-                            $_video 	= $data->getData('video');
-                            $parts 		= parse_url($_video);
-                            $path 		= explode("/",$parts["path"]);
-                            $_videoId 	= array_pop($path);
-							
-							//override value of $_videoId to revert to full url needed to accomodate youtube url
-							
-							$_videoId 	= $_video;
-							if($data->getData('image')){
-								$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
-							}else{
-
-								$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'video/video-placeholder.jpg');
-							}
-
-                            $_title 	= $data->getData('title');
-                            $_desc 		= $data->getData('description');
-                            // optional can use to resize video thumbnail
-                            $_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'),300,360);
-    ?>
-          <div>
-            <?php if(!empty($_videoId)){ ?>
-            <div class="video-container">
-              <div class="product-video"> <a class="video-link" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>">
-                <div class="video-play"></div>
-                </a> <img src="<?php echo $_videoImg;?>" alt="<?php echo $_title;?>"> </div>
+    <div class="left-column" style="background:#cbcac8;position:relative">
+        <div class="full-screen-toggle"></div>
+        <div class="social-share">
+            <div>
+                <div>SHARE</div>
+                <div class="share-bar" id="facebook" data-url="<?php echo $_product->getProductUrl(); ?>"
+                     data-text="Share on Facebook" data-title="Like"></div>
+                <div class="share-bar" id="twitter" data-url="<?php echo $_product->getProductUrl(); ?>"
+                     data-text="Share on Twitter" data-title="Tweet"></div>
+                <div class="share-bar" id="googleplus" data-url="<?php echo $_product->getProductUrl(); ?>"
+                     data-text="Share on Google+" data-title="+1"></div>
+                <div class="share-bar" id="pinterest" data-url="<?php echo $_product->getProductUrl(); ?>"
+                     data-text="Pin it on Pinterest" data-title="Pin"
+                     data-media="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"></div>
             </div>
-            <?php } ?>
-          </div>
-          <?php						
-                        endforeach;
-                    ?>
         </div>
-      </div>
-<?php
-endif;
-?>      
     </div>
-  </div>
-  <div class="right-column fixed-it scroll-to-form"> <?php echo $this->getChildHtml('vh_newsletter'); ?> <?php echo $this->getChildHtml('vh_coupon_callout'); ?> </div>
+    <div class="right-column add-to-shopping-bag-container fixed-it scroll-to-form gap-base">
+        <a class="btn-trigger" data-trigger-what=".add-to-cart-buttons button.button.btn-cart" href="#">ADD TO SHOPPING
+            BAG</a>
+        <?php echo $this->getChildHtml('addto') ?>
+    </div>
 </div>
 <div class="underneath product-detail-section clearer">
-  <div class="left-column">
-    <div class="ask-a-question clearer">
-      <div>
-        <div class="ask-icon"><span></span></div>
-        <?php 
-                $block = Mage::getModel('cms/block')->load('ask_a_question');
-        ?>
-        <h3 class="section-title"><?php echo $block->getTitle();?></h3>
-        <div class="description-text"><?php echo $block->getContent();?></div>
-        <div class="the-contact-form"> <?php echo $this->getChildHtml('vhContactForm');?>
-          <div style="display:none"><a id="contact-button-trigger" class="funky-button btn-trigger" data-trigger-what="#contact-submit-button" href="#">&nbsp;&nbsp;&nbsp;&nbsp;submit</a></div>
-        </div>
-        <?php			
-                    /*
-                    $page = Mage::getModel('cms/page')->load('about');
-                    echo $page->getTitle();
-                    echo $page->getContent();
-                    */
+    <div class="left-column">
+        <div class="product-description">
+            <div class="container" style="background:#fafafa">
+                <div class="description">
+                    <div class="std">
+                        <h3>Product Description</h3>
+                        <div class="description-text"><?php echo $_helper->productAttribute($_product,
+                                nl2br($_product->getDescription()), 'description') ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearer"></div>
+            <?php
+            $product_videos = Mage::getModel('video/video')->getCollection();
+            $product_videos->addFieldToFilter('product_id', $_product->getId());
+            $product_videos->addFieldToFilter('active', '1');
+            $product_videos->addFieldToFilter('type_id', '1');
+
+            if (count($product_videos)):
                 ?>
-      </div>
+                <h3 class="section-title" style="text-align:center;margin-top:60px">Product Secrets</h3>
+                <div class="clearer"></div>
+                <div class="the-videos clearer">
+                    <div>
+                        <?php
+                        foreach ($product_videos as $data):
+                            $_video = $data->getData('video');
+                            $parts = parse_url($_video);
+                            $path = explode("/", $parts["path"]);
+                            $_videoId = array_pop($path);
+
+                            //override value of $_videoId to revert to full url needed to accomodate youtube url
+
+                            $_videoId = $_video;
+                            if ($data->getData('image')) {
+                                $_videoImg = $_image = str_replace('\\', '/',
+                                    Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
+                            } else {
+
+                                $_videoImg = $_image = str_replace('\\', '/',
+                                    Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'video/video-placeholder.jpg');
+                            }
+
+                            $_title = $data->getData('title');
+                            $_desc = $data->getData('description');
+                            // optional can use to resize video thumbnail
+                            $_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'), 300, 360);
+                            ?>
+                            <div>
+                                <?php if (!empty($_videoId)) { ?>
+                                    <div class="video-container">
+                                        <div class="product-video"><a class="video-link" data-toggle="modal"
+                                                                      data-target="#video-modal"
+                                                                      data-video="<?php echo $_videoId; ?>">
+                                                <div class="video-play"></div>
+                                            </a> <img src="<?php echo $_videoImg; ?>" alt="<?php echo $_title; ?>">
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <?php
+                        endforeach;
+                        ?>
+                    </div>
+                </div>
+                <?php
+            endif;
+            ?>
+        </div>
     </div>
-  </div>
-  <div class="right-column"> </div>
+    <div
+        class="right-column fixed-it scroll-to-form"> <?php echo $this->getChildHtml('vh_newsletter'); ?><?php echo $this->getChildHtml('vh_coupon_callout'); ?> </div>
 </div>
 <div class="underneath product-detail-section clearer">
-  <div class="left-column"> <?php echo $this->getChildHtml('upsell_products') ?> </div>
-  <div class="right-column"> </div>
+    <div class="left-column">
+        <div class="ask-a-question clearer">
+            <div>
+                <div class="ask-icon"><span></span></div>
+                <?php
+                $block = Mage::getModel('cms/block')->load('ask_a_question');
+                ?>
+                <h3 class="section-title"><?php echo $block->getTitle(); ?></h3>
+                <div class="description-text"><?php echo $block->getContent(); ?></div>
+                <div class="the-contact-form"> <?php echo $this->getChildHtml('vhContactForm'); ?>
+                    <div style="display:none"><a id="contact-button-trigger" class="funky-button btn-trigger"
+                                                 data-trigger-what="#contact-submit-button" href="#">&nbsp;&nbsp;&nbsp;&nbsp;submit</a>
+                    </div>
+                </div>
+                <?php
+                /*
+                $page = Mage::getModel('cms/page')->load('about');
+                echo $page->getTitle();
+                echo $page->getContent();
+                */
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="right-column"></div>
 </div>
 <div class="underneath product-detail-section clearer">
-  <div class="left-column">
-    <h3 class="section-title" style="text-align:center">PRODUCT REVIEWS</h3>
-    <div class="product-review-text"><?php echo $this->getChildHtml('vhProductReview') ?></div>
-    <div class="write-a-review-button"><a href="#the-review-form" class="write-a-review">WRITE A REVIEW</a></div>
-  </div>
-  <div class="right-column"> </div>
+    <div class="left-column"> <?php echo $this->getChildHtml('upsell_products') ?> </div>
+    <div class="right-column"></div>
+</div>
+<div class="underneath product-detail-section clearer">
+    <div class="left-column">
+        <h3 class="section-title" style="text-align:center">PRODUCT REVIEWS</h3>
+        <div class="product-review-text"><?php echo $this->getChildHtml('vhProductReview') ?></div>
+        <div class="write-a-review-button"><a href="#the-review-form" class="write-a-review">WRITE A REVIEW</a></div>
+    </div>
+    <div class="right-column"></div>
 </div>
 <?php
-	$product_videos = Mage::getModel('video/video')->getCollection();
-	$product_videos->addFieldToFilter('product_id',$_product->getId());
-	$product_videos->addFieldToFilter('active','1');
-	$product_videos->addFieldToFilter('type_id','2');
-	
-if(count($product_videos)):
-?>
+$product_videos = Mage::getModel('video/video')->getCollection();
+$product_videos->addFieldToFilter('product_id', $_product->getId());
+$product_videos->addFieldToFilter('active', '1');
+$product_videos->addFieldToFilter('type_id', '2');
 
-<div class="underneath product-detail-section clearer">
-  <div class="left-column">
-    <div class="product-description">
-      <div class="clearer"></div>
-      <h3 class="section-title" style="text-align:center;margin-top:60px">Video Reviews</h3>
-      <div class="clearer"></div>
-      <div class="the-videos clearer">
-        <div>
-            <?php                        
-                        foreach($product_videos as $data):
-                            $_video 	= $data->getData('video');
-                            $parts 		= parse_url($_video);
-                            $path 		= explode("/",$parts["path"]);
-                            $_videoId 	= array_pop($path);
-							
-							//override value of $_videoId to revert to full url needed to accomodate youtube url
-							
-							$_videoId 	= $_video;
-							if($data->getData('image')){
-								$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
-							}else{
-								$_videoImg = $_image 	= str_replace('\\','/',Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'video/video-placeholder.jpg');
-							}
-                            $_title 	= $data->getData('title');
-                            $_desc 		= $data->getData('description');
-                            // optional can use to resize video thumbnail
-                            $_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'),300,360);
+if (count($product_videos)):
     ?>
-          <div>
-            <?php if(!empty($_videoId)){ ?>
-            <div class="video-container">
-              <div class="product-video"> <a class="video-link" data-toggle="modal" data-target="#video-modal" data-video="<?php echo $_videoId;?>">
-                <div class="video-play"></div>
-                </a> <img src="<?php echo $_videoImg;?>" alt="<?php echo $_title;?>"> </div>
-            </div>
-            <?php } ?>
-          </div>
-          <?php
+
+    <div class="underneath product-detail-section clearer">
+        <div class="left-column">
+            <div class="product-description">
+                <div class="clearer"></div>
+                <h3 class="section-title" style="text-align:center;margin-top:60px">Video Reviews</h3>
+                <div class="clearer"></div>
+                <div class="the-videos clearer">
+                    <div>
+                        <?php
+                        foreach ($product_videos as $data):
+                            $_video = $data->getData('video');
+                            $parts = parse_url($_video);
+                            $path = explode("/", $parts["path"]);
+                            $_videoId = array_pop($path);
+
+                            //override value of $_videoId to revert to full url needed to accomodate youtube url
+
+                            $_videoId = $_video;
+                            if ($data->getData('image')) {
+                                $_videoImg = $_image = str_replace('\\', '/',
+                                    Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $data->getData('image'));
+                            } else {
+                                $_videoImg = $_image = str_replace('\\', '/',
+                                    Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'video/video-placeholder.jpg');
+                            }
+                            $_title = $data->getData('title');
+                            $_desc = $data->getData('description');
+                            // optional can use to resize video thumbnail
+                            $_thumbnail = $this->helper('video/data')->resizeImg($data->getData('thumbnail'), 300, 360);
+                            ?>
+                            <div>
+                                <?php if (!empty($_videoId)) { ?>
+                                    <div class="video-container">
+                                        <div class="product-video"><a class="video-link" data-toggle="modal"
+                                                                      data-target="#video-modal"
+                                                                      data-video="<?php echo $_videoId; ?>">
+                                                <div class="video-play"></div>
+                                            </a> <img src="<?php echo $_videoImg; ?>" alt="<?php echo $_title; ?>">
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <?php
                         endforeach;
-                    ?>
+                        ?>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="right-column"></div>
     </div>
-  </div>
-  <div class="right-column"> </div>
-</div>
-<?php	
-	endif;
+    <?php
+endif;
 ?>
 
 <script type="text/javascript">
-            //<![CDATA[
-                var productAddToCartForm = new VarienForm('product_addtocart_form');
-                productAddToCartForm.submit = function(button, url) {
-                    if (this.validator.validate()) {
-                        var form = this.form;
-                        var oldUrl = form.action;
-    
-                        if (url) {
-                           form.action = url;
-                        }
-                        var e = null;
-                        try {
-                            this.form.submit();
-                        } catch (e) {
-                        }
-                        this.form.action = oldUrl;
-                        if (e) {
-                            throw e;
-                        }
-    
-                        if (button && button != 'undefined') {
-                            button.disabled = true;
-                        }
-                    }
-                }.bind(productAddToCartForm);
-    
-                productAddToCartForm.submitLight = function(button, url){
-                    if(this.validator) {
-                        var nv = Validation.methods;
-                        delete Validation.methods['required-entry'];
-                        delete Validation.methods['validate-one-required'];
-                        delete Validation.methods['validate-one-required-by-name'];
-                        // Remove custom datetime validators
-                        for (var methodName in Validation.methods) {
-                            if (methodName.match(/^validate-datetime-.*/i)) {
-                                delete Validation.methods[methodName];
-                            }
-                        }
-    
-                        if (this.validator.validate()) {
-                            if (url) {
-                                this.form.action = url;
-                            }
-                            this.form.submit();
-                        }
-                        Object.extend(Validation.methods, nv);
-                    }
-                }.bind(productAddToCartForm);
-            //]]>
-            </script>
-<div class="product-view">
-  <?php
-// get video image - after media.phtml
-$_videoThumb    = $_product->getVideoThumbnail(); // video thumbnail
+    //<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function (button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
 
-$_videoThumb    = str_replace("no_selection", "", $_videoThumb);
-$supported_image = array(
-    'gif',
-    'jpg',
-    'jpeg',
-    'png'
-);
-$ext = strtolower(pathinfo($_videoThumb, PATHINFO_EXTENSION)); 
-if (in_array($ext, $supported_image)) {
-    try{
-        $_videoImg= $this->helper('catalog/image')->init($_product, 'video_thumbnail')
-        ->constrainOnly(true)
-        ->keepAspectRatio(true)
-        ->keepFrame(false)
-        ->resize(400, null);
-    }catch(Exception $e){
-        $_videoImg = '';
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function (button, url) {
+        if (this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            // Remove custom datetime validators
+            for (var methodName in Validation.methods) {
+                if (methodName.match(/^validate-datetime-.*/i)) {
+                    delete Validation.methods[methodName];
+                }
+            }
+
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+    //]]>
+</script>
+<div class="product-view">
+    <?php
+    // get video image - after media.phtml
+    $_videoThumb = $_product->getVideoThumbnail(); // video thumbnail
+
+    $_videoThumb = str_replace("no_selection", "", $_videoThumb);
+    $supported_image = array(
+        'gif',
+        'jpg',
+        'jpeg',
+        'png'
+    );
+    $ext = strtolower(pathinfo($_videoThumb, PATHINFO_EXTENSION));
+    if (in_array($ext, $supported_image)) {
+        try {
+            $_videoImg = $this->helper('catalog/image')->init($_product, 'video_thumbnail')
+                ->constrainOnly(true)
+                ->keepAspectRatio(true)
+                ->keepFrame(false)
+                ->resize(400, null);
+        } catch (Exception $e) {
+            $_videoImg = '';
+        }
     }
-}
-?>
-  <!--
+    ?>
+    <!--
                   <?php //if ($this->canEmailToFriend()): ?>
                       <div id="email"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="link-email-friend" title="<?php echo $this->__('Email to a Friend') ?>"><i class="fa fa-envelope lighter" style="pointer-events: none;width:32px"></i></a></div>
                   <?php //endif; ?>
 -->
-  <?php //echo $this->getChildHtml('product_additional_data') ?>
-  <?php //echo $this->getChildHtml('reviews') ?>
+    <?php //echo $this->getChildHtml('product_additional_data') ?>
+    <?php //echo $this->getChildHtml('reviews') ?>
 </div>
 <div class="modal fade" id="video-modal" tabindex="-1" role="dialog" aria-labelledby="video">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body" id="video-player">
-        <div class="embed-container">
-          <iframe src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="video-player">
+                <div class="embed-container">
+                    <iframe src="" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <a href="#" class="close button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">close</span></a> </div>
+        <a href="#" class="close button" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">close</span></a></div>
 </div>
 <div class="modal fade" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="image">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body"> <img src=""> </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body"><img src=""></div>
+        </div>
+        <a href="#" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
     </div>
-    <a href="#" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a> </div>
 </div>
 <script>
-// <![CDATA[
+    // <![CDATA[
 
-	$j(document).ready(function(){
-		var desktopResolution;
-		if ($j(window).width() > 991) {
-			desktopResolution = true;
-		} else {
-			desktopResolution = false;
-		}
+    $j(document).ready(function () {
+        var desktopResolution;
+        if ($j(window).width() > 991) {
+            desktopResolution = true;
+        } else {
+            desktopResolution = false;
+        }
 
-		function resizeBreakpoint() {
-			if($j(window).width() > 991) {
-				if (!desktopResolution) {
-					desktopResolution = true;
-					resizeDesktop();
-				}
-			} else {
-				if (desktopResolution) {
-					desktopResolution = false;
-					resizeMobile();
-				}
-			}
-		}
+        function resizeBreakpoint() {
+            if ($j(window).width() > 991) {
+                if (!desktopResolution) {
+                    desktopResolution = true;
+                    resizeDesktop();
+                }
+            } else {
+                if (desktopResolution) {
+                    desktopResolution = false;
+                    resizeMobile();
+                }
+            }
+        }
 
-		$j(window).on('resize', function(e) {
-			resizeBreakpoint();
-			if (desktopResolution) {
-				initFixerDesktopResize();
-			} else {
-				initFixerMobileResize();
-			}
-		});
-
-		function initFixerDesktopResize(){
-			var windowWidth = $j(window).width();
-			var containerPosition = $j(".right-column.product-view").offset().left;
-			$j(".col-main").width(windowWidth);
-
-			$j(".fixed-it").each(function(){
-				$j(this).css({"position":"fixed","left":(containerPosition)+"px","top":$j(this).data("top")+"px","z-index":"4"});
-
-				if($j(this).hasClass("qty-sold")){
-					$j(this).css({"position":"fixed", "left":"auto"});
-					$j(this).css({"top":($j("#header").height()+40)+"px","z-index":"5"});
-				}
-			});
-		}
-
-		function initFixerMobileResize(){
-			var windowWidth = $j(window).width();
-			var containerPosition = $j(".right-column.product-view").offset().left;
-			$j(".col-main").width(windowWidth);
-
-			$j(".fixed-it").each(function(){
-				$j(this).css({"position":"relative","z-index":"4"});
-				if($j(this).hasClass("qty-sold")){
-					$j(this).css({"position":"absolute", "top":"40px"});
-					$j(this).css({"z-index":"5"});
-				}
-			});
-		}
-
-		function resizeMobile() {
-			$j(window).unbind('scroll');
-			$j("form.fixed-it").css({"position":"relative", "top":"0", "left":"0"});
-			$j(".right-column.add-to-shopping-bag-container").css({"position":"relative", "top":"0", "left":"0"});
-		}
-
-		function resizeDesktop() {
-			$j(".add-to-shopping-bag-container").append($j("#mc_embed_signup"));
-			$j(".add-to-shopping-bag-container").append($j(".vh-coupon-callout"));
-			$j("#product_addtocart_form").css({"min-height":"560px"});
-
-			setTimeout(function(){
-				$j("#product_addtocart_form").css({"min-height":$j(".product-detail-section.first-box").height()+"px"});
-			},1000);
-
-			var form_is_fully_viewable = isElementInViewport($j("#product_addtocart_form"),true);
-
-			form_is_not_fully_viewable = true;
-
-			if(form_is_fully_viewable){
-				form_is_not_fully_viewable = false;
-			}
-
-			$j(".fixed-it").each(function(){
-				$j(this).attr("data-left",$j(this).offset().left);
-				$j(this).attr("data-top",$j(this).offset().top);
-			});
-			$j(".fixed-it").each(function(){
-				$j(this).css({"position":"fixed","left":$j(this).data("left")+"px","top":$j(this).data("top")+"px","z-index":"4"});
-				if($j(this).hasClass("qty-sold")){
-					$j(this).css({"top":($j("#header").height()+40)+"px","z-index":"5"});
-				}
-			});
-
-			var product_addtocart_form = $j("#product_addtocart_form");
-			var nice_bar = $j("#nice-bar");
-
-			var product_addtocart_form_bottom = product_addtocart_form.offset().top + product_addtocart_form.outerHeight();
-			var nice_bar_top = nice_bar.offset().top;
-
-			prev_value = 0;
-			addScrollAction();
-		}
-
-		if($j(window).width() > 991){
-			var position = $j(".add-to-shopping-bag-container").css("position");
-			var nice_bar_top = $j("#nice-bar").offset().top;
-			var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-
-			var tt = setInterval(function(){
-				var position = $j(".add-to-shopping-bag-container").css("position");
-				var nice_bar_top = $j("#nice-bar").offset().top;
-				var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-				if(position=="fixed"){
-					clearInterval(tt);
-					if(nice_bar_top > add_button_top){
-						$j(".add-to-shopping-bag-container").attr("data-top",nice_bar_top).animate({"top":nice_bar_top+"px"});
-						$j(".add-to-shopping-bag-container").addClass("probed");
-					}
-					$j("#nice-bar").animate({"opacity":"1"});
-				}
-			},2000);
-		}else{
-			$j("#nice-bar").animate({"opacity":"1"});
-		}
-					
-		$j(".input-box").each(function(index, element) {
-            if($j(this).find("select").length > 0){
-			}else{
-				$j(this).css({"border":"0"});
-				$j(this).addClass('negate-after');
-			}
+        $j(window).on('resize', function (e) {
+            resizeBreakpoint();
+            if (desktopResolution) {
+                initFixerDesktopResize();
+            } else {
+                initFixerMobileResize();
+            }
         });
-		function isElementInViewport (el,full) {
-		
-			//special bonus for those using jQuery
-			if (typeof jQuery === "function" && el instanceof jQuery) {
-				e = el[0];
-			}
-		
-			var rect = e.getBoundingClientRect();
 
-			var offset = el.height();
+        function initFixerDesktopResize() {
+            var windowWidth = $j(window).width();
+            var containerPosition = $j(".right-column.product-view").offset().left;
+            $j(".col-main").width(windowWidth);
 
-			if(full === true){
-				offset = 0;
-			}
-			return (
-				rect.top >= 0 
-				&& rect.left >= 0 
-				&& (rect.bottom-offset <= (window.innerHeight || document.documentElement.clientHeight))  
-				&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-			);
-		}
+            $j(".fixed-it").each(function () {
+                $j(this).css({
+                    "position": "fixed",
+                    "left": (containerPosition) + "px",
+                    "top": $j(this).data("top") + "px",
+                    "z-index": "4"
+                });
+
+                if ($j(this).hasClass("qty-sold")) {
+                    $j(this).css({"position": "fixed", "left": "auto"});
+                    $j(this).css({"top": ($j("#header").height() + 40) + "px", "z-index": "5"});
+                }
+            });
+        }
+
+        function initFixerMobileResize() {
+            var windowWidth = $j(window).width();
+            var containerPosition = $j(".right-column.product-view").offset().left;
+            $j(".col-main").width(windowWidth);
+
+            $j(".fixed-it").each(function () {
+                $j(this).css({"position": "relative", "z-index": "4"});
+                if ($j(this).hasClass("qty-sold")) {
+                    $j(this).css({"position": "absolute", "top": "40px"});
+                    $j(this).css({"z-index": "5"});
+                }
+            });
+        }
+
+        function resizeMobile() {
+            $j(window).unbind('scroll');
+            $j("form.fixed-it").css({"position": "relative", "top": "0", "left": "0"});
+            $j(".right-column.add-to-shopping-bag-container").css({"position": "relative", "top": "0", "left": "0"});
+        }
+
+        function resizeDesktop() {
+            $j(".add-to-shopping-bag-container").append($j("#mc_embed_signup"));
+            $j(".add-to-shopping-bag-container").append($j(".vh-coupon-callout"));
+            $j("#product_addtocart_form").css({"min-height": "560px"});
+
+            setTimeout(function () {
+                $j("#product_addtocart_form").css({"min-height": $j(".product-detail-section.first-box").height() + "px"});
+            }, 1000);
+
+            var form_is_fully_viewable = isElementInViewport($j("#product_addtocart_form"), true);
+
+            form_is_not_fully_viewable = true;
+
+            if (form_is_fully_viewable) {
+                form_is_not_fully_viewable = false;
+            }
+
+            $j(".fixed-it").each(function () {
+                $j(this).attr("data-left", $j(this).offset().left);
+                $j(this).attr("data-top", $j(this).offset().top);
+            });
+            $j(".fixed-it").each(function () {
+                $j(this).css({
+                    "position": "fixed",
+                    "left": $j(this).data("left") + "px",
+                    "top": $j(this).data("top") + "px",
+                    "z-index": "4"
+                });
+                if ($j(this).hasClass("qty-sold")) {
+                    $j(this).css({"top": ($j("#header").height() + 40) + "px", "z-index": "5"});
+                }
+            });
+
+            var product_addtocart_form = $j("#product_addtocart_form");
+            var nice_bar = $j("#nice-bar");
+
+            var product_addtocart_form_bottom = product_addtocart_form.offset().top + product_addtocart_form.outerHeight();
+            var nice_bar_top = nice_bar.offset().top;
+
+            prev_value = 0;
+            addScrollAction();
+        }
+
+        if ($j(window).width() > 991) {
+            var position = $j(".add-to-shopping-bag-container").css("position");
+            var nice_bar_top = $j("#nice-bar").offset().top;
+            var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
+
+            var tt = setInterval(function () {
+                var position = $j(".add-to-shopping-bag-container").css("position");
+                var nice_bar_top = $j("#nice-bar").offset().top;
+                var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
+                if (position == "fixed") {
+                    clearInterval(tt);
+                    if (nice_bar_top > add_button_top) {
+                        $j(".add-to-shopping-bag-container").attr("data-top", nice_bar_top).animate({"top": nice_bar_top + "px"});
+                        $j(".add-to-shopping-bag-container").addClass("probed");
+                    }
+                    $j("#nice-bar").animate({"opacity": "1"});
+                }
+            }, 2000);
+        } else {
+            $j("#nice-bar").animate({"opacity": "1"});
+        }
+
+        $j(".input-box").each(function (index, element) {
+            if ($j(this).find("select").length > 0) {
+            } else {
+                $j(this).css({"border": "0"});
+                $j(this).addClass('negate-after');
+            }
+        });
+        function isElementInViewport(el, full) {
+
+            //special bonus for those using jQuery
+            if (typeof jQuery === "function" && el instanceof jQuery) {
+                e = el[0];
+            }
+
+            var rect = e.getBoundingClientRect();
+
+            var offset = el.height();
+
+            if (full === true) {
+                offset = 0;
+            }
+            return (
+                rect.top >= 0
+                && rect.left >= 0
+                && (rect.bottom - offset <= (window.innerHeight || document.documentElement.clientHeight))
+                && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
 
 
-		function getVideoUrl(video_url){
-			var d = video_url.match(/(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/i);
-			if(d != null){
-				return "http://www.youtube.com/embed/"+d[d.length-1]+"?rel=0&amp;autoplay=1&amp;color=white"
-			}
-			d = video_url.match(/vimeo.*(?:\/|clip_id=)([0-9a-z]*)/i);
-			if(d != null){
-				return "http://player.vimeo.com/video/"+d[d.length-1]+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
-			}
-			return false;
-		}
+        function getVideoUrl(video_url) {
+            var d = video_url.match(/(http:|https:)?\/\/(www\.)?(youtube.com|youtu.be)\/(watch)?(\?v=)?(\S+)?/i);
+            if (d != null) {
+                return "http://www.youtube.com/embed/" + d[d.length - 1] + "?rel=0&amp;autoplay=1&amp;color=white"
+            }
+            d = video_url.match(/vimeo.*(?:\/|clip_id=)([0-9a-z]*)/i);
+            if (d != null) {
+                return "http://player.vimeo.com/video/" + d[d.length - 1] + "?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
+            }
+            return false;
+        }
 
-		// set iframe url on click
-		$j('.video-link').on('click', function(){
-			/*
-			var url     = 'https://player.vimeo.com/video/',
-			modal       = $j(this).data("target"),
-			videoId     = $j(this).data("video"),
-			videoSrc    = url+videoId, 
-			videoUrl    = videoSrc+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
-			*/
-			var modal = $j(this).data("target");
-			var video_url = $j(this).data("video");
-			
-			if(getVideoUrl(video_url) !== false){
-				$j(modal+' iframe').attr('src', getVideoUrl(video_url)); 
-			}
-		})
+        // set iframe url on click
+        $j('.video-link').on('click', function () {
+            /*
+             var url     = 'https://player.vimeo.com/video/',
+             modal       = $j(this).data("target"),
+             videoId     = $j(this).data("video"),
+             videoSrc    = url+videoId,
+             videoUrl    = videoSrc+"?autoplay=1&amp;color=ffffff&amp;title=0&amp;byline=0&amp;portrait=0";
+             */
+            var modal = $j(this).data("target");
+            var video_url = $j(this).data("video");
 
-		// unset url on close
-		$j('#video-modal').on('hide.bs.modal', function (e) {
-			$j('#video-modal').find('iframe').attr('src', '');
-		})
+            if (getVideoUrl(video_url) !== false) {
+                $j(modal + ' iframe').attr('src', getVideoUrl(video_url));
+            }
+        })
 
-		$j(".product-view .product-options dd .input-box").mouseenter(function(){
-			$j(this).find("select").trigger("click");
-		});
-	
-		// set iframe url on click
-		//if($j(window).width() <= 1199){
-			$j('.zoom-image').on('click', function(){
-		
-				var image = $j(this).data("image"),
-					modal = $j(this).data("target");
-		
-				$j(modal+' img').attr('src', image); 
-			})
-		//}
-		//var orig_width = $j(window).width() < 1260 ? $j(window).width():1260;
+        // unset url on close
+        $j('#video-modal').on('hide.bs.modal', function (e) {
+            $j('#video-modal').find('iframe').attr('src', '');
+        })
 
-		var orig_width = $j(window).width();
+        $j(".product-view .product-options dd .input-box").mouseenter(function () {
+            $j(this).find("select").trigger("click");
+        });
 
-		$j(".main > .col-main").width(orig_width).css({"margin":"0 auto"});
-		
-		var current_slide = 0;
-		var srcs = [];
-		$j(".product-image .product-image-slideshow img").each(function(){
-			var src = $j(this).attr("src");
-			//console.log(src);
-			srcs.push(src);	
-		});
-		var max_total = srcs.length - 1;
-		
-		$j(".owl-next").click(function(){
-			
-			if(current_slide  < max_total){
-				current_slide++;
-			}else{
-				current_slide = 0;
-			}
-		});
-		$j(".owl-prev").click(function(){
-			if(current_slide  > 0){
-				current_slide--;
-			}else{
-				current_slide = max_total;
-			}
-		});
-		var zoom_sw = true;
-	
-		function initZoomer(){
-			$j(".gallery-image").addClass("full-screen-toggle");
-			var main = $j(".main");
-			var img = $j(document.createElement("img")).css({"height":"100%","width":"auto","display":"inline-block"}).addClass("full-screen-toggle");
-			var l = $j(".product-image").offset().left;
-			var t = $j(".product-image").offset().top;
-			var w = $j(".product-image").width();
-			var h = $j(".product-image").height();
-			var r = w/h;
-			var w1 = $j(".col-main").width();
-			var h1 = w1/r;
-			var zoomer_relative = $j(document.createElement("div")).attr("id","zoomer_relative").css({"position":"relative","width":"100%","display":"table","height":"0px","background":"none"}).addClass("zoomer_relative");
-			var zoomer = $j(document.createElement("div")).attr("id","zoomer").css({"position":"absolute","left":l+"px","top":t+"px","width":w+"px","height":h+"px","background":"none","text-align":"center","opacity":"0"});
-			
-			$j("body").append(zoomer);
-			var zleft = 100;
-			var ztop = 50;
-			if($j(window).width() < 768){
-				zleft = 50;
-				ztop = 10;
-			}
-			var zoomer_opener = $j(document.createElement("span")).css({"position":"absolute","right":zleft+"px","top":ztop+"px"}).html("").addClass("full-screen-toggle zoomer_opener");
-			if($j(window).width() > 768){
-				$j(".product-detail-section .product-img-box .product-image").append(zoomer_opener);
-			}
-			var zoomer_closer = $j(document.createElement("span")).css({"position":"absolute","right":zleft+"px","top":ztop+"px"}).html("").addClass("full-screen-toggle zoomer_closer");
-			if(srcs.length > 0){
-				if($j(window).width() > 768){
-					zoomer.append(zoomer_closer);
-				}
-				img.attr("src",srcs[current_slide])
-				zoomer.append(img);
+        // set iframe url on click
+        //if($j(window).width() <= 1199){
+        $j('.zoom-image').on('click', function () {
 
-				main.prepend(zoomer_relative);
-				
-				$j(".full-screen-toggle").click(function(){
-					if($j(window).width() > 768){
-						l = $j(".product-image").offset().left;
-						t = $j(".product-image").offset().top;
-						w = $j(".product-image").width();
-						h = $j(".product-image").height();
-						r = w/h;
-						h1 = $j(window).height()-90;
-						w1 = h1*r;
-						if(w1 > $j(window).width()){
-							w1 = $j(window).width();
-							h1 = w1/r;
-						}
-						zoomer.css({"position":"absolute","left":l+"px","top":t+"px","width":w+"px","height":h+"px","background":"none","text-align":"center","opacity":"0"});
-							zoomer_relative.css({"height":h1+t+"px"})
+            var image = $j(this).data("image"),
+                modal = $j(this).data("target");
 
-						img.attr("src",srcs[current_slide])
+            $j(modal + ' img').attr('src', image);
+        })
+        //}
+        //var orig_width = $j(window).width() < 1260 ? $j(window).width():1260;
 
-						if(zoom_sw){
-							zoomer.animate({"width":w1+"px","height":h1+"px","opacity":"1"})
-							zoomer_relative.css({"height":h1+t+"px"})
-							main.find("div:not(.zoomer_relative)").addClass("zoom-hidden").animate({"opacity":"0"});
-						}
-						else{
-							main.find("div:not(.zoomer_relative)").removeClass("zoom-hidden").animate({"opacity":"1"});
-							zoomer_relative.css({"height":"0px"})
-							zoomer.animate({"width":w+"px","height":h+"px","opacity":"0"})
-						}
-					}
-					zoom_sw = !zoom_sw;
-				});
-			}
-		}
-		
-	
-		function initFixer(){
-			$j(".fixed-it").each(function(){
-				var containerPosition = $j(".right-column.product-view").offset().left;
-				$j(this).css({"position":"fixed","left":containerPosition+"px","top":$j(this).data("top")+"px","z-index":"4"});
-				if($j(this).hasClass("qty-sold")){
-					$j(this).css({"position":"fixed", "left":"auto"});
-					$j(this).css({"top":($j("#header").height()+40)+"px","z-index":"5"});
-				}
-			});
-			var nice_bar_top = $j("#nice-bar").offset().top;
-			var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-		}
+        var orig_width = $j(window).width();
 
-		var zoom_sw2 = false;
-		var go_ahead = true;
-		the_window_width = 0;
+        $j(".main > .col-main").width(orig_width).css({"margin": "0 auto"});
 
-		if($j(window).width() > 1199){
-			initZoomer();
-			$j(".product-image-slideshow a.zoom-image").attr("data-toggle","modalx");
-		}
-	
-		$j("body").css({"position":"relative"}).prepend('<input type="text" id="dummy" value="" style="position:absolute;opacity:0">');
-		$j("#dummy").focus();
-		$j("a.back-to-gallery").focus();
-		
-		the_window_width = $j(window).width();
+        var current_slide = 0;
+        var srcs = [];
+        $j(".product-image .product-image-slideshow img").each(function () {
+            var src = $j(this).attr("src");
+            //console.log(src);
+            srcs.push(src);
+        });
+        var max_total = srcs.length - 1;
 
-		if($j(".vh-coupon-callout").offset().top){
-			coupon_bottom = $j(".vh-coupon-callout").offset().top+$j(".vh-coupon-callout").outerHeight(true);
-			//console.log(coupon_bottom);
-			//console.log(jQuery(window).height());
-		}
-		
-		if($j(window).width() > 991){
-			$j(".add-to-shopping-bag-container").append($j("#mc_embed_signup"));
-			$j(".add-to-shopping-bag-container").append($j(".vh-coupon-callout"));
-		}else{
-			var div = $j(document.createElement("div")).addClass("underneath product-detail-section clearer");
-			$j("#nice-bar").after(div);
-			div.append('<div id="new-loc"></div>');
-			$j(".scroll-to-form").removeClass("right-column");
-			$j("#new-loc").append($j(".scroll-to-form"));
-			$j("#new-loc").append($j("#mc_embed_signup"));
-		}
-		if($j(window).width() < 992){
-			//$j("#nice-bar").append($j(".add-to-shopping-bag-container"));
-			$j(".product-detail-section.first-box").css({"min-height":"auto"});
-		}else{
-			$j(".product-detail-section.first-box").css({"min-height":"600px"});
-		}
-		if($j(window).width() > 991 ){
+        $j(".owl-next").click(function () {
 
-			$j("#product_addtocart_form").css({"min-height":"560px"});
-			
-			setTimeout(function(){
-				$j("#product_addtocart_form").css({"min-height":$j(".product-detail-section.first-box").height()+"px"});
-			},1000);		
-			
-			var form_is_fully_viewable = isElementInViewport($j("#product_addtocart_form"),true);
+            if (current_slide < max_total) {
+                current_slide++;
+            } else {
+                current_slide = 0;
+            }
+        });
+        $j(".owl-prev").click(function () {
+            if (current_slide > 0) {
+                current_slide--;
+            } else {
+                current_slide = max_total;
+            }
+        });
+        var zoom_sw = true;
 
-			form_is_not_fully_viewable = true;
-			
-			if(form_is_fully_viewable){
-				form_is_not_fully_viewable = false;
-			}
+        function initZoomer() {
+            $j(".gallery-image").addClass("full-screen-toggle");
+            var main = $j(".main");
+            var img = $j(document.createElement("img")).css({
+                "height": "100%",
+                "width": "auto",
+                "display": "inline-block"
+            }).addClass("full-screen-toggle");
+            var l = $j(".product-image").offset().left;
+            var t = $j(".product-image").offset().top;
+            var w = $j(".product-image").width();
+            var h = $j(".product-image").height();
+            var r = w / h;
+            var w1 = $j(".col-main").width();
+            var h1 = w1 / r;
+            var zoomer_relative = $j(document.createElement("div")).attr("id", "zoomer_relative").css({
+                "position": "relative",
+                "width": "100%",
+                "display": "table",
+                "height": "0px",
+                "background": "none"
+            }).addClass("zoomer_relative");
+            var zoomer = $j(document.createElement("div")).attr("id", "zoomer").css({
+                "position": "absolute",
+                "left": l + "px",
+                "top": t + "px",
+                "width": w + "px",
+                "height": h + "px",
+                "background": "none",
+                "text-align": "center",
+                "opacity": "0"
+            });
 
-			$j(".fixed-it").each(function(){
-				$j(this).attr("data-left",$j(this).offset().left);
-				$j(this).attr("data-top",$j(this).offset().top);
-			});
-			$j(".fixed-it").each(function(){
-				$j(this).css({"position":"fixed","left":$j(this).data("left")+"px","top":$j(this).data("top")+"px","z-index":"4"});
-				if($j(this).hasClass("qty-sold")){
-					$j(this).css({"top":($j("#header").height()+40)+"px","z-index":"5"});
-				}
-			});
+            $j("body").append(zoomer);
+            var zleft = 100;
+            var ztop = 50;
+            if ($j(window).width() < 768) {
+                zleft = 50;
+                ztop = 10;
+            }
+            var zoomer_opener = $j(document.createElement("span")).css({
+                "position": "absolute",
+                "right": zleft + "px",
+                "top": ztop + "px"
+            }).html("").addClass("full-screen-toggle zoomer_opener");
+            if ($j(window).width() > 768) {
+                $j(".product-detail-section .product-img-box .product-image").append(zoomer_opener);
+            }
+            var zoomer_closer = $j(document.createElement("span")).css({
+                "position": "absolute",
+                "right": zleft + "px",
+                "top": ztop + "px"
+            }).html("").addClass("full-screen-toggle zoomer_closer");
+            if (srcs.length > 0) {
+                if ($j(window).width() > 768) {
+                    zoomer.append(zoomer_closer);
+                }
+                img.attr("src", srcs[current_slide])
+                zoomer.append(img);
 
-			var product_addtocart_form = $j("#product_addtocart_form");
-			var nice_bar = $j("#nice-bar");
-			
-			var product_addtocart_form_bottom = product_addtocart_form.offset().top + product_addtocart_form.outerHeight();
-			var nice_bar_top = nice_bar.offset().top;
+                main.prepend(zoomer_relative);
 
-			prev_value = 0;
-			addScrollAction();
-		}else{
-			$j(".fixed-it:not(.qty-sold)").css({"position":"relative","top":"auto","left":"auto"})
-		}
+                $j(".full-screen-toggle").click(function () {
+                    if ($j(window).width() > 768) {
+                        l = $j(".product-image").offset().left;
+                        t = $j(".product-image").offset().top;
+                        w = $j(".product-image").width();
+                        h = $j(".product-image").height();
+                        r = w / h;
+                        h1 = $j(window).height() - 90;
+                        w1 = h1 * r;
+                        if (w1 > $j(window).width()) {
+                            w1 = $j(window).width();
+                            h1 = w1 / r;
+                        }
+                        zoomer.css({
+                            "position": "absolute",
+                            "left": l + "px",
+                            "top": t + "px",
+                            "width": w + "px",
+                            "height": h + "px",
+                            "background": "none",
+                            "text-align": "center",
+                            "opacity": "0"
+                        });
+                        zoomer_relative.css({"height": h1 + t + "px"})
 
-		function addScrollAction() {
-			$j(window).scroll(function(){
-				if($j("body").hasClass("catalog-product-view")){
+                        img.attr("src", srcs[current_slide])
 
-					var footer_rect = $j(".footer")[0].getBoundingClientRect();
-					var coupon_rect = $j(".add-to-shopping-bag-container")[0].getBoundingClientRect();
-					footer_top = footer_rect.top;
-					coupon_bottom = coupon_rect.bottom+$j(".vh-coupon-callout").height();
+                        if (zoom_sw) {
+                            zoomer.animate({"width": w1 + "px", "height": h1 + "px", "opacity": "1"})
+                            zoomer_relative.css({"height": h1 + t + "px"})
+                            main.find("div:not(.zoomer_relative)").addClass("zoom-hidden").animate({"opacity": "0"});
+                        }
+                        else {
+                            main.find("div:not(.zoomer_relative)").removeClass("zoom-hidden").animate({"opacity": "1"});
+                            zoomer_relative.css({"height": "0px"})
+                            zoomer.animate({"width": w + "px", "height": h + "px", "opacity": "0"})
+                        }
+                    }
+                    zoom_sw = !zoom_sw;
+                });
+            }
+        }
 
-					viewable_footer_top = $j(window).height()-footer_top;
 
-					if(viewable_footer_top > 0){
-						//console.log('footer is in viewport');
-						//console.log(viewable_footer_top);
+        function initFixer() {
+            $j(".fixed-it").each(function () {
+                var containerPosition = $j(".right-column.product-view").offset().left;
+                $j(this).css({
+                    "position": "fixed",
+                    "left": containerPosition + "px",
+                    "top": $j(this).data("top") + "px",
+                    "z-index": "4"
+                });
+                if ($j(this).hasClass("qty-sold")) {
+                    $j(this).css({"position": "fixed", "left": "auto"});
+                    $j(this).css({"top": ($j("#header").height() + 40) + "px", "z-index": "5"});
+                }
+            });
+            var nice_bar_top = $j("#nice-bar").offset().top;
+            var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
+        }
 
-						new_top = footer_top - 100 - $j(".vh-coupon-callout").outerHeight(true) - $j(".add-to-shopping-bag-container").outerHeight(true);
+        var zoom_sw2 = false;
+        var go_ahead = true;
+        the_window_width = 0;
 
-						console.log('new top: '+new_top);
+        if ($j(window).width() > 1199) {
+            initZoomer();
+            $j(".product-image-slideshow a.zoom-image").attr("data-toggle", "modalx");
+        }
 
-						increment = $j(".add-to-shopping-bag-container").data("top") - new_top;
+        $j("body").css({"position": "relative"}).prepend('<input type="text" id="dummy" value="" style="position:absolute;opacity:0">');
+        $j("#dummy").focus();
+        $j("a.back-to-gallery").focus();
 
-						$j(".fixed-it").each(function(){
-							$j(this).css({"top":($j(this).data("top")-increment)+"px"});
-						});
-					}else if($j(window).scrollTop() > 0){
+        the_window_width = $j(window).width();
 
-						//console.log('form_is_not_fully_viewable and vh-coupon-callout is not fully viewable');
+        if ($j(".vh-coupon-callout").offset().top) {
+            coupon_bottom = $j(".vh-coupon-callout").offset().top + $j(".vh-coupon-callout").outerHeight(true);
+            //console.log(coupon_bottom);
+            //console.log(jQuery(window).height());
+        }
 
-						increment = $j(window).scrollTop();
+        if ($j(window).width() > 991) {
+            $j(".add-to-shopping-bag-container").append($j("#mc_embed_signup"));
+            $j(".add-to-shopping-bag-container").append($j(".vh-coupon-callout"));
+        } else {
+            var div = $j(document.createElement("div")).addClass("underneath product-detail-section clearer");
+            $j("#nice-bar").after(div);
+            div.append('<div id="new-loc"></div>');
+            $j(".scroll-to-form").removeClass("right-column");
+            $j("#new-loc").append($j(".scroll-to-form"));
+            $j("#new-loc").append($j("#mc_embed_signup"));
+        }
+        if ($j(window).width() < 992) {
+            //$j("#nice-bar").append($j(".add-to-shopping-bag-container"));
+            $j(".product-detail-section.first-box").css({"min-height": "auto"});
+        } else {
+            $j(".product-detail-section.first-box").css({"min-height": "600px"});
+        }
+        if ($j(window).width() > 991) {
 
-						var bottom = $j(".add-to-shopping-bag-container").data("top")-increment+$j(".add-to-shopping-bag-container").outerHeight(true)+$j(".vh-coupon-callout").outerHeight(true);
+            $j("#product_addtocart_form").css({"min-height": "560px"});
 
-						if(bottom > $j(window).height()){
-							$j(".fixed-it").each(function(){
-								$j(this).css({"top":($j(this).data("top")-increment)+"px"});
-								if($j(this).hasClass("qty-sold")){
-									$j(this).css({"top":($j("#header").height()+40-increment)+"px","z-index":"5"});
-								}
-							});
-						}else if($j(window).height() - bottom < 0){
-							$j(".fixed-it").each(function(){
-								$j(this).css({"top":($j(this).data("top")-increment)+"px"});
-								if($j(this).hasClass("qty-sold")){
-									$j(this).css({"top":($j("#header").height()+40-increment)+"px","z-index":"5"});
-								}
-							});
-						}else{
-							$j(".fixed-it").each(function(){
-							});
-						}
+            setTimeout(function () {
+                $j("#product_addtocart_form").css({"min-height": $j(".product-detail-section.first-box").height() + "px"});
+            }, 1000);
 
-					}else{
-						//console.log('footer is not in viewport');
-						initFixer();
-					}
-					if($j(window).scrollTop() <= 20 && $j(window).width() > 991){
-						var nice_bar_top = $j("#nice-bar").offset().top;
-						console.log("nice_bar_top: "+nice_bar_top);
+            var form_is_fully_viewable = isElementInViewport($j("#product_addtocart_form"), true);
 
-						var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
-						console.log("add_button_top: "+add_button_top);
+            form_is_not_fully_viewable = true;
 
-						if(nice_bar_top > add_button_top){
-							$j(".add-to-shopping-bag-container").css({"top":nice_bar_top+"px"});
-							$j(".add-to-shopping-bag-container").addClass("probed");
-						}
-					}
-				}
-			});
-		}
+            if (form_is_fully_viewable) {
+                form_is_not_fully_viewable = false;
+            }
 
-		if($j(window).scrollTop() > 0){
-			$j("html,body").scrollTop(0);
-		}
-		$j(".product-review-text p.no-rating a").click(function(e){
-			e.preventDefault();
-			$j("a.write-a-review").trigger("click");
-		});
-	  $j('#email a').click(function( event ) {
-		event.preventDefault();
-		var url2 = $j(this).attr('href'); 
-		popWindow(url2, 'email', '620', '430');
-	  });
-	
-	  function popWindow(url, title, w, h) {
-		var left = (screen.width/2)-(w/2);
-		var top = (screen.height/2)-(h/2)-50;
-		return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no,, width='+w+', height='+h+', top='+top+', left='+left);
-	  }
-	});
-// ]]>
+            $j(".fixed-it").each(function () {
+                $j(this).attr("data-left", $j(this).offset().left);
+                $j(this).attr("data-top", $j(this).offset().top);
+            });
+            $j(".fixed-it").each(function () {
+                $j(this).css({
+                    "position": "fixed",
+                    "left": $j(this).data("left") + "px",
+                    "top": $j(this).data("top") + "px",
+                    "z-index": "4"
+                });
+                if ($j(this).hasClass("qty-sold")) {
+                    $j(this).css({"top": ($j("#header").height() + 40) + "px", "z-index": "5"});
+                }
+            });
+
+            var product_addtocart_form = $j("#product_addtocart_form");
+            var nice_bar = $j("#nice-bar");
+
+            var product_addtocart_form_bottom = product_addtocart_form.offset().top + product_addtocart_form.outerHeight();
+            var nice_bar_top = nice_bar.offset().top;
+
+            prev_value = 0;
+            addScrollAction();
+        } else {
+            $j(".fixed-it:not(.qty-sold)").css({"position": "relative", "top": "auto", "left": "auto"})
+        }
+
+        function addScrollAction() {
+            $j(window).scroll(function () {
+                if ($j("body").hasClass("catalog-product-view")) {
+
+                    var footer_rect = $j(".footer")[0].getBoundingClientRect();
+                    var coupon_rect = $j(".add-to-shopping-bag-container")[0].getBoundingClientRect();
+                    footer_top = footer_rect.top;
+                    coupon_bottom = coupon_rect.bottom + $j(".vh-coupon-callout").height();
+
+                    viewable_footer_top = $j(window).height() - footer_top;
+
+                    if (viewable_footer_top > 0) {
+                        //console.log('footer is in viewport');
+                        //console.log(viewable_footer_top);
+
+                        new_top = footer_top - 100 - $j(".vh-coupon-callout").outerHeight(true) - $j(".add-to-shopping-bag-container").outerHeight(true);
+
+                        console.log('new top: ' + new_top);
+
+                        increment = $j(".add-to-shopping-bag-container").data("top") - new_top;
+
+                        $j(".fixed-it").each(function () {
+                            $j(this).css({"top": ($j(this).data("top") - increment) + "px"});
+                        });
+                    } else if ($j(window).scrollTop() > 0) {
+
+                        //console.log('form_is_not_fully_viewable and vh-coupon-callout is not fully viewable');
+
+                        increment = $j(window).scrollTop();
+
+                        var bottom = $j(".add-to-shopping-bag-container").data("top") - increment + $j(".add-to-shopping-bag-container").outerHeight(true) + $j(".vh-coupon-callout").outerHeight(true);
+
+                        if (bottom > $j(window).height()) {
+                            $j(".fixed-it").each(function () {
+                                $j(this).css({"top": ($j(this).data("top") - increment) + "px"});
+                                if ($j(this).hasClass("qty-sold")) {
+                                    $j(this).css({
+                                        "top": ($j("#header").height() + 40 - increment) + "px",
+                                        "z-index": "5"
+                                    });
+                                }
+                            });
+                        } else if ($j(window).height() - bottom < 0) {
+                            $j(".fixed-it").each(function () {
+                                $j(this).css({"top": ($j(this).data("top") - increment) + "px"});
+                                if ($j(this).hasClass("qty-sold")) {
+                                    $j(this).css({
+                                        "top": ($j("#header").height() + 40 - increment) + "px",
+                                        "z-index": "5"
+                                    });
+                                }
+                            });
+                        } else {
+                            $j(".fixed-it").each(function () {
+                            });
+                        }
+
+                    } else {
+                        //console.log('footer is not in viewport');
+                        initFixer();
+                    }
+                    if ($j(window).scrollTop() <= 20 && $j(window).width() > 991) {
+                        var nice_bar_top = $j("#nice-bar").offset().top;
+                        console.log("nice_bar_top: " + nice_bar_top);
+
+                        var add_button_top = $j(".add-to-shopping-bag-container").offset().top;
+                        console.log("add_button_top: " + add_button_top);
+
+                        if (nice_bar_top > add_button_top) {
+                            $j(".add-to-shopping-bag-container").css({"top": nice_bar_top + "px"});
+                            $j(".add-to-shopping-bag-container").addClass("probed");
+                        }
+                    }
+                }
+            });
+        }
+
+        if ($j(window).scrollTop() > 0) {
+            $j("html,body").scrollTop(0);
+        }
+        $j(".product-review-text p.no-rating a").click(function (e) {
+            e.preventDefault();
+            $j("a.write-a-review").trigger("click");
+        });
+        $j('#email a').click(function (event) {
+            event.preventDefault();
+            var url2 = $j(this).attr('href');
+            popWindow(url2, 'email', '620', '430');
+        });
+
+        function popWindow(url, title, w, h) {
+            var left = (screen.width / 2) - (w / 2);
+            var top = (screen.height / 2) - (h / 2) - 50;
+            return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no,, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        }
+    });
+    // ]]>
 </script> 
