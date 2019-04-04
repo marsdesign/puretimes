@@ -14839,7 +14839,7 @@ div.social-share > div{
 div.social-share > div > div{
   float:left;
   height:60px !important;
-  width:20% !important;
+  width:25% !important;
   text-align:center;
   line-height:60px;
   color:#fff;
@@ -15684,7 +15684,7 @@ a.link-compare:before{
   text-align:center;
   width:234px;
   position:absolute;
-  top:48px;
+  top:63px;
   right:-50px;
   /* Safari */
   -webkit-transform: rotate(45deg);
@@ -17092,7 +17092,6 @@ div.share-button{
   .votee img{
     height: 307px;
   }
-  
 }
 @media (max-width:479px){
   
@@ -17153,5 +17152,37 @@ div.share-button{
     display:inline-block !important;
   }
 }
+
+/* pdp fixes */
+@media (max-width:991px){
+  .fixed-it.add-to-shopping-bag-container{
+    min-height: 0!important;
+    top:auto!important;
+    left:auto!important;
+  }
+  .right-column.product-view .fixed-it{
+    min-height: 0!important;
+  }
+  .product-detail-section.first-box{
+    min-height:0!important;
+  }
+  div.full-screen-toggle{
+    display:none!important;
+  }
+  div.social-share {
+      padding-left: 0px !important;
+  }
+}
+@media (max-width:991px){
+  .add-to-shopping-bag-container.right-column{
+    right:0!important;
+    left:auto!important;
+  }
+}
+
+.add-to-box .add-to-links{
+  display:none;
+}
+
 
 

@@ -171,12 +171,6 @@ function getQuantitySold($sku)
         }
     }
 
-    @media (max-width: 1199px) {
-        div.social-share {
-            padding-left: 0px !important;
-        }
-    }
-
     @media (min-width: 992px) and (max-width: 1023px) {
         .product-detail-section {
             position: relative;
@@ -229,7 +223,6 @@ function getQuantitySold($sku)
         .qty-sold {
             top: 26px;
         }
-
         .wrapper {
             width: 100%;
             box-sizing: border-box;
@@ -309,7 +302,6 @@ function getQuantitySold($sku)
         }
 
         .qty-sold {
-            top: -7px;
             right: -56px;
         }
 
@@ -384,7 +376,7 @@ function getQuantitySold($sku)
     }
 </style>
 <div id="qty-sold" class="product-detail-section clearer divider" style="position:relative;z-index:5"><span
-        class="qty-sold fixed-it"><?php echo number_format(getQuantitySold(nl2br($_product->getSku())), '0', '.',
+        class="qty-sold"><?php echo number_format(getQuantitySold(nl2br($_product->getSku())), '0', '.',
             ','); ?> SOLD</span>
     <?php
     if (Mage::registry('current_category')):
@@ -488,8 +480,6 @@ function getQuantitySold($sku)
                      data-text="Share on Facebook" data-title="Like"></div>
                 <div class="share-bar" id="twitter" data-url="<?php echo $_product->getProductUrl(); ?>"
                      data-text="Share on Twitter" data-title="Tweet"></div>
-                <div class="share-bar" id="googleplus" data-url="<?php echo $_product->getProductUrl(); ?>"
-                     data-text="Share on Google+" data-title="+1"></div>
                 <div class="share-bar" id="pinterest" data-url="<?php echo $_product->getProductUrl(); ?>"
                      data-text="Pin it on Pinterest" data-title="Pin"
                      data-media="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"></div>

@@ -1251,6 +1251,7 @@ treat account and cart links different that the mobile skip-links skip link
         // going to run the alignment function each time the page is resized.
         $j(window).on('delayed-resize', function (e, resizeEvent) {
             alignProductGridActions();
+            setFixHeaderSpacer();
         });
     }
 
@@ -1394,7 +1395,12 @@ var ProductMediaManager = {
         $j(document).trigger('product-media-loaded', ProductMediaManager);
     }
 };
-
+function setFixHeaderSpacer(){
+    if($j("body").hasClass("catalog-product-view")){
+    }else{
+        $j(".fixed-header-spacer").height($j("#header").outerHeight());
+    }
+}
 $j(document).ready(function() {
 	function initPlayOverlay(){
 		var overlay = '<div class="play-overlay-container"><div class="play-overlay"><div class="left-overlay"></div><div class="right-overlay"></div></div></div>';
@@ -1542,12 +1548,7 @@ $j(document).ready(function() {
 			menu_row_ctr++;
 		}
 	});
-	function setFixHeaderSpacer(){
-		if($j("body").hasClass("catalog-product-view")){
-		}else{
-			$j(".fixed-header-spacer").height($j("#header").outerHeight());
-		}
-	}
+
 	setFixHeaderSpacer();
 
 	$j(window).resize(function(){
