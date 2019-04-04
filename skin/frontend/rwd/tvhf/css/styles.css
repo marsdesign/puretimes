@@ -8063,6 +8063,11 @@ body.customer-account .sidebar .block-reorder ol#cart-sidebar-reorder p.product-
   border-top: none;
 }
 
+#header-cart #cart-sidebar {
+  overflow: scroll;
+  max-height: calc(100vh - 285px);
+}
+
 ol#cart-sidebar-reorder li {
   margin-top: 10px;
   margin-bottom: 0;
