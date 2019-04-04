@@ -661,7 +661,6 @@ var MenuManager = {
 // jQuery Init
 // ==============================================
 
-// Use $j(document).ready() because Magento executes Prototype inline
 $j(document).ready(function () {
 
     // ==============================================
@@ -750,7 +749,7 @@ treat account and cart links different that the mobile skip-links skip link
 
         self.addClass('skip-active');
         elem.addClass('skip-active');
-        
+
     });
     // mmc added to close menus when hover off the nav item or menu
     $j(document).on('mouseover', function(event) {
@@ -910,7 +909,7 @@ treat account and cart links different that the mobile skip-links skip link
     // ==============================================
     // UI Pattern - Toggle Content (tabs and accordions in one setup)
     // ==============================================
-    
+
     $j('.toggle-content').each(function () {
         var wrapper = jQuery(this);
 
@@ -982,7 +981,7 @@ treat account and cart links different that the mobile skip-links skip link
 
 
     // ==============================================
-    // UI Pattern - Owl Carousel mmc 
+    // UI Pattern - Owl Carousel mmc
     // ==============================================
     $j(".carousel").owlCarousel({
         pagination: false,
@@ -1055,7 +1054,7 @@ treat account and cart links different that the mobile skip-links skip link
           $j(this).addClass('current');
         }
       });
-    }); 
+    });
 
     $j(function(){
       $j('.shop-menu a').each(function() {
@@ -1063,7 +1062,7 @@ treat account and cart links different that the mobile skip-links skip link
           $j(this).addClass('active');
         }
       });
-    }); 
+    });
 
 
 
@@ -1400,14 +1399,14 @@ $j(document).ready(function() {
 	function initPlayOverlay(){
 		var overlay = '<div class="play-overlay-container"><div class="play-overlay"><div class="left-overlay"></div><div class="right-overlay"></div></div></div>';
 		$j(".video-image,.product-video").each(function(index, element) {
-         	$j(this).append(overlay);   
+         	$j(this).append(overlay);
         });
 		/*
 		$j(".video-image,.product-video").mouseenter(function(){
-			$j(this).find(".play-overlay-container").fadeIn();	
+			$j(this).find(".play-overlay-container").fadeIn();
 		});
 		$j(".video-image,.product-video").mouseleave(function(){
-			$j(this).find(".play-overlay-container").fadeOut();	
+			$j(this).find(".play-overlay-container").fadeOut();
 		});
 		*/
 	}
@@ -1421,7 +1420,7 @@ $j(document).ready(function() {
 	$j(".btn-trigger").click(function(e){
 		e.preventDefault();
 		var t = $j(this).data('trigger-what');
-		$j(t).trigger("click");	
+		$j(t).trigger("click");
 	});
 	$j(".the-liner").width($j(".add-to-shopping-bag-container.the-right").width()).css("right",$j(".add-to-shopping-bag-container.the-right").parent().css("padding-right"));
 	$j("#contactForm li:last-child").addClass("last");
@@ -1469,7 +1468,7 @@ $j(document).ready(function() {
 					 'transform' : 'rotate('+ degrees +'deg)'});
 		return $(this);
 	};
-	
+
 	$j('.qty-sold').rotate(45);
 	if($j("body").hasClass("cms-home")){
 		$j("html,body").animate({"scrollTop":"30px"});
@@ -1482,9 +1481,8 @@ $j(document).ready(function() {
 		$j("body").append(modal);
 		$j("body").append('<a class="modaller lightbox" href="#modaller"></a>');
 		$j("a.modaller").click();
-	}	
+	}
 */
-
 	$j(".account-create .pslogin-button-link").append('<span>REGISTER WITH FACEBOOK</span>');
 	$j(".pslogin-login .pslogin-button-link").append('<span>LOGIN WITH FACEBOOK</span>');
 
@@ -1506,7 +1504,7 @@ $j(document).ready(function() {
 	$j(".category-menu-inner > ul > li.level0").each(function(){
 		menu_col_ctr++;
 		$j(this).css({"z-index":1});
-		$j(this).attr("data-row",menu_row_ctr);		
+		$j(this).attr("data-row",menu_row_ctr);
 		$j(this).attr("data-col",menu_col_ctr);
 		if(menu_col_ctr == 1){
 			$j(this).addClass("first");
@@ -1517,16 +1515,16 @@ $j(document).ready(function() {
 		}
 	});
 	$j(".category-menu-inner > ul > li.level0").hover(function(){
-		var row = $j(this).data("row");	
+		var row = $j(this).data("row");
 		var col = $j(this).data("col");
 		console.log(col);
-		$j("[data-col="+col+"]:not([data-row="+row+"],[data-row="+(row-1)+"]),[data-row="+(row-2)+"]").css({"pointer-events":"none","visibility":"hidden","z-index":"-100"});	
+		$j("[data-col="+col+"]:not([data-row="+row+"],[data-row="+(row-1)+"]),[data-row="+(row-2)+"]").css({"pointer-events":"none","visibility":"hidden","z-index":"-100"});
 	});
 	$j(".category-menu-inner > ul > li.level0").mouseleave(function(){
-		var row = $j(this).data("row");	
+		var row = $j(this).data("row");
 		var col = $j(this).data("col");
 		console.log(col);
-		$j("[data-col="+col+"]:not([data-row="+row+"],[data-row="+(row-1)+"]),[data-row="+(row-2)+"]").css({"pointer-events":"auto","visibility":"visible","z-index":"1"});	
+		$j("[data-col="+col+"]:not([data-row="+row+"],[data-row="+(row-1)+"]),[data-row="+(row-2)+"]").css({"pointer-events":"auto","visibility":"visible","z-index":"1"});
 	});
 
 	menu_col_ctr = 0;
@@ -1534,7 +1532,7 @@ $j(document).ready(function() {
 	$j(".category-nav > .category-nav-inner > a").each(function(){
 		menu_col_ctr++;
 		$j(this).css({"z-index":1});
-		$j(this).attr("data-row",menu_row_ctr);		
+		$j(this).attr("data-row",menu_row_ctr);
 		$j(this).attr("data-col",menu_col_ctr);
 		if(menu_col_ctr == 1){
 			$j(this).addClass("first");
@@ -1557,52 +1555,52 @@ $j(document).ready(function() {
 			$j(".product-cart-info a.btn-remove.btn-remove2").html("");
 		}
 	});
-	
+
 	if($j(window).width() < 600){
 		$j(".product-cart-info a.btn-remove.btn-remove2").html("");
 	}
 	the_window_width = $j(window).width();
-	
+
 	function resizeBlogIframe(){
 		var ratio = 315/560;
-		
+
 		var width = 560;
-		
+
 		if($j(".blog-post-view iframe").parent().width() < 560 || $j(window).width() < 560){
 			var width = $j(".blog-post-view iframe").parent().width();
 			var height = width*ratio;
-			
+
 			$j(".blog-post-view iframe").attr("width",width).attr("height",height);
 		}else{
 			$j(".blog-post-view iframe").attr("width",560).attr("height",315);
 		}
-		console.log(width);
+		//console.log(width);
 	}
 
     // 2ten todo - is this needed
-	$j(window).on('resize', function(e)
-	{
-		setFixHeaderSpacer();
-		if(($j(".product-detail-section").length > 0 && $j(".blog-post-view").length < 1) || $j("body").hasClass("cms-about") || $j("body").hasClass("cms-privacy") || $j("body").hasClass("cms-terms") || $j("body").hasClass("cms-shipping") || $j("body").hasClass("cms-returns") || $j("body").hasClass("cms-howtovote") || $j("body").hasClass("cms-contact")){
+    // $j(window).on('resize', function(e)
+    // {
+		// setFixHeaderSpacer();
+		// if(($j(".product-detail-section").length > 0 && $j(".blog-post-view").length < 1) || $j("body").hasClass("cms-about") || $j("body").hasClass("cms-privacy") || $j("body").hasClass("cms-terms") || $j("body").hasClass("cms-shipping") || $j("body").hasClass("cms-returns") || $j("body").hasClass("cms-howtovote") || $j("body").hasClass("cms-contact")){
+    //
+		// 	if (window.RT) clearTimeout(window.RT);
+		// 	window.RT = setTimeout(function()
+		// 	{
+		// 		if(Math.abs(the_window_width-$j(window).width()) > 50){
+		// 			$j('body').css({"opacity":"0"});
+		// 			window.location = window.location.href;
+		// 			//alert('Screen has been resized. Page reload is needed to optimize layout for new screen size. Click \'OK\' to continue.');
+		// 		}
+		// 	}, 200);
+		// }
+		// resizeBlogIframe();
+    // });
+	//resizeBlogIframe();
 
-			if (window.RT) clearTimeout(window.RT);
-			window.RT = setTimeout(function()
-			{
-				if(Math.abs(the_window_width-$j(window).width()) > 50){
-					$j('body').css({"opacity":"0"});
-					window.location = window.location.href;
-					//alert('Screen has been resized. Page reload is needed to optimize layout for new screen size. Click \'OK\' to continue.');
-				}
-			}, 200);
-		}
-		resizeBlogIframe();
-	});
-	resizeBlogIframe();
-	
 });
 $j(document).ready(function(){
 //moved from featured.phtml
-	
+
 
     // 2ten todo why not use slick slider?
     // 2ten todo and use html/css to change aspect ratio
@@ -1640,12 +1638,12 @@ $j(document).ready(function(){
 				if(h > highest){
 					highest = h;
 				}
-				$j(this).height(h);	
+				$j(this).height(h);
 			});
 			$j(".landscape").height(highest);
 		}
 		$j(window).resize(function(){
-			resize_slides();	
+			resize_slides();
 		});
 		resize_slides();
 /*
@@ -1668,7 +1666,7 @@ $j(document).ready(function(){
 			});
 			resize_slides();
 		});
-		
+
 	}
 });
 
