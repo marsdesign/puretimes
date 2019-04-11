@@ -1656,11 +1656,11 @@ $j(document).ready(function(){
 */
 
         // 2ten todo what does this do
-		$j("#header,#header > div").css({"z-index":"10000","width":"100%"});
+		// $j("#header,#header > div").css({"z-index":"10000","width":"100%"});
 
         // 2ten todo what does this do
 		$j( window ).on( "orientationchange", function( event ) {
-			$j("html,body,#header,.landscape,.the-slide").width($j(window).width());
+			// $j("html,body,#header,.landscape,.the-slide").width($j(window).width());
 			$j("html,body").animate({"scrollTop":"100px"},100,function(){
 				$j("html,body").animate({"scrollTop":"0px"},100,function(){
 				});
