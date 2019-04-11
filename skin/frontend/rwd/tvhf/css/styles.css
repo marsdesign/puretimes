@@ -17179,10 +17179,303 @@ div.share-button{
     left:auto!important;
   }
 }
-
 .add-to-box .add-to-links{
   display:none;
 }
 
 
+/* ==========================================================================
+   Home styles
+   ========================================================================== */
 
+.section{
+  position: relative;
+  z-index:1;
+}
+.section:after{
+  content:'';
+  clear:both;
+/*    background-image: url(img/shadow.png);*/
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4vw;
+    background-repeat: repeat-x;
+    transform: skewY(4.6deg);
+    background-position: top left;
+    /* height: 40px; */
+    /* border: solid 1px red; */
+    z-index: 10000000000;
+
+    /* box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.1); */
+    border-bottom:solid 2px #ececec;
+}
+.section:not(:first-child){
+  margin-top:-8vw;
+}
+.section .section__wrapper{
+  -webkit-clip-path: polygon(
+    0 0, 
+    100% 0, 
+    100% 100%, 
+    0 calc(100% - 8vw)
+    );
+  clip-path: polygon(
+    0 0, 
+    100% 0, 
+    100% 100%, 
+    0 calc(100% - 8vw)
+    );
+}
+/*.section:not(:first-child) .section__wrapper{
+  clip-path: polygon(
+    0 0, 
+    100% 8vw, 
+    100% 100%, 
+    0 calc(100% - 8vw)
+    );
+}*/
+.section__wrapper{
+  position: relative;
+  background: white;
+
+}
+.section__wrapper:after{
+
+/*  background-image:url('img/shadow.jpg');
+  content: '';
+  position: absolute;
+  top:4px;
+  left:0;
+  right:0;
+  bottom:0;
+  /*
+  background-color: #000;
+  background-color: rgba(0,0,0,0.15);
+  -webkit-filter: blur(3px);*/*/
+}
+.section:first-child{
+  z-index:2;
+}
+.section:last-child{
+  z-index: 0
+}
+/*.section:not(:first-child){
+  margin-top:-10%;
+}*/
+
+.whats-new:after{
+  content:'';
+  position: absolute;
+  top:5.9vw;
+  left:0px;
+  right:0px;
+  height:1vw;
+  background:white;
+  z-index: 1000;
+  transform: rotate(3.5deg);
+  box-shadow: 0 4px 2px -2px #000;
+}
+.section__contents{
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  max-width:900px;
+  margin:0 auto;
+}
+.section__caption{
+  flex:0 0 auto;
+  text-align:center;
+}
+.section__image{
+  width:50%;
+  flex:0 0 auto;
+}
+.section__image img{
+  width:100%;
+  height:auto;
+}
+.section:nth-of-type(odd) .section__caption{
+   order:1;
+}
+.section:nth-of-type(odd) .section__image{
+   order:2;
+}
+.content{
+  background: red;
+}
+.whats-new{
+  display:none;
+}
+.whats-new{
+  background: black;
+  color:white;
+  -webkit-clip-path: polygon(
+    0 0, 
+    100% 5vw, 
+    100% 5vw, 
+    0 100%
+    );
+  clip-path: polygon(
+    0 0, 
+    100% 5vw, 
+    100% 5vw, 
+    0 100%
+    );
+  margin-top:-9vw;
+  height:10vw;
+  width:50%;
+}
+.whats-new h3{
+  font-family: 'din_condensedbold';
+  color: #fff;
+  font-size: 3.5vw;
+  margin: 0;
+  line-height: normal;  
+}
+.whats-new a{
+  font-family: 'PT Sans',sans-serif;
+  color: #eee;
+  font-size: 1.5vw;
+  line-height: normal;
+}
+.whats-new__wrapper{
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.whats-new__caption{
+  padding-left:30px;
+}
+.section__caption h2{
+  font-family: 'din_condensedbold';
+  font-size: 40px;
+  line-height: normal;
+}
+.section__caption  a {
+    display: inline-block;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #222;
+    padding: 5px 10px;
+    line-height: normal;
+    text-align: center;
+    border: 3px solid #222;
+    letter-spacing: 1px;
+    font-family: "PT Sans", sans-serif;
+    font-weight: 700;
+    font-size:12px;
+}
+.section__caption p{
+  margin:0;
+  padding:0;
+  text-align:center;
+}
+.sw.home-featured-header{
+  margin-bottom:0;
+  padding:0;
+  padding-top:30px!important;
+}
+.home-featured-header h2 {
+  font-family: 'din_condensedbold';
+  font-size: 34px;
+  color: #2d2b28;
+  letter-spacing: 1px;
+}
+.sw.home-featured{
+  margin-top:0;
+  padding-top:0;
+}
+@media(min-width:600px){
+  .section__caption h2{
+    font-size: 30px;
+    font-size: 10vw;
+  }
+  .section__caption  a {
+    font-size: 14px;
+    font-size: 1.5vw;
+    padding: 10px 40px;
+  }
+}
+@media(min-width:771px){
+  .whats-new{
+    display:block;
+  }
+  .sw.home-featured-header{
+    display:none;
+  }
+  .sw.home-featured{
+    padding-top:36px;
+  }
+}
+@media(min-width:1200px){
+  .section__caption h2{
+    font-size:130px;
+  } 
+  .section__caption  a {
+    font-size: 24px;
+  }
+}
+
+
+
+/* ==========================================================================
+   IE/Edge fixes
+   ========================================================================== */
+
+/* disable slanted line on IE and edge */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+   /* IE10+ CSS */
+  .section:after{
+    bottom:0;
+    transform: none;
+  }
+  .section:not(:first-child){
+    margin-top:0;
+  }
+  .whats-new {
+    margin-top: 0;
+    height: auto;
+    width: 100%;
+  }
+  .whats-new:after{
+    display:none;
+  }
+}
+@supports (-ms-accelerator:true) {
+   /* IE Edge 12+ CSS */ 
+  .section:after{
+    bottom:0;
+    transform: none;
+  }
+  .section:not(:first-child){
+    margin-top:0;
+  }
+  .whats-new {
+    margin-top: 0;
+    height: auto;
+    width: 100%;
+  }
+  .whats-new:after{
+    display:none;
+  }
+}
+@supports (-ms-ime-align:auto) {
+    /* IE Edge 16+ CSS */ 
+  .section:after{
+    bottom:0;
+    transform: none;
+  }
+  .section:not(:first-child){
+    margin-top:0;
+  }
+  .whats-new {
+    margin-top: 0;
+    height: auto;
+    width: 100%;
+  }
+  .whats-new:after{
+    display:none;
+  }
+}
