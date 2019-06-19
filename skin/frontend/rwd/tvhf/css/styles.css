@@ -17302,9 +17302,6 @@ div.share-button{
 .section:nth-of-type(odd) .section__image{
    order:2;
 }
-.content{
-  background: red;
-}
 .whats-new{
   display:none;
 }
